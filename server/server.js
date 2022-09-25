@@ -1,9 +1,7 @@
 const path = require('path');
 const express = require('express');
 const session = require('express-session');
-
 const routes = require('./controllers');
-
 const sequelize = require('./config/connection');
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
 
@@ -12,7 +10,7 @@ const PORT = process.env.PORT || 3001;
 
 
 const sess = {
-  secret: 'Secret',
+  secret: 'Extremely secret secret',
   cookie: {
     maxAge: 600000,
   },
@@ -28,9 +26,7 @@ app.use(session(sess));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-app.get('/*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../client/build/index.html'));
-});
+app.use(express.static(path.join(__dirname, '../client/public')));
   
 app.use(routes);
 

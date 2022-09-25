@@ -11,13 +11,20 @@ Team.init(
             primaryKey: true,
             autoIncrement: true
         },
-        team_name: {
+        name: {
             type: DataTypes.STRING,
             allowNull: false
         },
         manager_name: {
-            type: DataTypes.STRING(500),
+            type: DataTypes.STRING,
             allowNull: false
+        },
+        manager_id: {
+            type: DataTypes.INTEGER,
+            references: {
+                model: 'manager',
+                key: 'id'
+            }
         },
         user_id: {
             type: DataTypes.INTEGER,
