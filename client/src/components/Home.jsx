@@ -1,112 +1,83 @@
-import React, { useState } from 'react';
-import Banner from "../assets/banner.jpg";
+import React, { useState, useRef } from 'react';
+import { CSSTransition } from 'react-transition-group';
+import Banner from '../assets/banner.jpg';
+import HomeTab from './tabs/HomeTab';
+import ManageTab from './tabs/ManageTab';
 
-export default function InitPrompt() {
-    const [formState, setFormState] = useState({ teamname: '', leadname: '' });
+export default function InitPrompt({ handlePageChange }) {
+  const [inProp, setInProp] = useState(false);
+  const [collapsedMenu, toggleCollapseMenu] = useState(true);
+  const [currentTab, setCurrentTab] = useState('Home');
 
-    const handleChange = (event) => {
-        const { name, value } = event.target;
-    
-        setFormState({
-          ...formState,
-          [name]: value,
-        });
-    };
+  const teamName = localStorage.getItem('teamName');
+  const managerName = localStorage.getItem('managerName');
+  // const nodeRef = useRef(null);
 
-    const handleFormSubmit = async (event) => {
-        event.preventDefault();
-        console.log(formState);
+  const renderTab = () => {
+    if (currentTab === 'Home') {
+      return <HomeTab handleTabChange={handleTabChange} />;
+    } else if (currentTab === 'Manage') {
+      return <ManageTab handleTabChange={handleTabChange} />;
+    }
+  };
+  const deleteTeam = () => {
+    localStorage.clear();
+    handlePageChange('Init');
+  };
 
-        const name = formState.teamname;
-        const manager_name = formState.leadname;
+  const handleTabChange = (tab) => setCurrentTab(tab);
 
-        console.log(name);
-        console.log(manager_name);
-
-
-        if(name && manager_name) {
-            const response = await fetch('/api/teams', {
-                method: 'POST',
-                body: JSON.stringify({ name, manager_name }),
-                headers: { 'Content-Type': 'application/json' }
-            });
-
-            if (response.ok) {
-                document.location.replace('/');
-            } else {
-                alert(response.statusText);
-            }
-        }
-
-        setFormState({
-          teamname: '',
-          leadname: '',
-        });
-    };
-    
-    return (
-        <>
-            <div className="container init-container">
-                <div className="form-side">
-                    <h1>Welcome!</h1>
-                    <h6>Enter team information to continue:</h6>
-                    <form className='init-form' onSubmit={handleFormSubmit}>
-                        <div className='init-input'>
-                            <div class='field'>
-                                <label class='label'>Team Name</label>
-                                <div class='control'>
-                                    <input
-                                        class='input'
-                                        type='teamname'
-                                        placeholder="Your team or company's name"
-                                        name='teamname'
-                                        value={formState.teamname}
-                                        onChange={handleChange}
-                                    />
-                                </div>
-                            </div>
-
-                            <div class='field'>
-                                <label class='label'>Team Lead's Name</label>
-                                <div class='control'>
-                                    <input
-                                        class='input'
-                                        type='leadname'
-                                        name='leadname'
-                                        placeholder="Your team's manager"
-                                        value={formState.leadname}
-                                        onChange={handleChange}
-                                    />
-                                </div>
-                            </div>
-                        </div>
-
-
-                        <div className='init-button-container'>
-                            <button className='init-button' type='submit'>
-                                Generate Team
-                            </button>
-                        <div className="divider"></div>
-                            <div className="sub-container d-flex flex-column align-items-center mb-5">
-                                <p className='mt-0 mb-1'>Create an account to save team</p>
-                                <a href='#'>
-                                    Register
-                                </a>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <div className="banner-side">
-                  <div className="brand">
-                  
-                    <h1>Team<span className='ez'>EZ</span><i class="fa-solid fa-chalkboard-user brand-icon"></i></h1>
-                    
-                    <h5>Team Management</h5>
-                  </div>
-                  <div className="banner"></div>
-                </div>
-            </div>
-        </>
-    );
+  return (
+    <>
+      <header>
+        <div className='row'>
+          <div className='header-text'>
+            <h1>{teamName}</h1>
+            <h4>
+              <i className='fa-solid fa-user'></i> Manager:{' '}
+              <strong>{managerName}</strong>
+            </h4>
+          </div>
+          <div className={collapsedMenu ? 'menu-button' : 'menu-button open'}>
+            <i
+              className='fa-solid fa-pen-to-square'
+              onClick={() => toggleCollapseMenu(!collapsedMenu)}
+            ></i>
+            <ul className={!collapsedMenu ? 'team-menu' : 'team-menu collapse'}>
+              <li id='edit-name'>Edit team name</li>
+              <li id='edit-manager'>Edit manager</li>
+              <li onClick={() => deleteTeam()} id='delete-team'>
+                Delete team
+              </li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div className='tab-container'>
+        <button
+          className='tab-button'
+          onClick={() => {
+            handleTabChange('Home');
+            setInProp(true);
+          }}
+        >
+          Home
+        </button>
+        <button
+          className='tab-button'
+          onClick={() => {
+            handleTabChange('Manage');
+            setInProp(true);
+          }}
+        >
+          Manage
+        </button>
+      </div>
+      <div className='home-container'>
+        {/* <CSSTransition nodeRef={nodeRef} in={inProp} timeout={200} classNames="tab"> */}
+        {renderTab()}
+        {/* </CSSTransition> */}
+      </div>
+    </>
+  );
 }
-
