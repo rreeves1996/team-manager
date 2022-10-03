@@ -41,8 +41,9 @@ Manager.hasMany(Employee, {
 
 // Role Relationships
 
-//! Probably need to make a many to many relationship for this one
-Role.belongsTo(Employee);
+Role.hasMany(Employee, {
+  foreignKey: 'role_id',
+});
 
 Role.belongsTo(Team);
 
@@ -52,7 +53,7 @@ Employee.belongsTo(Team);
 
 Employee.belongsTo(Manager);
 
-Employee.hasOne(Role);
+Employee.belongsTo(Role);
 
 
 module.exports = { User, Team, Employee, Role, Manager };

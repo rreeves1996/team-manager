@@ -5,16 +5,21 @@ const { Role, Team } = require('../../models');
 //* /api/roles
 router.get('/', async (req, res) => {
   try {
-    const roles = await Role.findAll({
-      // include: [
-      //   {
-      //     model: Team,
-      //     attributes: ['name'],
-      //   },
-      // ],
-    });
+    const roles = await Role.findAll();
 
     res.status(200).json(roles);
+  } catch (err) {
+    res.status(400).json(err);
+  }
+});
+
+// Get a Specific Teams Roles
+//* /api/roles/team/:teamId
+router.get('/team/:teamId', async (req, res) => {
+  try {
+    const role = await Role.findAll({ teamId: req.params.teamId });
+
+    res.status(200).json(role);
   } catch (err) {
     res.status(400).json(err);
   }

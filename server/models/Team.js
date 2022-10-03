@@ -18,31 +18,6 @@ Team.init(
     createdAt: {
       type: DataTypes.DATE,
     },
-    // manager_name: {
-    //   type: DataTypes.STRING,
-    //   allowNull: false,
-    // },
-    // manager_id: {
-    //   type: DataTypes.INTEGER,
-    //   references: {
-    //     model: 'manager',
-    //     key: 'id',
-    //   },
-    // },
-    // user_id: {
-    //   type: DataTypes.INTEGER,
-    //   references: {
-    //     model: 'user',
-    //     key: 'id',
-    //   },
-    // },
-    // employee: {
-    //   type: DataTypes.INTEGER,
-    //   references: {
-    //     model: 'employee',
-    //     key: 'id',
-    //   },
-    // },
     // memberCount: {
     //   type: DataTypes.VIRTUAL,
     //   get() {

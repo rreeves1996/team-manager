@@ -5,7 +5,14 @@ const { Employee, Role, Team, Manager } = require('../../models');
 //* /api/employees
 router.get('/', async (req, res) => {
   try {
-    const employee = await Employee.findAll();
+    const employee = await Employee.findAll({
+      include: [
+        {
+          model: Role,
+          atttributes: ['name', 'id'],
+        },
+      ],
+    });
 
     res.status(200).json(employee);
   } catch (err) {
@@ -29,7 +36,7 @@ router.get('/:id', async (req, res) => {
         },
         {
           model: Team,
-          attributes: [],
+          attributes: ['name', 'id'],
         },
       ],
     });
