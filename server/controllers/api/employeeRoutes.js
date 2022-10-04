@@ -5,7 +5,14 @@ const { Employee, Role, Team, Manager } = require('../../models');
 //* /api/employees
 router.get('/', async (req, res) => {
   try {
-    const employee = await Employee.findAll();
+    const employee = await Employee.findAll({
+      include: [
+        {
+          model: Role,
+          atttributes: ['name', 'id'],
+        },
+      ],
+    });
 
     res.status(200).json(employee);
   } catch (err) {
@@ -29,7 +36,7 @@ router.get('/:id', async (req, res) => {
         },
         {
           model: Team,
-          attributes: [],
+          attributes: ['name', 'id'],
         },
       ],
     });
@@ -53,4 +60,51 @@ router.post('/', async (req, res) => {
     res.status(400).json(err);
   }
 });
+
+// Update an Employee
+//* PUT /api/employees/:empId
+router.put('/:empId', async (req, res) => {
+  try {
+    const emp = await Employee.update(req.body, {
+      where: {
+        id: req.params.empId
+      }
+    });
+
+    if (!emp) {
+      res.status(404).json({ errMessage: 'No employee found with given ID'});
+      return;
+    };
+    
+    const updatedEmp = await Employee.findByPk(req.params.empId);
+
+    res.status(200).json(updatedEmp);
+  } catch (err) {
+    res.status(500).json(err)
+  };
+});
+
+// Delete an Employee
+//* DELETE /api/employees/:empId
+router.delete('/:empId', async (req, res) => {
+  try {
+    const deletedEmp = await Employee.findByPk(req.params.empId);
+
+    const empToDelete = await Employee.destroy({
+      where: {
+        id: req.params.empId
+      }
+    });
+
+    if (!empToDelete) {
+      res.status(404).json({ errMessage: 'No employee found with given ID'});
+      return;
+    };
+    
+    res.status(200).json({message: 'Employee succesfully deleted', Employee: deletedEmp});
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
 module.exports = router;

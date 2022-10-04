@@ -5,14 +5,12 @@ const Manager = require('./Manager');
 const Employee = require('./Employee');
 
 // User Relationships
-
 User.hasMany(Team, {
   foreignKey: 'user_id',
   onDelete: 'CASCADE',
 });
 
 // Team Relationships
-
 Team.belongsTo(User);
 
 Team.hasMany(Manager, {
@@ -31,7 +29,6 @@ Team.hasMany(Role, {
 });
 
 // Manager Relationships
-
 Manager.belongsTo(Team);
 
 Manager.hasMany(Employee, {
@@ -39,20 +36,19 @@ Manager.hasMany(Employee, {
   onDelete: 'CASCADE',
 });
 
-// Role Relationships
-
-//! Probably need to make a many to many relationship for this one
-Role.belongsTo(Employee);
-
-Role.belongsTo(Team);
-
 // Employee Relationships
-
 Employee.belongsTo(Team);
 
 Employee.belongsTo(Manager);
 
-Employee.hasOne(Role);
+Employee.belongsTo(Role);
+
+// Role Relationships
+Role.hasMany(Employee, {
+  foreignKey: 'role_id',
+});
+
+Role.belongsTo(Team);
 
 
 module.exports = { User, Team, Employee, Role, Manager };
