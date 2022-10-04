@@ -1,2 +1,3 @@
 DROP DATABASE IF EXISTS team_db;
+
 CREATE DATABASE team_db;

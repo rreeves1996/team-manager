@@ -46,4 +46,50 @@ router.post('/', async (req, res) => {
     }
 })
 
+// Update a Team
+//* PUT /api/teams/:teamId
+router.put('/:teamId', async (req, res) => {
+  try {
+    const team = await Team.update(req.body, {
+      where: {
+        id: req.params.teamId
+      }
+    });
+
+    if (!team) {
+      res.status(404).json({ errMessage: 'No Team found with given ID'});
+      return;
+    };
+    
+    const updatedteam = await Team.findByPk(req.params.teamId);
+
+    res.status(200).json(updatedteam);
+  } catch (err) {
+    res.status(500).json(err)
+  };
+});
+
+// Delete a Team
+//* DELETE /api/teams/:teamId
+router.delete('/:teamId', async (req, res) => {
+  try {
+    const deletedteam = await Team.findByPk(req.params.teamId);
+
+    const teamToDelete = await Team.destroy({
+      where: {
+        id: req.params.teamId
+      }
+    });
+
+    if (!teamToDelete) {
+      res.status(404).json({ errMessage: 'No Team found with given ID'});
+      return;
+    };
+    
+    res.status(200).json({message: 'Team succesfully deleted', Team: deletedteam});
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
 module.exports = router;

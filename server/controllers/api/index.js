@@ -1,16 +1,18 @@
 const router = require('express').Router();
+
+const userRoutes = require('./userRoutes');
+router.use('/users', userRoutes);
+
 const teamRoutes = require('./teamRoutes');
-// const userRoutes = require('./userRoutes');
+router.use('/teams', teamRoutes);
+
+const managerRoutes = require('./managerRoutes');
+router.use('/managers', managerRoutes);
+
+const employeeRoutes = require('./employeeRoutes');
+router.use('/employees', employeeRoutes);
 
 const roleRoutes = require('./roleRoutes');
-const managerRoutes = require('./managerRoutes');
-const employeeRoutes = require('./employeeRoutes');
-
-router.use('/teams', teamRoutes);
-// router.use('/users', userRoutes);
-
 router.use('/roles', roleRoutes);
-router.use('/managers', managerRoutes);
-router.use('/employees', employeeRoutes);
 
 module.exports = router;
