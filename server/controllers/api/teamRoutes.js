@@ -33,18 +33,17 @@ router.get('/:id', async (req, res) => {
 // Create New Team
 //* /api/teams
 router.post('/', async (req, res) => {
-    console.log(req);
-    try {
-        const newTeam = await Team.create({
-            ...req.body
-        });
+  try {
+    const newTeam = await Team.create({
+      ...req.body,
+    });
 
-        console.log(newTeam);
-        res.status(200).json(newTeam);
-    } catch (err) {
-        res.status(400).json(err);
-    }
-})
+    console.log(newTeam);
+    res.status(200).json(newTeam);
+  } catch (err) {
+    res.status(400).json(err);
+  }
+});
 
 // Update a Team
 //* PUT /api/teams/:teamId
