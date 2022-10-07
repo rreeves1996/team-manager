@@ -1,36 +1,137 @@
 .emp-card {
     display: flex;
-    flex-direction: column;
+    justify-content: center; align-items: center;
+    cursor: pointer;
+
+    width: 250px;
+    margin: 8px;
+    filter: drop-shadow(1px 2px 2px rgba(0, 0, 0, 0.295));
+
+    
+}
+.modal-content {
+    background-color: transparent !important;
+    border: none;
+    display: flex;
     justify-content: center;
     align-items: center;
-    border: 1px solid rgb(211, 211, 211);
-    border-radius: 6px;
-    margin: 8px;
-    text-shadow: 1px 1px 1px #00000011;
-    overflow: hidden;
 }
-.emp-card-header {
+.emp-card-modal-container {
+    background-color: white;
+    border-radius: 6px;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    filter: drop-shadow(2px 3px 5px rgba(0, 0, 0, 0.404));
+}
+
+.emp-card-header, .emp-card-header-modal {
+    display: flex;
+    padding: 13px;
+    align-items: center;
     text-align: center;
     background-color:var(--blue);
     color: white;
+    border-radius: 6px;
+    height: 100%;
+    transition: transform 0.2s,
+    background-color 0.2s;
+    /* overflow: hidden; */
+}
+.emp-card-header-modal {
+    border-radius: 0px;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+}
+.emp-card-header:hover {
+    transform: translateY(-2px);
+    background-color: #4d6b8d;
+}
+.emp-card-header::before {
+    position: absolute;
+    display: flex;  justify-content: center;    align-items: center;
+    content: url("../magnifying-glass-3-64.png");
+    opacity: 0%;
+
     width: 100%;
     height: 100%;
-    padding: 8px 0;
+    left: 0;
+    transition: opacity 300ms;
 }
-.emp-card .divider {
-    margin: 5px;
+.emp-card-header:hover::before {
+    
+
+    opacity: 75%;
+
+    transition: opacity 300ms;
+
 }
-.emp-card-header strong {
+.emp-picture {
+    display: flex;
+    justify-content: center; align-items: center;
+    width: 80px;
+    height: 80px;
+    border: 1px solid var(--off-white);
+    border-radius: 4px;
+    background-color: var(--blue-light);
+    margin-right: 13px;
+}
+.emp-picture i {
+    margin: 0 auto;
+    font-size: 3em;
+}
+.emp-info-header {
+    margin: 0 8px;
+}
+.emp-info-header strong {
     font-family: 'Alumni Sans Pinstripe';
-    font-size: 1.8em;
+    font-size: 2.5em;
     text-transform: uppercase;
     letter-spacing: 1px;
     line-height: 1;
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+    
+}
+.emp-info-header p {
+    font-size: .75em !important;
+    opacity: 75%;
 }
 .emp-card h6 {
     margin: 0;
+    margin-top: 4px;
+    font-size: .8em;
 }
 .emp-contact-info {
-    font-size: .8em;
+    color: var(--off-black);
+    font-size: .85em;
     padding: 8px 13px;
+}
+.emp-contact-info p {
+
+    margin: 8px 5px !important;
+}
+.emp-card-button-container{
+    padding: 5px 0;
+}
+.edit-button, .delete-button {
+    background-color: transparent;
+    border: 2px solid var(--blue);
+    color: var(--blue);
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.089);
+    padding: 7px 10px;
+    margin: 0px 3px 0px 5px;
+    transition: all 0.2s;
+}
+.edit-button:hover, .delete-button:hover {
+    filter: none;
+    color: var(--off-white);
+    background-color: var(--blue);
+}
+.confirm {
+    color: rgb(209, 45, 45);
+    border: 2px solid rgb(209, 45, 45);
+}
+.confirm:hover {
+    background-color: rgb(209, 45, 45);
 }
