@@ -2,7 +2,6 @@
   "name": "team-manager",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://localhost:3001",
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.2.0",
     "@fortawesome/free-regular-svg-icons": "^6.2.0",
@@ -14,13 +13,14 @@
     "babel-plugin-macros": "^3.1.0",
     "bootstrap": "^5.2.1",
     "bulma": "^0.9.4",
-    "jwt-decode": "^3.1.2",
     "react": "^18.2.0",
+    "react-bootstrap": "^2.5.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.4.1",
     "react-scripts": "^5.0.1",
     "react-transition-group": "^4.4.5",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "mdb-react-ui-kit": "^4.2.0"
   },
   "scripts": {
     "start": "react-scripts start",
