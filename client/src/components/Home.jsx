@@ -67,9 +67,7 @@ export default function InitPrompt({ handlePageChange }) {
           Manage
         </button>
       </div>
-      <div className='home-container'>
-        {renderTab()}
-      </div>
+      <div className='home-container'>{renderTab()}</div>
     </>
   );
 }
