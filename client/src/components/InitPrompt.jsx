@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Banner from "../assets/banner.jpg";
 
 export default function InitPrompt({ handlePageChange }) {

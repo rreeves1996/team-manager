@@ -35,7 +35,6 @@
     height: 100%;
     transition: transform 0.2s,
     background-color 0.2s;
-    /* overflow: hidden; */
 }
 .emp-card-header-modal {
     border-radius: 0px;
