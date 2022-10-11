@@ -166,7 +166,7 @@ const employeeData = [
     name: 'Nayla Kaiser',
     role_id: 13,
     team_id: 5,
-    manager_id: 0,
+    manager_id: 1,
     // id: 22
   },
   {
