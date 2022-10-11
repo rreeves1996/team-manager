@@ -13,23 +13,54 @@ export default function InitPrompt({ handlePageChange }) {
     });
   };
 
-  const handleFormSubmit = (event) => {
+  const handleFormSubmit = async (event) => {
     event.preventDefault();
     console.log(formState);
 
-    const name = formState.teamname;
-    const manager_name = formState.leadname;
+    let name = formState.teamname;
+    let manager_name = formState.leadname;
 
     if (name && manager_name) {
-      localStorage.setItem('teamName', name);
-      localStorage.setItem('managerName', manager_name);
-      console.log(localStorage.getItem('teamName'));
-      console.log(localStorage.getItem('managerName'));
+      const fetchReq1 = await fetch('/api/teams', {
+        method: 'POST',
+        body: JSON.stringify({ name }),
+        headers: { 'Content-Type': 'application/json' }
+      }).then((res) => res.json());
+      const fetchReq2 = await fetch('/api/managers', {
+        method: 'POST',
+        body: JSON.stringify({ manager_name }),
+        headers: { 'Content-Type': 'application/json' }
+      }).then((res) => res.json());
+      const requests = ([fetchReq1, fetchReq2])
+      const response = requests;
+
+      if (response.ok) {
+        handlePageChange("Home");
+      } else {
+        alert(response.statusText);
+      }
     } else if (!name || !manager_name) {
-      localStorage.setItem('teamName', 'The Seattle Puddlechickens');
-      localStorage.setItem('managerName', 'Qweet Farrol');
-      console.log(localStorage.getItem('teamName'));
-      console.log(localStorage.getItem('managerName'));
+      name = 'The Seattle Puddlechickens';
+      manager_name = 'Qweet Farrol';
+
+      const fetchReq1 = await fetch('/api/teams', {
+        method: 'POST',
+        body: JSON.stringify({ name }),
+        headers: { 'Content-Type': 'application/json' }
+      }).then((res) => res.json());
+      const fetchReq2 = await fetch('/api/managers', {
+        method: 'POST',
+        body: JSON.stringify({ manager_name }),
+        headers: { 'Content-Type': 'application/json' }
+      }).then((res) => res.json());
+      const requests = ([fetchReq1, fetchReq2])
+      const response = requests;
+
+      if (response.ok) {
+        handlePageChange("Home");
+      } else {
+        alert(response.statusText);
+      }
     }
 
     setFormState({
