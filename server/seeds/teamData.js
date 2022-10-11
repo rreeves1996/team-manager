@@ -2,23 +2,28 @@ const { Team } = require('../models');
 
 const teamData = [
   {
-    name: '',
+    name: 'Legionnaires',
+    // id: 1
   },
 
   {
-    name: '',
+    name: 'American Bandits',
+    // id: 2
   },
 
   {
-    name: '',
+    name: 'MuleDev',
+    // id: 3
   },
 
   {
-    name: '',
+    name: 'Wixify',
+    // id: 4
   },
 
   {
-    name: '',
+    name: 'DotNet',
+    // id: 5
   },
 ];
 

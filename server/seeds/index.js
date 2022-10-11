@@ -1,5 +1,5 @@
 const sequelize = require('../config/connection');
-const seedUsers = require('./userData;');
+const seedUsers = require('./userData');
 const seedTeams = require('./teamData');
 const seedRoles = require('./roleData');
 const seedManagers = require('./managerData');
