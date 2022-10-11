@@ -13,25 +13,25 @@ export default function InitPrompt({ handlePageChange }) {
     });
   };
 
-  const handleFormSubmit = async (event) => {
+  const handleFormSubmit = (event) => {
     event.preventDefault();
     console.log(formState);
 
-    let name = formState.teamname;
-    let manager_name = formState.leadname;
+    let team_name = formState.teamname.trim();
+    let name = formState.leadname.trim();
 
-    if (name && manager_name) {
-      const fetchReq1 = await fetch('/api/teams', {
+    if (team_name && name) {
+      const fetchReq1 = fetch('/api/teams', {
+        method: 'POST',
+        body: JSON.stringify({ team_name }),
+        headers: { 'Content-Type': 'application/json' }
+      }).then((res) => res.json());
+      const fetchReq2 = fetch('/api/managers', {
         method: 'POST',
         body: JSON.stringify({ name }),
         headers: { 'Content-Type': 'application/json' }
       }).then((res) => res.json());
-      const fetchReq2 = await fetch('/api/managers', {
-        method: 'POST',
-        body: JSON.stringify({ manager_name }),
-        headers: { 'Content-Type': 'application/json' }
-      }).then((res) => res.json());
-      const requests = ([fetchReq1, fetchReq2])
+      const requests = Promise.all([fetchReq1, fetchReq2])
       const response = requests;
 
       if (response.ok) {
@@ -39,21 +39,21 @@ export default function InitPrompt({ handlePageChange }) {
       } else {
         alert(response.statusText);
       }
-    } else if (!name || !manager_name) {
-      name = 'The Seattle Puddlechickens';
-      manager_name = 'Qweet Farrol';
+    } else if (!team_name || !name) {
+      team_name = 'The Seattle Puddlechickens';
+      name = 'Qweet Farrol';
 
-      const fetchReq1 = await fetch('/api/teams', {
+      const fetchReq1 = fetch('/api/teams', {
+        method: 'POST',
+        body: JSON.stringify({ team_name }),
+        headers: { 'Content-Type': 'application/json' }
+      }).then((res) => res.json());
+      const fetchReq2 = fetch('/api/managers', {
         method: 'POST',
         body: JSON.stringify({ name }),
         headers: { 'Content-Type': 'application/json' }
       }).then((res) => res.json());
-      const fetchReq2 = await fetch('/api/managers', {
-        method: 'POST',
-        body: JSON.stringify({ manager_name }),
-        headers: { 'Content-Type': 'application/json' }
-      }).then((res) => res.json());
-      const requests = ([fetchReq1, fetchReq2])
+      const requests = Promise.all([fetchReq1, fetchReq2])
       const response = requests;
 
       if (response.ok) {
