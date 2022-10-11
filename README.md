@@ -206,6 +206,7 @@ Project Link: [https://github.com/rreeves1996/team-manager](https://github.com/r
 
 
 <!-- MARKDOWN LINKS & IMAGES -->
+<!--* https://github.com/Ileriayo/markdown-badges -->
 [contributors-shield]: https://img.shields.io/github/contributors/rreeves1996/team-manager.svg?style=for-the-badge
 [contributors-url]: https://github.com/rreeves1996/team-manager/graphs/contributors
 [forks-shield]: https://img.shields.io/github/forks/rreeves1996/team-manager.svg?style=for-the-badge
