@@ -47,7 +47,7 @@ export default function InitPrompt({ handlePageChange }) {
       return res.json();
   });
 
-  console.log(managerNameReq.id, teamNameReq)
+  console.log(managerNameReq, teamNameReq)
 
   // const { loading, data } = Promise.all([teamNameReq, managerNameReq]);
   // let teamName;
