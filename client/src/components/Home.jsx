@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import HomeTab from './tabs/HomeTab';
 import ManageTab from './tabs/ManageTab';
 
@@ -6,8 +6,15 @@ export default function InitPrompt({ handlePageChange }) {
   const [collapsedMenu, toggleCollapseMenu] = useState(true);
   const [currentTab, setCurrentTab] = useState('Home');
 
-  const teamName = localStorage.getItem('teamName');
-  const managerName = localStorage.getItem('managerName');
+
+
+
+  // const teamName = localStorage.getItem('teamName');
+  // const managerName = localStorage.getItem('managerName');
+
+
+  const teamRoute = '/api/teams/1';
+  const managerRoute = '/api/managers/1';
 
   const renderTab = () => {
     if (currentTab === 'Home') {
@@ -23,15 +30,43 @@ export default function InitPrompt({ handlePageChange }) {
 
   const handleTabChange = (tab) => setCurrentTab(tab);
 
+
+  const teamNameReq = fetch(teamRoute, {
+      Method: 'GET'
+    }).then((res) => {
+      console.log(res);
+      console.log({teamNameReq});
+      return res.json();
+  });
+
+  const managerNameReq = fetch(managerRoute, {
+      Method: 'GET'
+    }).then((res) => {
+      console.log(res);
+      console.log(managerNameReq);
+      return res.json();
+  });
+
+  console.log(managerNameReq.id, teamNameReq)
+
+  // const { loading, data } = Promise.all([teamNameReq, managerNameReq]);
+  // let teamName;
+  // let managerName;
+  
+  // if (!loading) {
+  //   console.log(data);
+  // };
   return (
     <>
       <header>
         <div className='row'>
           <div className='header-text'>
-            <h1>{teamName}</h1>
+            <h1></h1>
             <h4>
               <i className='fa-solid fa-user'></i> Manager:{' '}
-              <strong>{managerName}</strong>
+              <strong>
+                
+              </strong>
             </h4>
           </div>
           <div className={collapsedMenu ? 'menu-button' : 'menu-button open'}>

@@ -112,7 +112,7 @@ export default function InitPrompt({ handlePageChange }) {
               <button className='init-button' type='submit'>
                 Generate Team
               </button>
-              <div className='divider'></div>
+              <div className='divider init-divider'></div>
               <div className='sub-container d-flex flex-column align-items-center mb-5'>
                 <p className='mt-0 mb-1'>Create an account to save team</p>
                 <a href='#'>Register</a>
