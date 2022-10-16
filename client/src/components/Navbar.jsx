@@ -8,7 +8,7 @@ export default function Navbar() {
     <nav>
       <div className="navbar-brand">
         <Link to='/' className='index-button'>
-          <h3>Team<span className='ez'>EZ</span><i className="fa-solid fa-chalkboard-user navbar-brand-icon"></i></h3>
+          <h3 className='brand-logo'><span className="brand-text">Team<span className='ez'>EZ</span></span><i className="fa-solid fa-chalkboard-user navbar-brand-icon"></i></h3>
         </Link>
       </div>
       <div className={collapsed ? "navbar-toggler" : "navbar-toggler open"} onClick={() => toggleCollapse(!collapsed)}>
