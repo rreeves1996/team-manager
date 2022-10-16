@@ -15,6 +15,21 @@ Manager.init(
             type: DataTypes.STRING,
             allowNull: false,
         },
+        email: {
+            type: DataTypes.STRING,
+            allowNull: true,
+            validate: {
+                isEmail: true,
+            }
+        },
+        phone: {
+            type: DataTypes.INTEGER(8),
+            allowNull: true
+        },
+        time: {
+            type: DataTypes.INTEGER,
+            allowNull: true
+        },
         salary: {
             type: DataTypes.INTEGER,
             allowNull: true
