@@ -623,6 +623,9 @@ h5 {
     width: 100%;
     justify-content: center;
 }
+.card-input {
+    height: 100%;
+}
 @media screen and (max-width: 768px) {
     .mobile-background-container {
         position: absolute;

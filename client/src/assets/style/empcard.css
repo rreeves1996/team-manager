@@ -16,6 +16,23 @@
     justify-content: center;
     align-items: center;
 }
+.card-input {
+    height: 16px !important;
+    width: 50%;
+    margin: 0 3px;
+}
+#number-input1, #number-input2, #number-input3 {
+    text-align: center;
+    text-indent: 0;
+}
+#number-input1, #number-input2 {
+
+    width: 30px;
+
+}
+#number-input3 {
+    width: 38px;
+}
 .emp-card-modal-container {
     background-color: white;
     border-radius: 6px;
@@ -107,20 +124,31 @@
     padding: 8px 13px;
 }
 .emp-contact-info p {
-
+    height: 18px;
+    display: flex; align-items: center;
+    width: 100%;
     margin: 8px 5px !important;
 }
 .emp-card-button-container{
     padding: 5px 0;
 }
-.edit-button, .delete-button {
+.edit-button, .delete-button, .timezone-button {
     background-color: transparent;
     border: 2px solid var(--blue);
+    text-transform: uppercase;
+    font-size: .8em;
     color: var(--blue);
     text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.089);
     padding: 7px 10px;
     margin: 0px 3px 0px 5px;
     transition: all 0.2s;
+}
+.timezone-button {
+    background-color: var(--blue);
+    border: none;
+    font-size: .7em;
+    color: var(--off-white);
+    padding-right: 8px;
 }
 .edit-button:hover, .delete-button:hover {
     filter: none;

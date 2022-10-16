@@ -5,6 +5,7 @@ import "../../assets/style/empcard.css"
 export default function EmpCard(props) {
   const [show, setShow] = useState(false);
   const [deleteConfirm, showDeleteConfirm] = useState(false);
+  const [editing, setEditing] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -83,16 +84,42 @@ export default function EmpCard(props) {
           </div>
           <div className='emp-contact-info'>
             <p>
-              <strong>Phone #:</strong> {props.number}
+              <strong>Phone #:</strong> {editing ? (
+                <>
+                  <input type="text" className='card-input number-input' id="number-input1" />-
+                  <input type="text" className='card-input number-input' id="number-input2" />-
+                  <input type="text" className='card-input number-input' id="number-input3" />
+                </>
+              ) : (
+                <>
+                  {props.number}
+                </>
+              )}
             </p>
             <p>
-              <strong>Email:</strong> {props.email}
+              <strong>Email:</strong> {editing ? (
+                <>
+                  <input type="text" className='card-input' />
+                </>
+              ) : (
+                <>
+                  {props.email}
+                </>
+              )}
             </p>
             <p>
-              <strong>Time:</strong> UTC -{props.timeZone}:00
+              <strong>Time:</strong> {editing ? (
+                <>
+                  <button className='timezone-button'>Timezones <i className='fa-solid fa-caret-down'></i></button>
+                </>
+              ) : (
+                <>
+                  UTC -{props.timeZone}:00
+                </>
+              )}
             </p>
             <div className='emp-card-button-container'>
-              <button className='edit-button'>Edit</button>
+              <button className='edit-button' onClick={() => setEditing(!editing)}>Edit</button>
               <button
                 className={
                   deleteConfirm ? 'delete-button confirm' : 'delete-button'
