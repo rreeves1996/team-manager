@@ -22,17 +22,36 @@ export default function EmpCard(props) {
     });
   };
 
-  const handleFormSubmit = async (event) => {
+  const handleEditSubmit = async (event) => {
     event.preventDefault();
 
-    let phonenumbers = [formState.phone1.trim(), formState.phone2.trim(), formState.phone2.trim()];
+    let phonenumbers = [formState.phone1.trim(), formState.phone2.trim(), formState.phone3.trim()];
     let email = formState.email.trim();
+    console.log(phonenumbers[0].length)
+    console.log(phonenumbers[1].length)
+    console.log(phonenumbers[2].length)
 
     if(phonenumbers && email) {
       if(phonenumbers[0].length === 3 && phonenumbers[1].length === 3 && phonenumbers[2].length === 4) {
+        const number = phonenumbers[0] + phonenumbers[1] + phonenumbers[2];
+
+        await axios.put(`/api/managers/${props.managers[0].id}`, { phone: number, email: email })
+          .then((res) => {
+            console.log(`Manager updated`);
+          })
+          .catch((err) => console.log(`Failed to update manager: ${err}`));
 
       }
     }
+
+    setFormState(
+      { 
+        phone1: phonenumbers[0], 
+        phone2: phonenumbers[1], 
+        phone3: phonenumbers[2], 
+        email: email, 
+        timezone: '' 
+      });
   }
 
   const deleteEmployee = (employee) => {
@@ -78,6 +97,7 @@ export default function EmpCard(props) {
           handleClose();
           setTimeout(() => {
             showDeleteConfirm(false);
+            setEditing(false);
           }, 300);
         }}
       >
@@ -108,7 +128,7 @@ export default function EmpCard(props) {
             </div>
           </div>
           <div className='emp-contact-info'>
-            <form className='card-edit' onSubmit={handleEditSubmit}>
+            <form className='card-edit'>
               <p>
                 <strong>Phone #:</strong> {editing ? (
                   <>
@@ -164,19 +184,26 @@ export default function EmpCard(props) {
                 )}
               </p>
               <div className='emp-card-button-container'>
-                <button className='edit-button' onClick={() => setEditing(!editing)}>Edit</button>
-                <button
-                  className={
-                    deleteConfirm ? 'delete-button confirm' : 'delete-button'
-                  }
-                  onClick={
-                    deleteConfirm
-                      ? deleteEmployee(props)
-                      : () => showDeleteConfirm(true)
-                  }
-                >
-                  {deleteConfirm ? 'Are you sure?' : 'Delete'}
+                <button 
+                  className='edit-button' 
+                  onClick={() => setEditing(!editing)}>
+                    {editing ? "Cancel" : "Edit"}
                 </button>
+                {editing ? (
+                  <>
+                    <button 
+                      className='submit-button' 
+                      onClick={() => handleEditSubmit()}>
+                        Submit
+                    </button>
+                  </>
+                ) : (
+                <button
+                  className={deleteConfirm ? 'delete-button confirm' : 'delete-button'}
+                  onClick={deleteConfirm ? deleteEmployee(props) : () => showDeleteConfirm(true)}>
+                    {deleteConfirm ? 'Are you sure?' : 'Delete'}
+                </button>
+                )}
               </div>
             </form>
           </div>

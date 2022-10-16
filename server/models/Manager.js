@@ -23,7 +23,7 @@ Manager.init(
             }
         },
         phone: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.STRING,
             allowNull: true
         },
         time: {
