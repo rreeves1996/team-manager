@@ -2,8 +2,12 @@ import React, { useState, useEffect } from 'react';
 import axios from "axios";
 import HomeTab from './tabs/HomeTab';
 import ManageTab from './tabs/ManageTab';
+import { createContext } from 'react';
+
+export const DataContext = createContext();
 
 export default function InitPrompt({ handlePageChange }) {
+  
   const [collapsedMenu, toggleCollapseMenu] = useState(true);
   const [currentTab, setCurrentTab] = useState('Home');
   const [teamData, setTeamData] = useState({});
@@ -11,9 +15,9 @@ export default function InitPrompt({ handlePageChange }) {
 
   const renderTab = () => {
     if (currentTab === 'Home') {
-      return <HomeTab handleTabChange={handleTabChange} />;
+      return <HomeTab />;
     } else if (currentTab === 'Manage') {
-      return <ManageTab handleTabChange={handleTabChange} />;
+      return <ManageTab />;
     }
   };
   const deleteTeam = () => {
@@ -77,25 +81,27 @@ export default function InitPrompt({ handlePageChange }) {
               </div>
             </div>
           </header>
-          <div className='tab-container'>
-            <button
-              className='tab-button'
-              onClick={() => {
-                handleTabChange('Home');
-              }}
-            >
-              Home
-            </button>
-            <button
-              className='tab-button'
-              onClick={() => {
-                handleTabChange('Manage');
-              }}
-            >
-              Manage
-            </button>
-          </div>
-          <div className='home-container'>{renderTab()}</div>
+          <DataContext.Provider value={teamData}>
+            <div className='tab-container'>
+              <button
+                className='tab-button'
+                onClick={() => {
+                  handleTabChange('Home');
+                }}
+              >
+                Home
+              </button>
+              <button
+                className='tab-button'
+                onClick={() => {
+                  handleTabChange('Manage');
+                }}
+              >
+                Manage
+              </button>
+            </div>
+            <div className='home-container'>{renderTab()}</div>
+          </DataContext.Provider>
         </>
       )}
     </>
