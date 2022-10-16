@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import Banner from "../assets/banner.jpg";
+import React, { useState, useEffect } from 'react';
+import axios from "axios";
 
 export default function InitPrompt({ handlePageChange }) {
   const [formState, setFormState] = useState({ teamname: '', leadname: '' });
@@ -12,55 +12,37 @@ export default function InitPrompt({ handlePageChange }) {
       [name]: value,
     });
   };
-
-  const handleFormSubmit = (event) => {
+  const handleFormSubmit = async (event) => {
     event.preventDefault();
-    console.log(formState);
 
-    let team_name = formState.teamname.trim();
-    let name = formState.leadname.trim();
+    let teamName = formState.teamname.trim();
+    let managerName = formState.leadname.trim();
 
-    if (team_name && name) {
-      const fetchReq1 = fetch('/api/teams', {
-        method: 'POST',
-        body: JSON.stringify({ team_name }),
-        headers: { 'Content-Type': 'application/json' }
-      }).then((res) => res.json());
-      const fetchReq2 = fetch('/api/managers', {
-        method: 'POST',
-        body: JSON.stringify({ name }),
-        headers: { 'Content-Type': 'application/json' }
-      }).then((res) => res.json());
-      const requests = Promise.all([fetchReq1, fetchReq2])
-      const response = requests;
+    if (teamName && managerName) {
+      const reqOne = axios.post("/api/teams/", { name: teamName });
+      const reqTwo = axios.post("/api/managers/", { name: managerName });
+      
 
-      if (response.ok) {
-        handlePageChange("Home");
-      } else {
-        alert(response.statusText);
-      }
-    } else if (!team_name || !name) {
-      team_name = 'The Seattle Puddlechickens';
-      name = 'Qweet Farrol';
+      await axios.all([reqOne, reqTwo]).then((res) => {
+        console.log(res);
+        handlePageChange('Home');
+      }).catch((err) => {
+        console.error(err);
+      });
 
-      const fetchReq1 = fetch('/api/teams', {
-        method: 'POST',
-        body: JSON.stringify({ team_name }),
-        headers: { 'Content-Type': 'application/json' }
-      }).then((res) => res.json());
-      const fetchReq2 = fetch('/api/managers', {
-        method: 'POST',
-        body: JSON.stringify({ name }),
-        headers: { 'Content-Type': 'application/json' }
-      }).then((res) => res.json());
-      const requests = Promise.all([fetchReq1, fetchReq2])
-      const response = requests;
+    } else if (!teamName || !managerName) {
+      teamName = 'The Seattle Puddlechickens';
+      managerName = 'Qweet Farrol';
 
-      if (response.ok) {
-        handlePageChange("Home");
-      } else {
-        alert(response.statusText);
-      }
+      const reqOne = axios.post("/api/teams/", { name: teamName });
+      const reqTwo = axios.post("/api/managers/", { name: managerName });
+
+      await axios.all([reqOne, reqTwo]).then((res) => {
+        console.log(res);
+        handlePageChange('Home');
+      }).catch((err) => {
+        console.error(err);
+      });
     }
 
     setFormState({
@@ -68,8 +50,9 @@ export default function InitPrompt({ handlePageChange }) {
       leadname: '',
     });
 
-    handlePageChange('Home');
+    
   };
+  
 
   return (
     <>

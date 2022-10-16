@@ -1,20 +1,13 @@
 import React, { useState, useEffect } from 'react';
+import axios from "axios";
 import HomeTab from './tabs/HomeTab';
 import ManageTab from './tabs/ManageTab';
 
 export default function InitPrompt({ handlePageChange }) {
   const [collapsedMenu, toggleCollapseMenu] = useState(true);
   const [currentTab, setCurrentTab] = useState('Home');
-
-
-
-
-  // const teamName = localStorage.getItem('teamName');
-  // const managerName = localStorage.getItem('managerName');
-
-
-  const teamRoute = '/api/teams/1';
-  const managerRoute = '/api/managers/1';
+  const [teamData, setTeamData] = useState({});
+  const [managerData, setManagerData] = useState({});
 
   const renderTab = () => {
     if (currentTab === 'Home') {
@@ -30,42 +23,35 @@ export default function InitPrompt({ handlePageChange }) {
 
   const handleTabChange = (tab) => setCurrentTab(tab);
 
-
-  const teamNameReq = fetch(teamRoute, {
-      Method: 'GET'
-    }).then((res) => {
-      console.log(res);
-      console.log({teamNameReq});
-      return res.json();
-  });
-
-  const managerNameReq = fetch(managerRoute, {
-      Method: 'GET'
-    }).then((res) => {
-      console.log(res);
-      console.log(managerNameReq);
-      return res.json();
-  });
-
-  console.log(managerNameReq, teamNameReq)
-
-  // const { loading, data } = Promise.all([teamNameReq, managerNameReq]);
-  // let teamName;
-  // let managerName;
   
-  // if (!loading) {
-  //   console.log(data);
-  // };
+  useEffect(() => {
+    const fetchData = async () => {
+      const reqOne = axios.get("/api/teams/5");
+      const reqTwo = axios.get("/api/managers/10");
+
+      await axios.all([reqOne, reqTwo]).then((res) => {
+        setTeamData(res[0].data);
+        setManagerData(res[1].data);
+        console.log(res)
+        console.log(teamData.name);
+        console.log(managerData.name);
+      })
+    }
+
+    fetchData().catch(console.error);
+  }, [])
+
   return (
     <>
+      
       <header>
         <div className='row'>
           <div className='header-text'>
-            <h1></h1>
+            <h1>{teamData.name}</h1>
             <h4>
               <i className='fa-solid fa-user'></i> Manager:{' '}
               <strong>
-                
+                {managerData.name}
               </strong>
             </h4>
           </div>
@@ -103,6 +89,7 @@ export default function InitPrompt({ handlePageChange }) {
         </button>
       </div>
       <div className='home-container'>{renderTab()}</div>
+      
     </>
   );
 }

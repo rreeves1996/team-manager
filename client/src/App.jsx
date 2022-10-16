@@ -4,11 +4,10 @@ import Navbar from './components/Navbar'
 import Home from './components/Home'
 import Footer from './components/Footer';
 import About from './components/About';
-
+import InitPrompt from './components/InitPrompt';
 
 import './assets/style/style.css';
-import InitPrompt from './components/InitPrompt';
-import { render } from '@testing-library/react';
+
 
 
 export default function App() {

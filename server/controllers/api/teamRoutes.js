@@ -1,8 +1,17 @@
 const router = require('express').Router();
 const { Team, Manager, Employee, Role } = require('../../models');
 
-//* /api/teams endpoint
+// Get All Teams
+//* GET /api/teams
+router.get('/', async (req, res) => {
+  try {
+    const teams = await Team.findAll();
 
+    res.status(200).json(teams);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
 // Get One Team
 //* /api/teams/:id
 router.get('/:id', async (req, res) => {
@@ -13,14 +22,14 @@ router.get('/:id', async (req, res) => {
           model: Manager,
           atttributes: ['name', 'id', 'salary'],
         },
-        {
-          model: Employee,
-          atttributes: ['name', 'id'],
-        },
-        {
-          model: Role,
-          attributes: ['id', 'name', 'salary'],
-        },
+        // {
+        //   model: Employee,
+        //   atttributes: ['name', 'id'],
+        // },
+        // {
+        //   model: Role,
+        //   attributes: ['id', 'name', 'salary'],
+        // },
       ],
     });
 
@@ -34,12 +43,12 @@ router.get('/:id', async (req, res) => {
 //* /api/teams
 router.post('/', async (req, res) => {
   try {
-    const newTeam = await Team.create({
+    const team = await Team.create({
       ...req.body,
     });
 
-    console.log(newTeam);
-    res.status(200).json(newTeam);
+
+    res.status(200).json(team);
   } catch (err) {
     res.status(400).json(err);
   }

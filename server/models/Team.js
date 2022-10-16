@@ -11,12 +11,19 @@ Team.init(
       primaryKey: true,
       autoIncrement: true,
     },
-    team_name: {
+    name: {
       type: DataTypes.STRING,
       allowNull: false,
     },
     createdAt: {
       type: DataTypes.DATE,
+    },
+    user_id: {
+      type: DataTypes.INTEGER,
+      references: {
+          model: 'user',
+          key: 'id'
+      }
     },
     // memberCount: {
     //   type: DataTypes.VIRTUAL,
