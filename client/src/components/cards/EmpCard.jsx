@@ -33,7 +33,7 @@ export default function EmpCard(props) {
           </div>
           <div className='emp-info-header'>
             <h6 className='emp-name'>
-              <strong>{props.abbreviatedName}</strong>
+              <strong>{props.abbreviatedname}</strong>
             </h6>
             <h6 className='emp-role'>
               {props.lead ? 'Team Lead' : props.role}

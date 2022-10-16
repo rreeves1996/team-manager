@@ -22,7 +22,7 @@ export default function YourTeam(props) {
                     managers={props.managers}
                     key={props.id}
                     id={props.id}
-                    abbreviatedName={managerNameAbbreviated}
+                    abbreviatedname={managerNameAbbreviated}
                     name={manager.name}
                     role={manager.role}
                     lead={manager.lead}

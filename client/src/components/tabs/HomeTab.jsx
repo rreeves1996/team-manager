@@ -9,10 +9,12 @@ export default function HomeTab() {
   const [roles, addRole] = useState([]);
   const [teamManagers, addManager] = useState([]);
   const [employees, addEmployee] = useState([]);
-  const managers = useContext(DataContext)
-  console.log(DataContext);
+  const teamData = useContext(DataContext);
+  
 
   useEffect(() => {
+    const managers = teamData.manager;
+
     addManager((teamManagers) => [...teamManagers, managers]);
   }, []);
 
