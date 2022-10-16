@@ -12,6 +12,7 @@ export default function InitPrompt({ handlePageChange }) {
       [name]: value,
     });
   };
+
   const handleFormSubmit = async (event) => {
     event.preventDefault();
 
@@ -22,23 +23,19 @@ export default function InitPrompt({ handlePageChange }) {
       const reqOne = axios.post("/api/teams/", { name: teamName });
       const reqTwo = axios.post("/api/managers/", { name: managerName });
 
-
       await axios.all([reqOne, reqTwo])
         .then(async (res) => {
           const teamId = res[0].data.id;
-          console.log(teamId);
 
           await axios.put(`/api/managers/${res[1].data.id}`, { team_id: teamId })
             .then((res) => {
-              console.log(res);
-              handlePageChange('Home');
-            }).catch((err) => {
-              console.log("Failed to update manager's team ID: " + err);
-            })
-        }).catch((err) => {
-          console.log("Failed to create team/manager: " + err);
-        });
+              console.log(`Manager's team ID(${teamId}) updated`);
 
+              handlePageChange('Home');
+            })
+            .catch((err) => console.log(`Failed to update manager's team ID: ${err}`));
+        })
+        .catch((err) => console.log(`Failed to create team/manager: ${err}`));
     } else if (!teamName || !managerName) {
       teamName = 'The Seattle Puddlechickens';
       managerName = 'Qweet Farrol';
@@ -49,18 +46,16 @@ export default function InitPrompt({ handlePageChange }) {
       await axios.all([reqOne, reqTwo])
         .then(async (res) => {
           const teamId = res[0].data.id;
-          console.log(teamId);
 
           await axios.put(`/api/managers/${res[1].data.id}`, { team_id: teamId })
             .then((res) => {
-              console.log(res);
+              console.log(`Manager's team ID(${teamId}) updated`);
+
               handlePageChange('Home');
-            }).catch((err) => {
-              console.log("Failed to update manager's team ID: " + err);
             })
-        }).catch((err) => {
-          console.log("Failed to create team/manager: " + err);
-        });
+            .catch((err) => console.log(`Failed to update manager's team ID: ${err}`));
+        })
+        .catch((err) => console.log(`Failed to create team/manager: ${err}`));
     }
 
     setFormState({
@@ -113,7 +108,7 @@ export default function InitPrompt({ handlePageChange }) {
               </button>
               <div className='divider init-divider'></div>
               <div className='sub-container d-flex flex-column align-items-center mb-5'>
-                <p className='mt-0 mb-1'>Create an account to save team</p>
+                <p className='mt-1 mb-1'>Create an account to save team</p>
                 <a href='#'>Register</a>
               </div>
             </div>

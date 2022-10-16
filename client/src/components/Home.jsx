@@ -7,7 +7,6 @@ export default function InitPrompt({ handlePageChange }) {
   const [collapsedMenu, toggleCollapseMenu] = useState(true);
   const [currentTab, setCurrentTab] = useState('Home');
   const [teamData, setTeamData] = useState({});
-  const [managerData, setManagerData] = useState({});
 
   const renderTab = () => {
     if (currentTab === 'Home') {
@@ -26,18 +25,18 @@ export default function InitPrompt({ handlePageChange }) {
   
   useEffect(() => {
     const fetchData = async () => {
-      const reqOne = axios.get("/api/teams/5");
-      const reqTwo = axios.get("/api/managers/10");
-
-      await axios.all([reqOne, reqTwo]).then((res) => {
-        setTeamData(res[0].data);
-        setManagerData(res[1].data);
-        console.log(res)
-        console.log(teamData.name);
-        console.log(managerData.name);
-      })
-    }
-
+      await axios.get("/api/teams/")
+        .then(async (res) => {
+          await axios.get(`/api/teams/${res.data.length}`)
+            .then((res) => {
+              setTeamData(res.data);
+              console.log(res);
+            })
+            .catch((err) => console.error(`Failed to get team with specified ID: ${err}`));
+        })
+        .catch((err) => console.error(`Failed to get teams: ${err}`));
+    };
+    
     fetchData().catch(console.error);
   }, [])
 
@@ -47,11 +46,13 @@ export default function InitPrompt({ handlePageChange }) {
       <header>
         <div className='row'>
           <div className='header-text'>
-            <h1>{teamData.name}</h1>
+            <h1>
+              {teamData.name}
+            </h1>
             <h4>
               <i className='fa-solid fa-user'></i> Manager:{' '}
               <strong>
-                {managerData.name}
+                {teamData.manager.name}
               </strong>
             </h4>
           </div>
