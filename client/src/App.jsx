@@ -11,7 +11,7 @@ import './assets/style/style.css';
 
 export default function App() {
   const [page, changePage] = useState(() => {
-    if(localStorage.getItem("teamName")) {
+    if(localStorage.getItem("teamID")) {
       return "Home";
     } else {
       return "Init";
@@ -24,7 +24,14 @@ export default function App() {
       case "Init":
           return <InitPrompt page={page} handlePageChange={handlePageChange} />;
       case "Home":
-        return <Home handlePageChange={handlePageChange} />;
+        const prevTeam = localStorage.getItem("teamID");
+
+        if(prevTeam) {
+          return <Home handlePageChange={handlePageChange} />;
+        } else {
+          return <Home handlePageChange={handlePageChange} />;
+        }
+        
       default:
         return <Home handlePageChange={handlePageChange} />
     }

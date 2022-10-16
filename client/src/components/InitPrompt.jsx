@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import axios from "axios";
 
 export default function InitPrompt({ handlePageChange }) {
@@ -26,12 +27,14 @@ export default function InitPrompt({ handlePageChange }) {
       await axios.all([reqOne, reqTwo])
         .then(async (res) => {
           const teamId = res[0].data.id;
+          localStorage.setItem("teamID", teamId);
 
           await axios.put(`/api/managers/${res[1].data.id}`, { team_id: teamId })
             .then((res) => {
               console.log(`Manager's team ID(${teamId}) updated`);
 
               handlePageChange('Home');
+              
             })
             .catch((err) => console.log(`Failed to update manager's team ID: ${err}`));
         })
@@ -46,6 +49,7 @@ export default function InitPrompt({ handlePageChange }) {
       await axios.all([reqOne, reqTwo])
         .then(async (res) => {
           const teamId = res[0].data.id;
+          localStorage.setItem("teamID", teamId);
 
           await axios.put(`/api/managers/${res[1].data.id}`, { team_id: teamId })
             .then((res) => {

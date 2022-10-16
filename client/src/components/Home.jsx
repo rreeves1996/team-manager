@@ -6,7 +6,7 @@ import { createContext } from 'react';
 
 export const DataContext = createContext();
 
-export default function InitPrompt({ handlePageChange }) {
+export default function InitPrompt({ handlePageChange, id }) {
   
   const [collapsedMenu, toggleCollapseMenu] = useState(true);
   const [currentTab, setCurrentTab] = useState('Home');
@@ -31,12 +31,22 @@ export default function InitPrompt({ handlePageChange }) {
     const fetchData = async () => {
       await axios.get("/api/teams/")
         .then(async (res) => {
-          await axios.get(`/api/teams/${res.data.length}`)
-            .then((res) => {
-              setTeamData(res.data);
-              console.log(res);
-            })
-            .catch((err) => console.error(`Failed to get team with specified ID: ${err}`));
+          const prevTeam = localStorage.getItem("teamID");
+          if(prevTeam) {
+            await axios.get(`/api/teams/${prevTeam}`)
+              .then((res) => {
+                setTeamData(res.data);
+                console.log(res);
+              })
+              .catch((err) => console.error(`Failed to get team with specified ID: ${err}`));
+          } else {
+            await axios.get(`/api/teams/${res.data.length}`)
+              .then((res) => {
+                setTeamData(res.data);
+                console.log(res);
+              })
+              .catch((err) => console.error(`Failed to get team with specified ID: ${err}`));
+          }
         })
         .catch((err) => console.error(`Failed to get teams: ${err}`));
       setLoading(!loading);
