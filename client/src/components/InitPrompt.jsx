@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import axios from "axios";
 
 export default function InitPrompt({ handlePageChange }) {
@@ -21,14 +21,23 @@ export default function InitPrompt({ handlePageChange }) {
     if (teamName && managerName) {
       const reqOne = axios.post("/api/teams/", { name: teamName });
       const reqTwo = axios.post("/api/managers/", { name: managerName });
-      
 
-      await axios.all([reqOne, reqTwo]).then((res) => {
-        console.log(res);
-        handlePageChange('Home');
-      }).catch((err) => {
-        console.error(err);
-      });
+
+      await axios.all([reqOne, reqTwo])
+        .then(async (res) => {
+          const teamId = res[0].data.id;
+          console.log(teamId);
+
+          await axios.put(`/api/managers/${res[1].data.id}`, { team_id: teamId })
+            .then((res) => {
+              console.log(res);
+              handlePageChange('Home');
+            }).catch((err) => {
+              console.log("Failed to update manager's team ID: " + err);
+            })
+        }).catch((err) => {
+          console.log("Failed to create team/manager: " + err);
+        });
 
     } else if (!teamName || !managerName) {
       teamName = 'The Seattle Puddlechickens';
@@ -37,20 +46,27 @@ export default function InitPrompt({ handlePageChange }) {
       const reqOne = axios.post("/api/teams/", { name: teamName });
       const reqTwo = axios.post("/api/managers/", { name: managerName });
 
-      await axios.all([reqOne, reqTwo]).then((res) => {
-        console.log(res);
-        handlePageChange('Home');
-      }).catch((err) => {
-        console.error(err);
-      });
+      await axios.all([reqOne, reqTwo])
+        .then(async (res) => {
+          const teamId = res[0].data.id;
+          console.log(teamId);
+
+          await axios.put(`/api/managers/${res[1].data.id}`, { team_id: teamId })
+            .then((res) => {
+              console.log(res);
+              handlePageChange('Home');
+            }).catch((err) => {
+              console.log("Failed to update manager's team ID: " + err);
+            })
+        }).catch((err) => {
+          console.log("Failed to create team/manager: " + err);
+        });
     }
 
     setFormState({
       teamname: '',
       leadname: '',
     });
-
-    
   };
   
 

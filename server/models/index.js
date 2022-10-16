@@ -13,7 +13,7 @@ User.hasMany(Team, {
 // Team Relationships
 Team.belongsTo(User);
 
-Team.hasMany(Manager, {
+Team.hasOne(Manager, {
   foreignKey: 'team_id',
   onDelete: 'CASCADE',
 });
