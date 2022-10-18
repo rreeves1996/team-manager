@@ -15,6 +15,10 @@ Manager.init(
             type: DataTypes.STRING,
             allowNull: false,
         },
+        is_lead: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: false
+        },
         email: {
             type: DataTypes.STRING,
             allowNull: true,

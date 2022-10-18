@@ -34,7 +34,6 @@ export default function InitPrompt({ handlePageChange }) {
               console.log(`Manager's team ID(${teamId}) updated`);
 
               handlePageChange('Home');
-              
             })
             .catch((err) => console.log(`Failed to update manager's team ID: ${err}`));
         })
@@ -51,7 +50,7 @@ export default function InitPrompt({ handlePageChange }) {
           const teamId = res[0].data.id;
           localStorage.setItem("teamID", teamId);
 
-          await axios.put(`/api/managers/${res[1].data.id}`, { team_id: teamId })
+          await axios.put(`/api/managers/${res[1].data.id}`, { team_id: teamId, is_lead: true })
             .then((res) => {
               console.log(`Manager's team ID(${teamId}) updated`);
 
