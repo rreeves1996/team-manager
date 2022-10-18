@@ -3,19 +3,51 @@ import Modal from 'react-bootstrap/Modal';
 import axios from 'axios';
 import "../../assets/style/empcard.css"
 
+function EmpPhoneNumber(props) {
+
+  return (
+    <>
+      <p>
+        <strong>Phone #:</strong> {' ' + `(${props.number1}) ${props.number2}-${props.number3}`}
+      </p>
+    </>
+  )
+}
+
+function EmpEmail(props) {
+
+  return (
+    <>
+      <p>
+        <strong>Email:</strong> {props.email}
+      </p>
+    </>
+  )
+}
+
+function EmpTimeZone(props) {
+
+  return (
+    <>
+      <p>
+        <strong>Time:</strong> UTC -{props.timezone ? props.timezone : "0"}:00
+      </p>
+    </>
+  )
+}
+
 export default function EmpCard(props) {
   const [formState, setFormState] = useState({ phone1: '', phone2: '', phone3: '', email: '', timezone: '', });
-  const [phoneNumber, setPhoneNumber] = useState(() => 
-    props.number ? ({ 
-        groupOne: props.number.slice(0,3), 
-        groupTwo: props.number.slice(3,6), 
-        groupThree: props.number.slice(6,10) 
-      }) : ({
-        groupOne: "", 
-        groupTwo: "", 
-        groupThree: ""
-      })
-    
+  const [phoneNumber, setPhoneNumber] = useState(() => props.number ? 
+    ({ 
+      groupOne: props.number.slice(0,3), 
+      groupTwo: props.number.slice(3,6), 
+      groupThree: props.number.slice(6,10) 
+    }) : ({
+      groupOne: "", 
+      groupTwo: "", 
+      groupThree: ""
+    })
   )
   const [show, setShow] = useState(false);
   const [deleteConfirm, showDeleteConfirm] = useState(false);
@@ -71,11 +103,8 @@ export default function EmpCard(props) {
   }
 
   useEffect(() => {
-    if(loading) {
-      console.log("Loading...");
-
-    }
-  }, [loading])
+    console.log(phoneNumber);
+  }, [phoneNumber])
 
   const deleteEmployee = (employee) => {
     if (employee.role === 'manager') {
@@ -122,13 +151,9 @@ export default function EmpCard(props) {
             showDeleteConfirm(false);
             setEditing(false);
           }, 300);
-        }}
-      >
+        }}>
         <div className='emp-card-modal-container'>
-          <i
-            className='fa-solid fa-xmark exit-button'
-            onClick={() => handleClose()}
-          ></i>
+          <i className='fa-solid fa-xmark exit-button' onClick={() => handleClose()}></i>
           <div className='emp-card-header-modal'>
             <div className='emp-picture'>
               {props.picture ? (
@@ -203,15 +228,9 @@ export default function EmpCard(props) {
               </>
             ) : (
               <>
-                <p>
-                  <strong>Phone #:</strong> {props.number}
-                </p>
-                <p>
-                  <strong>Email:</strong> {props.email}
-                </p>
-                <p>
-                  <strong>Time:</strong> UTC -{props.timeZone}:00
-                </p>
+                <EmpPhoneNumber number1={phoneNumber.groupOne} number2={phoneNumber.groupTwo} number3={phoneNumber.groupThree} />
+                <EmpEmail email={props.email} />
+                <EmpTimeZone timezone={props.timeZone} />
                 <div className='emp-card-button-container'>
                   <button 
                     className='edit-button' 

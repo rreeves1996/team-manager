@@ -129,6 +129,9 @@
     width: 100%;
     margin: 8px 5px !important;
 }
+.emp-contact-info p strong {
+    margin-right: .25rem;
+}
 .emp-card-button-container{
     padding: 5px 0;
 }
