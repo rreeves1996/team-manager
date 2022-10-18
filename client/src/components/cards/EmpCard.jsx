@@ -8,7 +8,15 @@ function EmpPhoneNumber(props) {
   return (
     <>
       <p>
-        <strong>Phone #:</strong> {' ' + `(${props.number1}) ${props.number2}-${props.number3}`}
+        {props.header ? (
+          <>
+          </>
+        ) : (
+          <>
+            <strong>Phone #:</strong>
+          </>
+        )}
+        {`(${props.number1}) ${props.number2}-${props.number3}`}
       </p>
     </>
   )
@@ -83,17 +91,24 @@ export default function EmpCard(props) {
         await axios.put(`/api/managers/${props.managers[0].id}`, { phone: number, email: email })
           .then((res) => {
             console.log(`Manager updated`);
+
+            setPhoneNumber((phoneNumber) => (
+              { 
+                groupOne: props.number.slice(0,3), 
+                groupTwo: props.number.slice(3,6), 
+                groupThree: props.number.slice(6,10) 
+              }
+            ));
           })
           .catch((err) => console.log(`Failed to update manager: ${err}`));
-
       }
     }
 
     setFormState(
       { 
-        phone1: phonenumbers[0], 
-        phone2: phonenumbers[1], 
-        phone3: phonenumbers[2], 
+        phone1: phoneNumber.groupOne, 
+        phone2: phoneNumber.groupTwo, 
+        phone3: phoneNumber.groupThree, 
         email: email, 
         timezone: '' 
       });
@@ -104,7 +119,7 @@ export default function EmpCard(props) {
 
   useEffect(() => {
     console.log(phoneNumber);
-  }, [phoneNumber])
+  }, [])
 
   const deleteEmployee = (employee) => {
     if (employee.role === 'manager') {
@@ -135,7 +150,10 @@ export default function EmpCard(props) {
             <h6 className='emp-role'>
               {props.lead ? 'Team Lead' : props.role}
             </h6>
-            <p>{props.number}</p>
+            <EmpPhoneNumber header={true}
+              number1={phoneNumber.groupOne} 
+              number2={phoneNumber.groupTwo} 
+              number3={phoneNumber.groupThree} />
           </div>
         </div>
       </div>
@@ -228,7 +246,10 @@ export default function EmpCard(props) {
               </>
             ) : (
               <>
-                <EmpPhoneNumber number1={phoneNumber.groupOne} number2={phoneNumber.groupTwo} number3={phoneNumber.groupThree} />
+                <EmpPhoneNumber header={false}
+                  number1={phoneNumber.groupOne} 
+                  number2={phoneNumber.groupTwo} 
+                  number3={phoneNumber.groupThree} />
                 <EmpEmail email={props.email} />
                 <EmpTimeZone timezone={props.timeZone} />
                 <div className='emp-card-button-container'>

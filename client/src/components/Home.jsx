@@ -6,8 +6,7 @@ import { createContext } from 'react';
 
 export const DataContext = createContext();
 
-export default function InitPrompt({ handlePageChange, id }) {
-  
+export default function InitPrompt({ handlePageChange }) {
   const [collapsedMenu, toggleCollapseMenu] = useState(true);
   const [currentTab, setCurrentTab] = useState('Home');
   const [teamData, setTeamData] = useState({});
