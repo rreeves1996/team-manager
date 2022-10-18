@@ -1,13 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import axios from 'axios';
 import "../../assets/style/empcard.css"
 
 export default function EmpCard(props) {
   const [formState, setFormState] = useState({ phone1: '', phone2: '', phone3: '', email: '', timezone: '', });
+  const [phoneNumber, setPhoneNumber] = useState(() => 
+    props.number ? ({ 
+        groupOne: props.number.slice(0,3), 
+        groupTwo: props.number.slice(3,6), 
+        groupThree: props.number.slice(6,10) 
+      }) : ({
+        groupOne: "", 
+        groupTwo: "", 
+        groupThree: ""
+      })
+    
+  )
   const [show, setShow] = useState(false);
   const [deleteConfirm, showDeleteConfirm] = useState(false);
   const [editing, setEditing] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -24,12 +37,12 @@ export default function EmpCard(props) {
 
   const handleEditSubmit = async (event) => {
     event.preventDefault();
-
-    let phonenumbers = [formState.phone1.trim(), formState.phone2.trim(), formState.phone3.trim()];
-    let email = formState.email.trim();
-    console.log(phonenumbers[0].length)
-    console.log(phonenumbers[1].length)
-    console.log(phonenumbers[2].length)
+    console.log(phoneNumber);
+    const phonenumbers = [formState.phone1.trim(), formState.phone2.trim(), formState.phone3.trim()];
+    const email = formState.email.trim();
+    console.log(phonenumbers[0])
+    console.log(phonenumbers[1])
+    console.log(phonenumbers[2])
 
     if(phonenumbers && email) {
       if(phonenumbers[0].length === 3 && phonenumbers[1].length === 3 && phonenumbers[2].length === 4) {
@@ -52,7 +65,17 @@ export default function EmpCard(props) {
         email: email, 
         timezone: '' 
       });
+
+      console.log(formState);
+      setEditing(!editing);
   }
+
+  useEffect(() => {
+    if(loading) {
+      console.log("Loading...");
+
+    }
+  }, [loading])
 
   const deleteEmployee = (employee) => {
     if (employee.role === 'manager') {
@@ -128,10 +151,11 @@ export default function EmpCard(props) {
             </div>
           </div>
           <div className='emp-contact-info'>
-            <form className='card-edit'>
-              <p>
-                <strong>Phone #:</strong> {editing ? (
-                  <>
+            {editing ? (
+              <>
+                <form className='card-edit' onSubmit={handleEditSubmit}>
+                  <p>
+                    <strong>Phone #:</strong>
                     <input type="text" 
                       className='card-input number-input' 
                       id="number-input1"
@@ -150,62 +174,59 @@ export default function EmpCard(props) {
                       name='phone3'
                       value={formState.phone3}
                       onChange={handleChange} />
-                  </>
-                ) : (
-                  <>
-                    {props.number}
-                  </>
-                )}
-              </p>
-              <p>
-                <strong>Email:</strong> {editing ? (
-                  <>
+                  </p>
+                  <p>
+                    <strong>Email:</strong>
                     <input type="text" 
                       className='card-input'
                       name='email'
                       value={formState.email}
                       onChange={handleChange} />
-                  </>
-                ) : (
-                  <>
-                    {props.email}
-                  </>
-                )}
-              </p>
-              <p>
-                <strong>Time:</strong> {editing ? (
-                  <>
+                  </p>
+                  <p>
+                    <strong>Time:</strong> 
                     <button className='timezone-button'>Timezones <i className='fa-solid fa-caret-down'></i></button>
-                  </>
-                ) : (
-                  <>
-                    UTC -{props.timeZone}:00
-                  </>
-                )}
-              </p>
-              <div className='emp-card-button-container'>
-                <button 
-                  className='edit-button' 
-                  onClick={() => setEditing(!editing)}>
-                    {editing ? "Cancel" : "Edit"}
-                </button>
-                {editing ? (
-                  <>
+                  </p>
+                  <div className='emp-card-button-container'>
+                    <button 
+                      className='edit-button' 
+                      onClick={() => setEditing(!editing)}>
+                        Cancel
+                    </button>
                     <button 
                       className='submit-button' 
-                      onClick={() => handleEditSubmit()}>
+                      type='submit'>
                         Submit
                     </button>
-                  </>
-                ) : (
-                <button
-                  className={deleteConfirm ? 'delete-button confirm' : 'delete-button'}
-                  onClick={deleteConfirm ? deleteEmployee(props) : () => showDeleteConfirm(true)}>
-                    {deleteConfirm ? 'Are you sure?' : 'Delete'}
-                </button>
-                )}
-              </div>
-            </form>
+                  </div>
+                </form>
+              </>
+            ) : (
+              <>
+                <p>
+                  <strong>Phone #:</strong> {props.number}
+                </p>
+                <p>
+                  <strong>Email:</strong> {props.email}
+                </p>
+                <p>
+                  <strong>Time:</strong> UTC -{props.timeZone}:00
+                </p>
+                <div className='emp-card-button-container'>
+                  <button 
+                    className='edit-button' 
+                    onClick={() => setEditing(!editing)}>
+                      Edit
+                  </button>
+
+                  <button
+                    className={deleteConfirm ? 'delete-button confirm' : 'delete-button'}
+                    onClick={deleteConfirm ? deleteEmployee(props) : () => showDeleteConfirm(true)}>
+                      {deleteConfirm ? 'Are you sure?' : 'Delete'}
+                  </button>
+                </div>
+              </>
+            )}
           </div>
         </div>
       </Modal>

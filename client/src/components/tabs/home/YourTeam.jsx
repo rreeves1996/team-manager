@@ -26,7 +26,7 @@ export default function YourTeam(props) {
                     name={manager.name}
                     role={manager.role}
                     lead={manager.lead}
-                    number={manager.number}
+                    number={manager.phone}
                     email={manager.email}
                     timeZone={manager.timeZone}
                   />

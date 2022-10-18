@@ -132,7 +132,7 @@
 .emp-card-button-container{
     padding: 5px 0;
 }
-.edit-button, .delete-button, .timezone-button {
+.edit-button, .delete-button, .timezone-button, .submit-button {
     background-color: transparent;
     border: 2px solid var(--blue);
     text-transform: uppercase;
@@ -150,7 +150,7 @@
     color: var(--off-white);
     padding-right: 8px;
 }
-.edit-button:hover, .delete-button:hover {
+.edit-button:hover, .delete-button:hover, .submit-button:hover {
     filter: none;
     color: var(--off-white);
     background-color: var(--blue);
