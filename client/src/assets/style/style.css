@@ -169,14 +169,28 @@ p {
     display: none !important;
 }
 .nav-link-container {
-    
-    position: absolute;
-    display: flex;  flex-direction: column;
+    transform: translateY(85%);
+    width: 110px;
+    align-items: center;
+}
+.nav-button {
+    display: flex;  
     justify-content: center;    align-items: center;
-    font-size: 1.5rem;
-    transform: translateY(100%);
-    background-color: var(--off-black);
-
+    width: 100%;
+    color: var(--off-white);
+    font-size: 1.3rem;
+}
+.nav-button:hover {
+    color: white;
+    text-decoration: none;
+}
+#login-button {
+    border-top: 1px solid var(--off-white);
+    border-radius: 0px 0px 6px 6px;
+}
+#about-button {
+    border-bottom: 1px solid var(--off-white);
+    border-radius:  6px 6px 0px 0px;
 }
 .init-container {
     margin-top: 45px;
@@ -399,24 +413,23 @@ header i:active, .exit-button:active {
     margin-bottom: 0;
 }
 .team-menu {
-    position: absolute;
     transform: translate(-91%, 3px);
-
     width: 155px;
-    user-select: none;
-    display: flex;
-    flex-direction: column;
-    border: 1px solid white;
-    border-radius: 6px;
-
 }
-.team-menu li {
+
+.team-menu, .nav-link-container {
+    position: absolute;
+    display: flex;  flex-direction: column;
+    user-select: none;
+    border: 1px solid white;    border-radius: 6px;
+}
+.team-menu li, .nav-button {
     padding: 8px 10px;
     cursor: pointer;
     background-color:#2424248e;
     transition: background-color 100ms;
 }
-.team-menu li:hover {
+.team-menu li:hover, .nav-button:hover {
     background-color:#3b3b3b8e;
 }
 #edit-name {
@@ -623,9 +636,8 @@ h5 {
     width: 100%;
     justify-content: center;
 }
-.card-input {
-    height: 100%;
-}
+
+
 @media screen and (max-width: 768px) {
     .mobile-background-container {
         position: absolute;
