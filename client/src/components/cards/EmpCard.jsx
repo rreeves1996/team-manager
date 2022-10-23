@@ -4,7 +4,6 @@ import axios from 'axios';
 import "../../assets/style/empcard.css"
 
 function EmpPhoneNumber(props) {
-
   return (
     <>
       <p>
@@ -23,7 +22,6 @@ function EmpPhoneNumber(props) {
 }
 
 function EmpEmail(props) {
-
   return (
     <>
       <p>
@@ -34,7 +32,6 @@ function EmpEmail(props) {
 }
 
 function EmpTimeZone(props) {
-
   return (
     <>
       <p>
@@ -46,6 +43,9 @@ function EmpTimeZone(props) {
 
 export default function EmpCard(props) {
   const [formState, setFormState] = useState({ phone1: '', phone2: '', phone3: '', email: '', timezone: '', });
+  const [show, setShow] = useState(false);
+  const [deleteConfirm, showDeleteConfirm] = useState(false);
+  const [editing, setEditing] = useState(false);
   const [phoneNumber, setPhoneNumber] = useState(() => props.number ? 
     ({ 
       groupOne: props.number.slice(0,3), 
@@ -57,14 +57,9 @@ export default function EmpCard(props) {
       groupThree: ""
     })
   )
-  const [show, setShow] = useState(false);
-  const [deleteConfirm, showDeleteConfirm] = useState(false);
-  const [editing, setEditing] = useState(false);
-  const [loading, setLoading] = useState(true);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -77,12 +72,9 @@ export default function EmpCard(props) {
 
   const handleEditSubmit = async (event) => {
     event.preventDefault();
-    console.log(phoneNumber);
+
     const phonenumbers = [formState.phone1.trim(), formState.phone2.trim(), formState.phone3.trim()];
     const email = formState.email.trim();
-    console.log(phonenumbers[0])
-    console.log(phonenumbers[1])
-    console.log(phonenumbers[2])
 
     if(phonenumbers && email) {
       if(phonenumbers[0].length === 3 && phonenumbers[1].length === 3 && phonenumbers[2].length === 4) {
@@ -113,7 +105,6 @@ export default function EmpCard(props) {
         timezone: '' 
       });
 
-      console.log(formState);
       setEditing(!editing);
   }
 

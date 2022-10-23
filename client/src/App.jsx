@@ -24,14 +24,7 @@ export default function App() {
       case "Init":
           return <InitPrompt page={page} handlePageChange={handlePageChange} />;
       case "Home":
-        const prevTeam = localStorage.getItem("teamID");
-
-        if(prevTeam) {
-          return <Home handlePageChange={handlePageChange} />;
-        } else {
-          return <Home handlePageChange={handlePageChange} />;
-        }
-        
+        return <Home handlePageChange={handlePageChange} />;
       default:
         return <Home handlePageChange={handlePageChange} />
     }
