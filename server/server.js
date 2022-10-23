@@ -30,7 +30,7 @@ app.use(session(sess));
 app.use(express.json());
 app.use(cors());
 app.use(express.urlencoded({ extended: false }));
-app.use('/static', express.static(path.join(__dirname, 'client/public')));
+app.use('/static', express.static(path.join(__dirname, 'client/build')));
   
 app.use(routes);
 
