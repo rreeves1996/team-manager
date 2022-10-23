@@ -44,6 +44,7 @@ body {
     background-color: var(--off-black);
     color: var(--off-white);
     overflow-x: hidden;
+    
 }
 
 /* MAIN STYLING */
@@ -63,8 +64,9 @@ main {
     align-items: center;
     flex-direction: column;
     width: 100vw;
-    min-height: calc(100vh - 130px);
-    height: 100%;
+    min-height: 800px;
+    height: calc(100vh - 130px);
+
 }
 button {
     border: none;
@@ -642,7 +644,8 @@ h5 {
     .mobile-background-container {
         position: absolute;
         display: flex;
-        width: 100%;    height: calc(100vh - 130px);
+        width: 100%;    min-height: 800px;
+        height: 100%;
         background-color: var(--blue);
         overflow: hidden;
     }
@@ -666,7 +669,7 @@ h5 {
         margin-top: 180px;
         padding: 0;
         width: 90%;
-        min-width: 370px;
+        min-width: 350px;
         max-width: 470px;
     }
     .form-side {
