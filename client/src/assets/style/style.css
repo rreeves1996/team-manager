@@ -677,7 +677,17 @@ h5 {
         border-radius: 20px 20px 8px 8px;
     }
     .form-side h1 {
+        font-size: 5.5rem;
         border-radius: 8px 8px 0 0;
+    }
+    .form-side h6 {
+        width: 90%;
+    }
+    .label, button {
+        font-size: 1.2rem;
+    }
+    .form-side h6, input, .sub-container p, .sub-container a  {
+        font-size: 1.1rem;
     }
     .brand {
         position: absolute;
