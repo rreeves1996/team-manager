@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
 import axios from "axios";
 
 export default function InitPrompt({ handlePageChange }) {
@@ -74,7 +73,7 @@ export default function InitPrompt({ handlePageChange }) {
         <div className='form-side'>
           <h1>Welcome!</h1>
           <h6>Enter team information to continue:</h6>
-          <form className='init-form' onSubmit={handleFormSubmit}>
+          <form className='form-container' onSubmit={handleFormSubmit}>
             <div className='init-input'>
               <div className='field'>
                 <label className='label'>Team Name</label>

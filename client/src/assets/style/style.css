@@ -216,18 +216,18 @@ p {
     text-decoration: none !important;
 }
 
-
-.init-container {
+.container {
     margin-top: 45px;
     border-radius: 8px;
     filter: drop-shadow(2px 4px 5px rgba(0, 0, 0, 0.37));
     display: flex;
     flex-direction: row;
     width: 40%;
-    min-width: 770px;
-    min-height: 500px;
-    height: 500px;
+    min-width: 770px;   min-height: 500px;
     z-index: 0;
+}
+.init-container {
+    height: 500px;
 }
 .init-divider {
     margin: 7px 0 22px;
@@ -268,9 +268,8 @@ p {
 .form-side p {
     margin-bottom: 20px;
 }
-.init-form {
+.form-container {
     width: 80%;
-    
 }
 
 .label {
