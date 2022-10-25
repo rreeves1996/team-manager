@@ -157,12 +157,21 @@ p {
     text-decoration: none;
     filter: brightness(.75)
 }
+.register-link {
+    display: flex;  justify-content: center;    align-items:center;
+    width: 100%; height: 100%;
+    padding: 12px 2px !important;
+
+}
+.navbar-links {
+    display: flex;  justify-content: center;    align-items: center;
+}
 .navbar-toggler {
-    
     display: flex;
     justify-content: center;
     align-items: center;
     font-size: 2.5rem;
+    margin: 0 0 0 12px;
 }
 .navbar-hover-arrow {
     position: absolute;
@@ -194,6 +203,20 @@ p {
     border-bottom: 1px solid var(--off-white);
     border-radius:  6px 6px 0px 0px;
 }
+.register-link {
+    width: 100%;
+    height: 100%;
+    background-color: red;
+    margin: 0 12px;
+    border-radius: 5px;
+    color: var(--off-white) !important;
+}
+.navbar-links a:hover {
+    color: white !important;
+    text-decoration: none !important;
+}
+
+
 .init-container {
     margin-top: 45px;
     border-radius: 8px;
@@ -445,14 +468,14 @@ header i:active, .exit-button:active {
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
 }
-.tab-button {
+.tab-button, .register-link {
     height: 45px;
     padding: 0 15px;
     margin-right: 5px;
     background-color: transparent;
     transition: background-color 100ms;
 }
-.tab-button:hover {
+.tab-button:hover, .register-link:hover {
     background-color: rgba(255, 255, 255, 0.048);
 }
 .tab-container {
