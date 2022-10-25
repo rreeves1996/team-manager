@@ -431,7 +431,10 @@ header i:active, .exit-button:active {
 }
 .header-text h1 {
     line-height: 1;
-    margin: 15px 0 15px 0;
+    margin: 10px 0;
+    font-size: 6.5rem;  font-weight: 700;   letter-spacing: 4px;
+    text-decoration-thickness: 4px;
+    text-underline-offset: 14px;
 }
 .header-text h4 {
     margin-bottom: 0;
@@ -488,7 +491,6 @@ header i:active, .exit-button:active {
     padding: 16px 0px;
     justify-content: space-between;
     height: 100%;
-    /* min-height: 750px; */
 }
 .fa-user {
     color: var(--off-white);
