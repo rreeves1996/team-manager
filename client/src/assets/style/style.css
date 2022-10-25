@@ -600,8 +600,7 @@ h5 {
     border: 1px solid var(--sub-box-border);
     background-color: var(--sub-box-bg);
     border-radius: 2px;
-    margin-top: -5px;
-    margin-bottom: 8px;
+    margin: 8px 0;
     opacity: 100%;
     transform: translateY(0%);
     transition: all 0.5s;
@@ -609,7 +608,7 @@ h5 {
 
 .more-stats.collapsed {
     pointer-events: none;
-    margin-bottom: -35px;
+    margin-bottom: -15px;
     opacity: 0%;
     transform: translateY(-10%);
     transition: all 0.5s;
