@@ -72,11 +72,11 @@ export default function InitPrompt({ handlePageChange }) {
       <div className='container init-container'>
         <div className='form-side'>
           <h1>Welcome!</h1>
-          <h6>Enter team information to continue:</h6>
+          <h6>Enter team information to continue</h6>
           <form className='form-container' onSubmit={handleFormSubmit}>
             <div className='init-input'>
               <div className='field'>
-                <label className='label'>Team Name</label>
+                <label className='label'>Team Name:</label>
                 <div className='control'>
                   <input
                     className='input'
@@ -90,7 +90,7 @@ export default function InitPrompt({ handlePageChange }) {
               </div>
 
               <div className='field'>
-                <label className='label'>Team Lead's Name</label>
+                <label className='label'>Team Lead's Name:</label>
                 <div className='control'>
                   <input
                     className='input'
@@ -104,11 +104,11 @@ export default function InitPrompt({ handlePageChange }) {
               </div>
             </div>
 
-            <div className='init-button-container'>
-              <button className='init-button' type='submit'>
+            <div className='button-container'>
+              <button className='form-button' type='submit'>
                 Generate Team
               </button>
-              <div className='divider init-divider'></div>
+              <div className='divider form-divider'></div>
               <div className='sub-container d-flex flex-column align-items-center mb-5'>
                 <p className='mt-1 mb-1'>Create an account to save team</p>
                 <a href='#'>Register</a>
