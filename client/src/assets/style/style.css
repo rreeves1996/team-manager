@@ -296,7 +296,7 @@ p {
     width: 100%;
     text-align: right;
     font-size: .8rem;
-    margin: 0 0 -13px -18px !important;
+    margin: 8px 0 -18px -18px !important;
 }
 .form-button {
     width: 100%;
@@ -348,7 +348,6 @@ p {
     top: 120px;
     background-size:cover;
     transform: rotate(90deg)
-
     scale(1.55);
     opacity: 75%;
     filter: blur(2px);

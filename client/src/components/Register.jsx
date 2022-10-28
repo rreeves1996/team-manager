@@ -40,7 +40,7 @@ export default function Register({ handlePageChange }) {
             <h1>Register</h1>
             <h6>Enter your new account information</h6>
             <form className='form-container' onSubmit={handleFormSubmit}>
-            <p className='required'>* - Optional</p>
+            
               <div className='register-input'>
                 <div className='field'>
                   <label className='label'>Your name:</label>
@@ -62,6 +62,8 @@ export default function Register({ handlePageChange }) {
                   </div>
                 </div>
 
+                <p className='required'>* - Optional</p>
+
                 <div className='field'>
                   <label className='label'>*Team name:</label>
                   <div className='control'>
@@ -74,6 +76,8 @@ export default function Register({ handlePageChange }) {
                       onChange={handleChange} />
                   </div>
                 </div>
+
+                
 
                 <div className='field'>
                   <label className='label'>Email address:</label>
@@ -109,9 +113,8 @@ export default function Register({ handlePageChange }) {
                   </div>
                 </div>
               </div>
-              
+
               <div className='button-container mt-4'>
-                
                 <button className='form-button' type='submit'>
                   Register Account
                 </button>
