@@ -20,22 +20,15 @@ export default function Summary(props) {
       <div className='divider'></div>
       <div className='card-body'>
         <p>
-          Your team currently has <strong>{props.managers.length}</strong>{' '}
-          managers and <strong>{employeeCount}</strong> employees{' '}
-          <span
-            className='more-stats-toggler'
-            onClick={() => collapseStats((prevState) => !prevState)}
-          >
-            More stats{' '}
-            <i
-              className={
-                collapsed
-                  ? 'fa-solid fa-caret-down'
-                  : 'fa-solid fa-caret-down rotated'
-              }
-            ></i>
-          </span>
+          Your team has <strong>{props.employees.length}</strong> employees{' '}
         </p>
+        <span
+          className='more-stats-toggler'
+          onClick={() => collapseStats((prevState) => !prevState)}>
+          More stats{' '}
+          <i className={collapsed ? 'fa-solid fa-caret-down' : 'fa-solid fa-caret-down rotated'}></i>
+        </span>
+        
         <div className={collapsed ? 'more-stats collapsed' : 'more-stats'}>
           <p>
             <strong>Payroll Total: </strong>{' '}

@@ -42,7 +42,7 @@ export default function HomeTab() {
         <>
         <div className='col-home'>
           <Summary managers={teamManagers} roles={teamRoles[0]} employees={teamEmployees[0]} />
-          <QuickAdd handleAddEmployees={handleAddEmployees} />
+          <QuickAdd handleAddEmployees={handleAddEmployees} roles={teamRoles[0]} />
         </div>
         <YourTeam managers={teamManagers} roles={teamRoles[0]} employees={teamEmployees[0]} />
         </>
