@@ -43,14 +43,14 @@ export default function Summary(props) {
           <p>
             <strong>Avg. Salary:</strong>{' '}
           </p>
-          {props.roles.map((role) => {
-            console.log(role.roleName);
+          {/* {props.roles.map((role) => {
+            console.log(role);
             return (
               <p>
                 <strong>Total {role.roleName}s:</strong> {role.empCount}
               </p>
             );
-          })}
+          })} */}
         </div>
         <div className='info'>
           <i className='fa-solid fa-circle-exclamation'></i>

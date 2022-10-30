@@ -22,17 +22,17 @@ Employee.init(
         key: 'id',
       },
     },
-    team_id: {
-      type: DataTypes.INTEGER,
-      references: {
-        model: 'team',
-        key: 'id',
-      },
-    },
     manager_id: {
       type: DataTypes.INTEGER,
       references: {
         model: 'manager',
+        key: 'id',
+      },
+    },
+    team_id: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: 'team',
         key: 'id',
       },
     },

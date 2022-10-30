@@ -224,7 +224,6 @@ p {
     flex-direction: row;
     width: 40%;
     min-width: 770px;   min-height: 500px;
-    z-index: 0;
 }
 .init-container {
     height: 500px;
@@ -676,7 +675,7 @@ h5 {
     text-align: center;
     margin: 8px 0px;
 }
-.managers {
+.managers, .employees {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -684,7 +683,7 @@ h5 {
     width: 100%;
 }
 .card-container {
-    display: flex;
+    display: flex;  flex-wrap: wrap;
     width: 100%;
     justify-content: center;
 }
@@ -698,6 +697,7 @@ h5 {
         height: 100%;
         background-color: var(--blue);
         overflow: hidden;
+        z-index: 0;
     }
     .mobile-background {
         position: relative;
@@ -707,6 +707,7 @@ h5 {
         opacity: 75%;
         
         filter: blur(2px);
+        pointer-events: none;
         
     }
     .navbar-brand {

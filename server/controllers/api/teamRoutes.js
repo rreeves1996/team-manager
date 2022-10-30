@@ -22,14 +22,14 @@ router.get('/:id', async (req, res) => {
           model: Manager,
           atttributes: ['name', 'id', 'salary'],
         },
-        // {
-        //   model: Employee,
-        //   atttributes: ['name', 'id'],
-        // },
-        // {
-        //   model: Role,
-        //   attributes: ['id', 'name', 'salary'],
-        // },
+        {
+          model: Employee,
+          atttributes: ['name', 'id'],
+        },
+        {
+          model: Role,
+          attributes: ['id', 'title', 'salary'],
+        },
       ],
     });
 

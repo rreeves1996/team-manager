@@ -6,7 +6,7 @@ export default function YourTeam(props) {
     <div className='your-team'>
       <h2>Your Team</h2>
       <div className='container-body'>
-        <div className='managers'>
+        <div className='managers mb-4'>
           <h5>
             <strong>Managers</strong>
           </h5>
@@ -29,6 +29,33 @@ export default function YourTeam(props) {
                     number={manager.phone}
                     email={manager.email}
                     timeZone={manager.timeZone}
+                  />
+                </>
+              );
+            })}
+          </div>
+        </div>
+        <div className="employees">
+          <h5>
+            <strong>Employees</strong>
+          </h5>
+          <div className='card-container'>
+            {props.employees.map((employee) => {
+              const employeeNameSplit = employee.name.split(' ');
+              const employeeFirst = employeeNameSplit[0].split('');
+              const employeeNameAbbreviated = `${employeeFirst[0]}. ${employeeNameSplit[1]}`;
+
+              return (
+                <>
+                  <EmpCard
+                    key={employee.id}
+                    id={employee.id}
+                    abbreviatedname={employeeNameAbbreviated}
+                    name={employee.name}
+                    role={employee.role}
+                    number={employee.phone}
+                    email={employee.email}
+                    timeZone={employee.timeZone}
                   />
                 </>
               );

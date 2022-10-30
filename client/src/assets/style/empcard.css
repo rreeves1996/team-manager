@@ -26,9 +26,7 @@
     text-indent: 0;
 }
 #number-input1, #number-input2 {
-
     width: 30px;
-
 }
 #number-input3 {
     width: 38px;
@@ -44,6 +42,7 @@
 .emp-card-header, .emp-card-header-modal {
     display: flex;
     padding: 13px;
+    width: 100%;
     align-items: center;
     text-align: center;
     background-color:var(--blue);
@@ -96,7 +95,7 @@
     font-size: 3em;
 }
 .emp-info-header {
-    margin: 0 8px;
+    margin: 0 auto;
 }
 .emp-info-header strong {
     font-family: 'Alumni Sans Pinstripe';

@@ -1,21 +1,30 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import Summary from './home/Summary';
 import QuickAdd from './home/QuickAdd';
 import YourTeam from './home/YourTeam';
-import { useContext } from 'react';
 import { DataContext } from '../Home';
 
 export default function HomeTab() {
-  const [roles, addRole] = useState([]);
+  const [teamRoles, addRole] = useState([]);
   const [teamManagers, addManager] = useState([]);
-  const [employees, addEmployee] = useState([]);
+  const [teamEmployees, addEmployee] = useState([]);
+  const [loading, setLoading] = useState(true);
   const teamData = useContext(DataContext);
   
 
   useEffect(() => {
-    const managers = teamData.manager;
+    const updateParams = () => {
+      const managers = teamData.manager;
+      const employees = teamData.employees;
+      const roles = teamData.roles;
+      
+      addManager((teamManagers) => [...teamManagers, managers]);
+      addEmployee((teamEmployees) => [...teamEmployees, employees]);
+      addRole((teamRoles) => [...teamRoles, roles]);
+      setLoading(!loading);
+    }
 
-    addManager((teamManagers) => [...teamManagers, managers]);
+    updateParams();
   }, []);
 
   const handleAddRoles = (newRole) => 
@@ -27,11 +36,18 @@ export default function HomeTab() {
 
   return (
     <>
-      <div className='col-home'>
-        <Summary managers={teamManagers} roles={roles} />
-        <QuickAdd handleAddEmployees={handleAddEmployees} />
-      </div>
-      <YourTeam managers={teamManagers} />
+      {loading ? (
+        <h1>Loading...</h1>
+      ) : (
+        <>
+        <div className='col-home'>
+          <Summary managers={teamManagers} roles={teamRoles} employees={teamEmployees[0]} />
+          <QuickAdd handleAddEmployees={handleAddEmployees} />
+        </div>
+        <YourTeam managers={teamManagers} roles={teamRoles} employees={teamEmployees[0]} />
+        </>
+      )}
+
     </>
   );
 }
