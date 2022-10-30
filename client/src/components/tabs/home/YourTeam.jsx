@@ -1,7 +1,12 @@
+import axios from 'axios';
 import React from 'react';
+import { useState } from 'react';
 import EmpCard from '../../cards/EmpCard';
 
 export default function YourTeam(props) {
+  const [loading, setLoading] = useState(true);
+
+  console.log(props)
   return (
     <div className='your-team'>
       <h2>Your Team</h2>
@@ -45,6 +50,8 @@ export default function YourTeam(props) {
               const employeeFirst = employeeNameSplit[0].split('');
               const employeeNameAbbreviated = `${employeeFirst[0]}. ${employeeNameSplit[1]}`;
 
+
+
               return (
                 <>
                   <EmpCard
@@ -52,7 +59,7 @@ export default function YourTeam(props) {
                     id={employee.id}
                     abbreviatedname={employeeNameAbbreviated}
                     name={employee.name}
-                    role={employee.role}
+                    role={employee.role_id}
                     number={employee.phone}
                     email={employee.email}
                     timeZone={employee.timeZone}

@@ -46,6 +46,9 @@ export default function EmpCard(props) {
   const [show, setShow] = useState(false);
   const [deleteConfirm, showDeleteConfirm] = useState(false);
   const [editing, setEditing] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [empRole, setEmpRole] = useState();
+
   const [phoneNumber, setPhoneNumber] = useState(() => props.number ? 
     ({ 
       groupOne: props.number.slice(0,3), 
@@ -109,7 +112,15 @@ export default function EmpCard(props) {
   }
 
   useEffect(() => {
-    console.log(phoneNumber);
+    const getRole = async () => {
+      await axios.get(`/api/roles/${props.role}`)
+        .then((res) => {
+          setEmpRole(res.data.title)
+        }).catch((err) => console.log(err));
+      setLoading(!loading);
+    }
+    
+    getRole();
   }, [])
 
   const deleteEmployee = (employee) => {
@@ -121,6 +132,11 @@ export default function EmpCard(props) {
 
   return (
     <>
+      {loading ? (
+        <>
+        </>
+      ) : (
+        <>
       <div className='emp-card' onClick={handleShow}>
         <div className='emp-card-header'>
           <div className='emp-picture'>
@@ -139,7 +155,7 @@ export default function EmpCard(props) {
               <strong>{props.abbreviatedname}</strong>
             </h6>
             <h6 className='emp-role'>
-              {props.lead ? 'Team Lead' : props.role}
+              {!empRole ? 'Team Lead' : empRole}
             </h6>
             <EmpPhoneNumber header={true}
               number1={phoneNumber.groupOne} 
@@ -180,7 +196,7 @@ export default function EmpCard(props) {
                 <strong>{props.name}</strong>
               </h6>
               <h6 className='emp-role'>
-                {props.lead ? 'Team Lead' : props.role}
+                {!empRole ? 'Team Lead' : empRole}
               </h6>
             </div>
           </div>
@@ -261,6 +277,9 @@ export default function EmpCard(props) {
           </div>
         </div>
       </Modal>
+        </>
+      )}
+
     </>
   );
 }

@@ -13,6 +13,18 @@ router.get('/', async (req, res) => {
   }
 });
 
+// Get One Role
+//* /api/roles/:id
+router.get('/:id', async (req, res) => {
+  try {
+    const newTeam = await Role.findByPk(req.params.id);
+
+    res.status(200).json(newTeam);
+  } catch (err) {
+    res.status(400).json(err);
+  }
+});
+
 // Get a Specific Teams Roles
 //* GET /api/roles/team/:teamId
 router.get('/team/:teamId', async (req, res) => {
