@@ -242,6 +242,9 @@ p {
 .register-container .form-side {
     border-radius:0 20px 8px 0;
 }
+.login-container .form-side {
+    border-radius: 20px 0 0 8px;
+}
 .form-side h1 {
     font-weight: 700;
     letter-spacing: 3px;
