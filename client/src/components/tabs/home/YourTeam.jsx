@@ -24,6 +24,7 @@ export default function YourTeam(props) {
               return (
                 <>
                   <EmpCard
+                    manager={true}
                     managers={props.managers}
                     key={props.id}
                     id={props.id}
@@ -55,6 +56,7 @@ export default function YourTeam(props) {
               return (
                 <>
                   <EmpCard
+                    manager={false}
                     key={employee.id}
                     id={employee.id}
                     abbreviatedname={employeeNameAbbreviated}
