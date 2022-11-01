@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useAppContext } from '../utils/GlobalState';
+import Auth from '../utils/auth';
 
 export default function Navbar() {
   const [collapsed, toggleCollapse] = useState(true);
+  const [state, dispatch] = useAppContext();
 
   return (
     <nav>
@@ -12,9 +15,14 @@ export default function Navbar() {
         </Link>
       </div>
       <div className="navbar-links">
-        <Link to='/register'>
-          <div className='register-link'>Create Account</div>
-        </Link>
+        {state.isLoggedIn ? (
+          <>
+          </>
+        ) : (
+          <Link to='/register'>
+            <div className='register-link'>Create Account</div>
+          </Link>
+        )}
         <div className={collapsed ? "navbar-toggler" : "navbar-toggler open"} onClick={() => toggleCollapse(!collapsed)}>
           <i className="fa-solid fa-bars"></i><i className="fa-solid fa-chevron-down navbar-hover-arrow"></i>
           <div className={!collapsed ? "nav-link-container" : "nav-link-container collapse"}>
@@ -24,9 +32,16 @@ export default function Navbar() {
             <Link to='/contact' className='nav-button' id='contact-button'>
               <div className='contact-link'>Contact</div>
             </Link>
-            <Link to='/login' className='nav-button' id='login-button'>
-              <div className='login-link'>Login</div>
-            </Link>
+            {state.isLoggedIn ? (
+              <Link className='nav-button' id='login-button'>
+                <div className='login-link' onClick={Auth.logout}>Logout</div>
+              </Link>
+            ) : (
+              <Link to='/login' className='nav-button' id='login-button'>
+                <div className='login-link'>Login</div>
+              </Link>
+            )}
+            
           </div>
         </div>
       </div>

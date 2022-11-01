@@ -1,7 +1,14 @@
+import axios from "axios";
 import React, { useState } from "react";
 
 export default function Register({ handlePageChange }) {
-    const [formState, setFormState] = useState({ username: '', firstname: '' , lastname: '' , email: '' , password: '', passconfirm: '' });
+    const [formState, setFormState] = useState({ 
+      username: '', 
+      firstname: '' , 
+      lastname: '' , 
+      email: '' , 
+      password: '', 
+      passconfirm: '' });
   
     const handleChange = (event) => {
       const { name, value } = event.target;
@@ -14,20 +21,27 @@ export default function Register({ handlePageChange }) {
   
     const handleFormSubmit = async (event) => {
       event.preventDefault();
-
+      
       let username = formState.username.trim();
       let name = `${formState.firstname.trim()} ${formState.lastname.trim()}`;
       let email = formState.email.trim();
       let password = formState.password.trim();
       let passconfirm = formState.passconfirm.trim();
   
-      if(password === passconfirm) {
-        if(email.filter((letter) => letter === '@')) {
-          
+        if(username && name && email && password) {
+          await axios.post("/api/users/create", {
+            username: username,
+            firstlastname: name,
+            email: email,
+            password: password
+          })
+            .then((res) => {
+              console.log("Registration successful!");
+
+              handlePageChange("Home");
+            })
+            .catch(err => console.log(`Failed to login: ${err}`))
         }
-      } else {
-        console.alert("Passwords do not match!");
-      }
     };
     
   
@@ -78,7 +92,7 @@ export default function Register({ handlePageChange }) {
                   <div className='control'>
                     <input
                       className='input'
-                      type='teamname'
+                      type='text'
                       name='teamname'
                       placeholder="Your team's name"
                       value={formState.teamname}
@@ -86,7 +100,18 @@ export default function Register({ handlePageChange }) {
                   </div>
                 </div>
 
-                
+                <div className='field'>
+                  <label className='label'>Username:</label>
+                  <div className='control'>
+                    <input
+                      className='input'
+                      type='text'
+                      name='username'
+                      placeholder="Your desired username"
+                      value={formState.username}
+                      onChange={handleChange} />
+                  </div>
+                </div>
 
                 <div className='field'>
                   <label className='label'>Email address:</label>
@@ -114,7 +139,7 @@ export default function Register({ handlePageChange }) {
                       onChange={handleChange} />
                     <input
                       className='input password-input'
-                      type='passconfirm'
+                      type='password'
                       name='passconfirm'
                       placeholder="Re-enter"
                       value={formState.passconfirm}

@@ -42,8 +42,8 @@ export default function App() {
           </div>
           <Routes>
             <Route path='/' element={localStorage.getItem("teamID") ? <Home /> : <InitPrompt />} />
-            <Route path='/login' element={<Login />} />
-            <Route path='/register' element={<Register />} />
+            <Route path='/login' element={<Login handlePageChange={handlePageChange} />} />
+            <Route path='/register' element={<Register handlePageChange={handlePageChange} />} />
           </Routes>
         </main>
         <Footer />
