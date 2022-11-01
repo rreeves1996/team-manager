@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 export default function Register({ handlePageChange }) {
-    const [formState, setFormState] = useState({ username: '', firstname: '' , lastname: '' , email: '' , password: '' });
+    const [formState, setFormState] = useState({ username: '', firstname: '' , lastname: '' , email: '' , password: '', passconfirm: '' });
   
     const handleChange = (event) => {
       const { name, value } = event.target;
@@ -14,11 +14,20 @@ export default function Register({ handlePageChange }) {
   
     const handleFormSubmit = async (event) => {
       event.preventDefault();
+
+      let username = formState.username.trim();
+      let name = `${formState.firstname.trim()} ${formState.lastname.trim()}`;
+      let email = formState.email.trim();
+      let password = formState.password.trim();
+      let passconfirm = formState.passconfirm.trim();
   
-      setFormState({
-        teamname: '',
-        leadname: '',
-      });
+      if(password === passconfirm) {
+        if(email.filter((letter) => letter === '@')) {
+          
+        }
+      } else {
+        console.alert("Passwords do not match!");
+      }
     };
     
   
