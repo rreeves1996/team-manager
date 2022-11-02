@@ -11,6 +11,7 @@ export default function Login({ handlePageChange }) {
           ...formState,
           [name]: value,
       });
+      console.log(formState);
     };
   
     const handleFormSubmit = async (event) => {

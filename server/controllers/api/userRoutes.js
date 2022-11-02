@@ -63,7 +63,8 @@ router.put('/logout', (req, res) => {
     }
 });
 
-
+// Get all Users
+//* /api/users
 router.get('/', async (req, res) => {
     try {
        const users = await User.findAll()
