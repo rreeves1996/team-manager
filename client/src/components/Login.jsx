@@ -6,37 +6,37 @@ export default function Login({ handlePageChange }) {
   
     const handleChange = (event) => {
       const { name, value } = event.target;
-  
+
       setFormState({
-          ...formState,
-          [name]: value,
+        ...formState,
+        [name]: value,
       });
-      console.log(formState);
     };
-  
+
     const handleFormSubmit = async (event) => {
-        event.preventDefault();
+      event.preventDefault();
 
-        const userEmail = formState.email.trim();
-        const userPassword = formState.password.trim();
+      const userEmail = formState.email.trim();
+      const userPassword = formState.password.trim();
 
-        if(userEmail && userPassword) {
-            await axios.put('/api/users/login', {
-                email: userEmail,
-                password: userPassword
-            })
-                .then((res) => {
-                    console.log("Login successful!");
+      if (userEmail && userPassword) {
+        await axios
+          .put('/api/users/login', {
+            email: userEmail,
+            password: userPassword,
+          })
+          .then((res) => {
+            console.log('Login successful!');
 
-                    handlePageChange("Home");
-                })
-                .catch(err => console.log(`Failed to login: ${err}`))
-        }
-    
-        setFormState({
-            email: '',
-            password: '',
-        });
+            handlePageChange('Home');
+          })
+          .catch((err) => console.log(`Failed to login: ${err}`));
+      }
+
+      setFormState({
+        email: '',
+        password: '',
+      });
     };
     
   
