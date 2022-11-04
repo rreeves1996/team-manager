@@ -248,7 +248,7 @@ p {
 .register-container .form-side {
     border-radius:0 20px 8px 0;
 }
-.login-container .form-side {
+.login-container .form-side, .init-container .form-side {
     border-radius: 20px 0 0 8px;
 }
 
