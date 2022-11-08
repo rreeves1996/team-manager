@@ -1,109 +1,113 @@
-import axios from "axios";
-import React, { useState } from "react";
+import axios from 'axios';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-export default function Login({ handlePageChange }) {
-  const navigate = useNavigate();
-  const [formState, setFormState] = useState({ email: '', password: '' });
+export default function Login() {
+	const navigate = useNavigate();
 
-  const handleChange = (event) => {
-    const { name, value } = event.target;
+	const [formState, setFormState] = useState({ email: '', password: '' });
 
-    setFormState({
-      ...formState,
-      [name]: value,
-    });
-  };
+	const handleChange = (event) => {
+		const { name, value } = event.target;
 
-  const handleFormSubmit = async (event) => {
-    event.preventDefault();
+		setFormState({
+			...formState,
+			[name]: value,
+		});
+	};
 
-    const userEmail = formState.email.trim();
-    const userPassword = formState.password.trim();
+	const handleFormSubmit = async (event) => {
+		event.preventDefault();
 
-    if (userEmail && userPassword) {
-      await axios
-        .put('/api/users/login', {
-          email: userEmail,
-          password: userPassword,
-        })
-        .then((res) => {
-          console.log('Login successful!');
+		const userEmail = formState.email.trim();
+		const userPassword = formState.password.trim();
 
-          navigate('/', { replace: true });
-        })
-        .catch((err) => console.log(`Failed to login: ${err}`));
-    }
+		console.log(userEmail);
+		console.log(userPassword);
 
-    setFormState({
-      email: '',
-      password: '',
-    });
-  };
+		if (userEmail && userPassword) {
+			await axios
+				.post('/api/users/login', {
+					email: userEmail,
+					password: userPassword,
+				})
+				.then((res) => {
+					console.log(`Success! Payload: ${JSON.stringify(res)}`);
 
-  return (
-    <>
-      <div className='container login-container'>
-        <div className='form-side'>
-          <h1>Sign In</h1>
-          <h6>Enter your account information to continue</h6>
-          <form className='form-container' onSubmit={handleFormSubmit}>
-            <div className='login-input'>
-              <div className='field'>
-                <label className='label'>Email:</label>
-                <div className='control'>
-                  <input
-                    className='input'
-                    type='email'
-                    name='email'
-                    placeholder='Your email'
-                    autoComplete='off'
-                    value={formState.email}
-                    onChange={handleChange}
-                  />
-                </div>
-              </div>
+					navigate('/profile');
+				})
+				.catch((err) => console.log(`Failed to login: ${err}`));
+		}
 
-              <div className='field'>
-                <label className='label'>Password:</label>
-                <div className='control'>
-                  <input
-                    className='input'
-                    type='password'
-                    name='password'
-                    placeholder='Your password'
-                    autoComplete='off'
-                    value={formState.password}
-                    onChange={handleChange}
-                  />
-                </div>
-              </div>
-            </div>
+		setFormState({
+			email: '',
+			password: '',
+		});
+	};
 
-            <div className='button-container'>
-              <button className='form-button' type='submit'>
-                Login
-              </button>
-              <div className='divider form-divider'></div>
-              <div className='sub-container d-flex flex-column align-items-center mb-4'>
-                <p className='mt-1 mb-1'>Want to create a new account?</p>
-                <a href='#'>Register</a>
-              </div>
-            </div>
-          </form>
-        </div>
-        <div className='banner-side'>
-          <div className='brand'>
-            <h1>
-              Team<span className='ez'>EZ</span>
-              <i className='fa-solid fa-chalkboard-user brand-icon'></i>
-            </h1>
+	return (
+		<>
+			<div className='container login-container'>
+				<div className='form-side'>
+					<h1>Sign In</h1>
+					<h6>Enter your account information to continue</h6>
+					<form className='form-container' onSubmit={handleFormSubmit}>
+						<div className='login-input'>
+							<div className='field'>
+								<label className='label'>Email:</label>
+								<div className='control'>
+									<input
+										className='input'
+										type='email'
+										name='email'
+										placeholder='Your email'
+										autoComplete='off'
+										value={formState.email}
+										onChange={handleChange}
+									/>
+								</div>
+							</div>
 
-            <h5>Team Management</h5>
-          </div>
-          <div className='banner'></div>
-        </div>
-      </div>
-    </>
-  );
+							<div className='field'>
+								<label className='label'>Password:</label>
+								<div className='control'>
+									<input
+										className='input'
+										type='password'
+										name='password'
+										placeholder='Your password'
+										autoComplete='off'
+										value={formState.password}
+										onChange={handleChange}
+									/>
+								</div>
+							</div>
+						</div>
+
+						<div className='button-container'>
+							<button className='form-button' type='submit'>
+								Login
+							</button>
+							<div className='divider form-divider'></div>
+							<div className='sub-container d-flex flex-column align-items-center mb-4'>
+								<p className='mt-1 mb-1'>Want to create a new account?</p>
+								<a href='#'>Register</a>
+							</div>
+						</div>
+					</form>
+				</div>
+				<div className='banner-side'>
+					<div className='brand'>
+						<h1>
+							Team<span className='ez'>EZ</span>
+							<i className='fa-solid fa-chalkboard-user brand-icon'></i>
+						</h1>
+
+						<h5>Team Management</h5>
+					</div>
+					<div className='banner'></div>
+				</div>
+			</div>
+		</>
+	);
 }

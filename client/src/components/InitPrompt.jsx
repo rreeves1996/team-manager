@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from "axios";
 
-export default function InitPrompt({ handlePageChange }) {
+export default function InitPrompt() {
+  const navigate = useNavigate();
   const [formState, setFormState] = useState({ teamname: '', leadname: '' });
 
   const handleChange = (event) => {
@@ -26,17 +28,16 @@ export default function InitPrompt({ handlePageChange }) {
       await axios.all([reqOne, reqTwo])
         .then(async (res) => {
           const teamId = res[0].data.id;
-          localStorage.setItem("teamID", teamId);
 
           await axios.put(`/api/managers/${res[1].data.id}`, { team_id: teamId })
             .then((res) => {
               console.log(`Manager's team ID(${teamId}) updated`);
 
-              handlePageChange('Home');
-            })
-            .catch((err) => console.log(`Failed to update manager's team ID: ${err}`));
-        })
-        .catch((err) => console.log(`Failed to create team/manager: ${err}`));
+              navigate('/');
+          }).catch((err) => console.log(`Failed to update manager's team ID: ${err}`));
+
+          localStorage.setItem("teamID", teamId);
+      }).catch((err) => console.log(`Failed to create team/manager: ${err}`));
     } else if (!teamName || !managerName) {
       teamName = 'The Seattle Puddlechickens';
       managerName = 'Qweet Farrol';
@@ -47,17 +48,16 @@ export default function InitPrompt({ handlePageChange }) {
       await axios.all([reqOne, reqTwo])
         .then(async (res) => {
           const teamId = res[0].data.id;
-          localStorage.setItem("teamID", teamId);
-
+          
           await axios.put(`/api/managers/${res[1].data.id}`, { team_id: teamId, is_lead: true })
             .then((res) => {
               console.log(`Manager's team ID(${teamId}) updated`);
 
-              handlePageChange('Home');
-            })
-            .catch((err) => console.log(`Failed to update manager's team ID: ${err}`));
-        })
-        .catch((err) => console.log(`Failed to create team/manager: ${err}`));
+              navigate('/');
+          }).catch((err) => console.log(`Failed to update manager's team ID: ${err}`));
+
+          localStorage.setItem("teamID", teamId);
+      }).catch((err) => console.log(`Failed to create team/manager: ${err}`));
     }
 
     setFormState({

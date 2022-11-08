@@ -1,64 +1,44 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Navbar from './components/Navbar'
+import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import InitPrompt from './components/InitPrompt';
-import Home from './components/Home'
+import Home from './components/Home';
 import Register from './components/Register';
-import Login from './components/Login'
+import Login from './components/Login';
+import Profile from './components/Profile';
 import About from './components/About';
+
 import './assets/style/style.css';
 
 export default function App() {
-  const [page, changePage] = useState(() => {
-    if (localStorage.getItem('teamID')) {
-      return 'Home';
-    } else {
-      return 'Init';
-    }
-  });
+	const [page, changePage] = useState(() => {
+		if (localStorage.getItem('teamID')) {
+			return 'Home';
+		} else {
+			return 'Init';
+		}
+	});
 
-  const handlePageChange = (page) => changePage(page);
+	const handlePageChange = (page) => changePage(page);
 
-  // const renderPage = () => {
-  //   switch (page) {
-  //     case 'Init':
-  //       return <InitPrompt page={page} handlePageChange={handlePageChange} />;
-  //     case 'Home':
-  //       return <Home handlePageChange={handlePageChange} />;
-  //     default:
-  //       return <Home handlePageChange={handlePageChange} />;
-  //   }
-  // };
-
-  return (
-    <>
-      <Navbar />
-      <main>
-        <div className='mobile-background-container'>
-          <div className='mobile-background'></div>
-        </div>
-        <Routes>
-          <Route
-            path='/'
-            element={localStorage.getItem('teamID') ? <Home /> : <InitPrompt />}
-          />
-          <Route
-            path='/login'
-            element={<Login handlePageChange={handlePageChange} />}
-          />
-          <Route
-            path='/register'
-            element={<Register handlePageChange={handlePageChange} />}
-          />
-          <Route
-            path='/about'
-            element={<About handlePageChange={handlePageChange} />}
-          />
-        </Routes>
-      </main>
-      <Footer />
-    </>
-  );
+	return (
+		<>
+			<Navbar />
+			<main>
+				<div className='mobile-background-container'>
+					<div className='mobile-background'></div>
+				</div>
+				<Routes>
+					<Route path='/' element={<Home />} />
+					<Route path='/init' element={<InitPrompt />} />
+					<Route path='/login' element={<Login />} />
+					<Route path='/register' element={<Register />} />
+					<Route path='/profile' element={<Profile />} />
+					<Route path='/about' element={<About />} />
+				</Routes>
+			</main>
+			<Footer />
+		</>
+	);
 }
-
