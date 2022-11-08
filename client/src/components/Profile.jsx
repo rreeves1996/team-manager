@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { useAppContext } from '../utils/GlobalState';
 import Teams from './tabs/PTeams';
 import Settings from './tabs/PSettings';
 
 export default function Profile() {
 	const [loading, setLoading] = useState(true);
 	const [currentTab, setCurrentTab] = useState('Teams');
+	const [state, dispatch] = useAppContext();
 
 	const renderTab = () => {
 		if (currentTab === 'Teams') {
@@ -17,9 +20,15 @@ export default function Profile() {
 	const handleTabChange = (tab) => setCurrentTab(tab);
 
 	useEffect(() => {
-		const fetchData = () => {
-			console.log('hello');
+		const fetchData = async () => {
+			await axios
+				.get('/api/users')
+				.then((res) => {
+					console.log(`Success! Payload: ${JSON.stringify(res)}`);
+				})
+				.catch((err) => console.log(`Failed to login: ${err}`));
 
+			console.log(state.isLoggedIn);
 			setLoading(!loading);
 		};
 

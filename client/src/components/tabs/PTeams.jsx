@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import MyTeams from './profile/MyTeams';
-import TeamCard from '../cards/TeamCard';
+// import TeamCard from '../cards/TeamCard';
 
 export default function PTeams() {
 	return (

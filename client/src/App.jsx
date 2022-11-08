@@ -12,16 +12,6 @@ import About from './components/About';
 import './assets/style/style.css';
 
 export default function App() {
-	const [page, changePage] = useState(() => {
-		if (localStorage.getItem('teamID')) {
-			return 'Home';
-		} else {
-			return 'Init';
-		}
-	});
-
-	const handlePageChange = (page) => changePage(page);
-
 	return (
 		<>
 			<Navbar />

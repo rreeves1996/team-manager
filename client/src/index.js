@@ -6,10 +6,9 @@ import { AppProvider } from './utils/GlobalState';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <BrowserRouter>
-    <AppProvider>
-      <App />
-    </AppProvider>
-  </BrowserRouter>
+	<BrowserRouter>
+		<AppProvider>
+			<App />
+		</AppProvider>
+	</BrowserRouter>
 );
-

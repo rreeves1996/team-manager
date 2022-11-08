@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Auth from '../utils/auth';
 
 export default function Login() {
 	const navigate = useNavigate();
@@ -33,6 +34,9 @@ export default function Login() {
 				})
 				.then((res) => {
 					console.log(`Success! Payload: ${JSON.stringify(res)}`);
+
+					const token = Math.floor(Math.random() * 10);
+					Auth.login(token);
 
 					navigate('/profile');
 				})
