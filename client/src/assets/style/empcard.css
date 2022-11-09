@@ -1,166 +1,173 @@
 .emp-card {
-    display: flex;
-    justify-content: center; align-items: center;
-    cursor: pointer;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	cursor: pointer;
 
-    width: 250px;
-    margin: 8px;
-    filter: drop-shadow(1px 2px 2px rgba(0, 0, 0, 0.295));
-
-    
+	width: 250px;
+	margin: 8px;
+	filter: drop-shadow(1px 2px 2px rgba(0, 0, 0, 0.295));
 }
 .modal-content {
-    background-color: transparent !important;
-    border: none;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+	background-color: transparent !important;
+	border: none;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 .card-input {
-    height: 16px !important;
-    width: 50%;
-    margin: 0 3px;
+	height: 16px !important;
+	width: 50%;
+	margin: 0 3px;
 }
-#number-input1, #number-input2, #number-input3 {
-    text-align: center;
-    text-indent: 0;
+#number-input1,
+#number-input2,
+#number-input3 {
+	text-align: center;
+	text-indent: 0;
 }
-#number-input1, #number-input2 {
-    width: 30px;
+#number-input1,
+#number-input2 {
+	width: 30px;
 }
 #number-input3 {
-    width: 38px;
+	width: 38px;
 }
 .emp-card-modal-container {
-    background-color: white;
-    border-radius: 6px;
-    border-top-left-radius: 12px;
-    border-top-right-radius: 12px;
-    filter: drop-shadow(2px 3px 5px rgba(0, 0, 0, 0.404));
+	background-color: white;
+	border-radius: 6px;
+	border-top-left-radius: 12px;
+	border-top-right-radius: 12px;
+	filter: drop-shadow(2px 3px 5px rgba(0, 0, 0, 0.404));
 }
 
-.emp-card-header, .emp-card-header-modal {
-    display: flex;
-    padding: 13px;
-    width: 100%;
-    align-items: center;
-    text-align: center;
-    background-color:var(--blue);
-    color: white;
-    border-radius: 6px;
-    height: 100%;
-    transition: transform 0.2s,
-    background-color 0.2s;
+.emp-card-header,
+.emp-card-header-modal {
+	display: flex;
+	padding: 13px;
+	width: 100%;
+	align-items: center;
+	text-align: center;
+	background-color: var(--blue);
+	color: white;
+	border-radius: 6px;
+	height: 100%;
+	transition: transform 0.2s, background-color 0.2s;
 }
 .emp-card-header-modal {
-    border-radius: 0px;
-    border-top-left-radius: 6px;
-    border-top-right-radius: 6px;
+	border-radius: 0px;
+	border-top-left-radius: 6px;
+	border-top-right-radius: 6px;
 }
 .emp-card-header:hover {
-    transform: translateY(-2px);
-    background-color: #4d6b8d;
+	transform: translateY(-2px);
+	background-color: #4d6b8d;
 }
 .emp-card-header::before {
-    position: absolute;
-    display: flex;  justify-content: center;    align-items: center;
-    content: url("../magnifying-glass-3-64.png");
-    opacity: 0%;
+	position: absolute;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	content: url('../magnifying-glass-3-64.png');
+	opacity: 0%;
 
-    width: 100%;
-    height: 100%;
-    left: 0;
-    transition: opacity 300ms;
+	width: 100%;
+	height: 100%;
+	left: 0;
+	transition: opacity 300ms;
 }
 .emp-card-header:hover::before {
-    
+	opacity: 75%;
 
-    opacity: 75%;
-
-    transition: opacity 300ms;
-
+	transition: opacity 300ms;
 }
 .emp-picture {
-    display: flex;
-    justify-content: center; align-items: center;
-    width: 80px;
-    height: 80px;
-    border: 1px solid var(--off-white);
-    border-radius: 4px;
-    background-color: var(--blue-light);
-    margin-right: 13px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 80px;
+	height: 80px;
+	border: 1px solid var(--off-white);
+	border-radius: 4px;
+	background-color: var(--blue-light);
+	margin-right: 13px;
 }
 .emp-picture i {
-    margin: 0 auto;
-    font-size: 3em;
+	margin: 0 auto;
+	font-size: 3em;
 }
 .emp-info-header {
-    margin: 0 auto;
+	margin: 0 auto;
 }
 .emp-info-header strong {
-    font-family: 'Alumni Sans Pinstripe';
-    font-size: 2.5em;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    line-height: 1;
-    text-decoration: underline;
-    text-decoration-thickness: 1px;
-    text-underline-offset: 3px;
-    
+	font-family: 'Alumni Sans Pinstripe';
+	font-size: 2.5em;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+	line-height: 1;
+	text-decoration: underline;
+	text-decoration-thickness: 1px;
+	text-underline-offset: 3px;
 }
 .emp-info-header p {
-    font-size: .75em !important;
-    opacity: 75%;
+	font-size: 0.75em !important;
+	opacity: 75%;
 }
 .emp-card h6 {
-    margin: 0;
-    margin-top: 4px;
-    font-size: .8em;
+	margin: 0;
+	margin-top: 4px;
+	font-size: 0.8em;
 }
 .emp-contact-info {
-    color: var(--off-black);
-    font-size: .85em;
-    padding: 8px 13px;
+	color: var(--off-black);
+	font-size: 0.85em;
+	padding: 8px 13px;
 }
 .emp-contact-info p {
-    height: 18px;
-    display: flex; align-items: center;
-    width: 100%;
-    margin: 8px 5px !important;
+	height: 18px;
+	display: flex;
+	align-items: center;
+	width: 100%;
+	margin: 8px 5px !important;
 }
 .emp-contact-info p strong {
-    margin-right: .25rem;
+	margin-right: 0.25rem;
 }
-.emp-card-button-container{
-    padding: 5px 0;
+.emp-card-button-container {
+	padding: 5px 0;
 }
-.edit-button, .delete-button, .timezone-button, .submit-button {
-    background-color: transparent;
-    border: 2px solid var(--blue);
-    text-transform: uppercase;
-    font-size: .8em;
-    color: var(--blue);
-    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.089);
-    padding: 7px 10px;
-    margin: 0px 3px 0px 5px;
-    transition: all 0.2s;
+.edit-button,
+.delete-button,
+.timezone-button,
+.submit-button {
+	background-color: transparent;
+	border: 2px solid var(--blue);
+	text-transform: uppercase;
+	font-size: 0.8em;
+	color: var(--blue);
+	text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.089);
+	padding: 7px 10px;
+	margin: 0px 3px 0px 5px;
+	transition: all 0.2s;
 }
 .timezone-button {
-    background-color: var(--blue);
-    border: none;
-    font-size: .7em;
-    color: var(--off-white);
-    padding-right: 8px;
+	background-color: var(--blue);
+	border: none;
+	font-size: 0.7em;
+	color: var(--off-white);
+	padding-right: 8px;
 }
-.edit-button:hover, .delete-button:hover, .submit-button:hover {
-    filter: none;
-    color: var(--off-white);
-    background-color: var(--blue);
+.edit-button:hover,
+.delete-button:hover,
+.submit-button:hover {
+	filter: none;
+	color: var(--off-white);
+	background-color: var(--blue);
 }
 .confirm {
-    color: rgb(209, 45, 45);
-    border: 2px solid rgb(209, 45, 45);
+	color: rgb(209, 45, 45);
+	border: 2px solid rgb(209, 45, 45);
 }
 .confirm:hover {
-    background-color: rgb(209, 45, 45);
+	background-color: rgb(209, 45, 45);
 }

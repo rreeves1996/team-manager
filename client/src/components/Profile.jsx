@@ -1,18 +1,21 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, createContext } from 'react';
 import { useAppContext } from '../utils/GlobalState';
 import axios from 'axios';
 import Auth from '../utils/auth';
-import Teams from './tabs/PTeams';
+import General from './tabs/PGeneral';
 import Settings from './tabs/PSettings';
+
+export const UserContext = createContext();
 
 export default function Profile() {
 	const [loading, setLoading] = useState(true);
-	const [currentTab, setCurrentTab] = useState('Teams');
+	const [currentTab, setCurrentTab] = useState('General');
+	const [userData, setUserData] = useState({});
 	const [state, dispatch] = useAppContext();
 
 	const renderTab = () => {
-		if (currentTab === 'Teams') {
-			return <Teams />;
+		if (currentTab === 'General') {
+			return <General />;
 		} else if (currentTab === 'Settings') {
 			return <Settings />;
 		}
@@ -24,12 +27,10 @@ export default function Profile() {
 		const fetchData = async () => {
 			const user = Auth.getProfile();
 
-			console.log();
-
 			await axios
 				.get(`/api/users/${user.data.id}`)
 				.then((res) => {
-					console.log(`Success! Payload: ${JSON.stringify(res.data)}`);
+					setUserData(res.data);
 				})
 				.catch((err) => console.log(`Failed to login: ${err}`));
 
@@ -51,10 +52,6 @@ export default function Profile() {
 						<div className='row'>
 							<div className='header-text'>
 								<h1>My Profile</h1>
-								<h4>
-									<i className='fa-solid fa-user'></i>
-									Username
-								</h4>
 							</div>
 						</div>
 					</header>
@@ -62,9 +59,9 @@ export default function Profile() {
 						<button
 							className='tab-button'
 							onClick={() => {
-								handleTabChange('Teams');
+								handleTabChange('General');
 							}}>
-							My Teams
+							General
 						</button>
 						<button
 							className='tab-button'
@@ -74,7 +71,9 @@ export default function Profile() {
 							Settings
 						</button>
 					</div>
-					<div className='profile-container'>{renderTab()}</div>
+					<UserContext.Provider value={userData}>
+						<div className='profile-container'>{renderTab()}</div>
+					</UserContext.Provider>
 				</>
 			)}
 		</>

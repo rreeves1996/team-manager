@@ -21,7 +21,9 @@ export default function Navbar() {
 			</div>
 			<div className='navbar-links'>
 				{state.isLoggedIn ? (
-					<></>
+					<Link to='/profile'>
+						<div className='register-link'>My Profile</div>
+					</Link>
 				) : (
 					<Link to='/register'>
 						<div className='register-link'>Create Account</div>
