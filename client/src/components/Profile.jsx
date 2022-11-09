@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import { useAppContext } from '../utils/GlobalState';
+import axios from 'axios';
+import Auth from '../utils/auth';
 import Teams from './tabs/PTeams';
 import Settings from './tabs/PSettings';
 
@@ -21,14 +22,17 @@ export default function Profile() {
 
 	useEffect(() => {
 		const fetchData = async () => {
+			const user = Auth.getProfile();
+
+			console.log();
+
 			await axios
-				.get('/api/users')
+				.get(`/api/users/${user.data.id}`)
 				.then((res) => {
-					console.log(`Success! Payload: ${JSON.stringify(res)}`);
+					console.log(`Success! Payload: ${JSON.stringify(res.data)}`);
 				})
 				.catch((err) => console.log(`Failed to login: ${err}`));
 
-			console.log(state.isLoggedIn);
 			setLoading(!loading);
 		};
 

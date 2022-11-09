@@ -1,6 +1,6 @@
-import axios from 'axios';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import Auth from '../utils/auth';
 
 export default function Login() {
@@ -33,13 +33,12 @@ export default function Login() {
 					password: userPassword,
 				})
 				.then((res) => {
-					console.log(`Success! Payload: ${JSON.stringify(res)}`);
-
-					const token = Math.floor(Math.random() * 10);
-					Auth.login(token);
+					console.log(`Success! Token: ${res.data.token}`);
+					Auth.login(res.data.token);
 
 					navigate('/profile');
 				})
+				.finally(() => navigate(0))
 				.catch((err) => console.log(`Failed to login: ${err}`));
 		}
 

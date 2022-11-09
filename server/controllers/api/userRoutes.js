@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const { User, Team } = require('../../models');
+const { signToken } = require('../../utils/auth');
 
 //? https://webdeasy.de/en/complete-login-system-with-node-js-vue-js-restapi-jwt-part-1-2/
 
@@ -44,15 +45,25 @@ router.post('/login', async (req, res) => {
 			return;
 		}
 
+		const user = {
+			id: userData.id,
+			email: userData.email,
+			password: userData.password,
+		};
+		const token = signToken(user);
+
 		req.session.save(() => {
 			req.session.user_id = userData.id;
 			req.session.logged_in = true;
+			req.session.token = token;
 
 			console.log(req.session);
 
-			res
-				.status(200)
-				.json({ user: userData, message: 'You are now logged in!' });
+			res.status(200).json({
+				user: userData,
+				token: req.session.token,
+				message: 'You are now logged in!',
+			});
 		});
 	} catch (err) {
 		res.status(500).json(err);
