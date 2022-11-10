@@ -16,7 +16,7 @@ export default function Summary(props) {
 				</h5>
 			</div>
 			<div className='divider'></div>
-			<div className='card-body account-info'>
+			<div className='card-body'>
 				<p>
 					Your team has <strong>{props.employees.length}</strong> employees{' '}
 				</p>

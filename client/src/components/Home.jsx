@@ -1,13 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, createContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import HomeTab from './tabs/HomeTab';
 import ManageTab from './tabs/ManageTab';
-import { createContext } from 'react';
 
 export const DataContext = createContext();
 
-export default function InitPrompt() {
+export default function Home(props) {
 	const navigate = useNavigate();
 
 	const [loading, setLoading] = useState(true);
@@ -32,30 +31,12 @@ export default function InitPrompt() {
 
 	useEffect(() => {
 		const fetchData = async () => {
-			await axios
-				.get('/api/teams/')
-				.then(async (res) => {
-					const prevTeam = localStorage.getItem('teamID');
+			const reqTeam = localStorage.getItem('teamID');
 
-					if (prevTeam) {
-						await axios
-							.get(`/api/teams/${prevTeam}`)
-							.then((res) => {
-								setTeamData(res.data);
-							})
-							.catch((err) =>
-								console.error(`Failed to get team with specified ID: ${err}`)
-							);
-					} else {
-						await axios
-							.get(`/api/teams/${res.data.length}`)
-							.then((res) => {
-								setTeamData(res.data);
-							})
-							.catch((err) =>
-								console.error(`Failed to get team with specified ID: ${err}`)
-							);
-					}
+			await axios
+				.get(`/api/teams/${reqTeam}`)
+				.then(async (res) => {
+					setTeamData(res.data);
 				})
 				.catch((err) => console.error(`Failed to get teams: ${err}`));
 

@@ -4,6 +4,7 @@ import axios from "axios";
 
 export default function InitPrompt() {
   const navigate = useNavigate();
+
   const [formState, setFormState] = useState({ teamname: '', leadname: '' });
 
   const handleChange = (event) => {
@@ -31,7 +32,7 @@ export default function InitPrompt() {
 
           await axios.put(`/api/managers/${res[1].data.id}`, { team_id: teamId })
             .then((res) => {
-              console.log(`Manager's team ID(${teamId}) updated`);
+              console.log(`Manager's team ID(${teamId}) updated: ${res}`);
 
               navigate('/');
           }).catch((err) => console.log(`Failed to update manager's team ID: ${err}`));

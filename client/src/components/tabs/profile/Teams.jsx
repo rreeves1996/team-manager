@@ -6,23 +6,27 @@ import TeamCard from '../../cards/TeamCard';
 
 export default function Teams() {
 	const [loading, setLoading] = useState(true);
-	const teams = [];
+	const [teamData, setTeamData] = useState([]);
 	const userData = useContext(UserContext);
 
 	useEffect(() => {
+		const teams = [];
+
 		Promise.all(
 			userData.teams.map((team) =>
 				axios
 					.get(`/api/teams/${team.id}`)
 					.then((res) => {
 						teams.push(res.data);
-						console.log(teams);
 					})
 					.catch((err) => console.log(`GET failed: ${err}`))
 			)
-		).then((data) => {
-			setLoading(!loading);
-		});
+		)
+			.then((data) => setTeamData(teams))
+			.finally(() => {
+				setLoading(!loading);
+				console.log(teamData);
+			});
 	}, []);
 
 	return (
@@ -43,9 +47,9 @@ export default function Teams() {
 						<></>
 					) : (
 						<>
-							{teams.map((team) => (
+							{userData.teams.map((team, index) => (
 								<>
-									<h1>heelods</h1>
+									<TeamCard team={teamData[index]} />
 								</>
 							))}
 						</>
