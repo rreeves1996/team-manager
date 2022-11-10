@@ -37,6 +37,7 @@ export default function Home(props) {
 				.get(`/api/teams/${reqTeam}`)
 				.then(async (res) => {
 					setTeamData(res.data);
+					console.log(res.data);
 				})
 				.catch((err) => console.error(`Failed to get teams: ${err}`));
 

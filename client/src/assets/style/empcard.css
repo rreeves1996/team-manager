@@ -136,6 +136,9 @@
 .emp-card-button-container {
 	padding: 5px 0;
 }
+.phone-missing {
+	display: flex;
+}
 .edit-button,
 .delete-button,
 .timezone-button,

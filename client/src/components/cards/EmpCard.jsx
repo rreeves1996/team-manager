@@ -1,178 +1,201 @@
 import React, { useState, useEffect } from 'react';
+import { BsExclamationLg } from 'react-icons/bs';
 import Modal from 'react-bootstrap/Modal';
 import axios from 'axios';
-import "../../assets/style/empcard.css"
+import '../../assets/style/empcard.css';
 
 function EmpPhoneNumber(props) {
-  return (
-    <>
-      <p>
-        {props.header ? (
-          <>
-          </>
-        ) : (
-          <>
-            <strong>Phone #:</strong>
-          </>
-        )}
-        {`(${props.number1}) ${props.number2}-${props.number3}`}
-      </p>
-    </>
-  )
+	return (
+		<>
+			<p>
+				{props.header ? (
+					<></>
+				) : (
+					<>
+						<strong>Phone #:</strong>
+					</>
+				)}
+				{props.number1 === '' ? (
+					<>
+						<h6 className='phone-missing'>
+							<BsExclamationLg className='alert-icon' /> Phone # missing
+						</h6>
+					</>
+				) : (
+					<>{`(${props.number1}) ${props.number2}-${props.number3}`}</>
+				)}
+			</p>
+		</>
+	);
 }
 
 function EmpEmail(props) {
-  return (
-    <>
-      <p>
-        <strong>Email:</strong> {props.email}
-      </p>
-    </>
-  )
+	return (
+		<>
+			<p>
+				<strong>Email:</strong> {props.email}
+			</p>
+		</>
+	);
 }
 
 function EmpTimeZone(props) {
-  return (
-    <>
-      <p>
-        <strong>Time:</strong> UTC -{props.timezone ? props.timezone : "0"}:00
-      </p>
-    </>
-  )
+	return (
+		<>
+			<p>
+				<strong>Time:</strong> UTC -{props.timezone ? props.timezone : '0'}:00
+			</p>
+		</>
+	);
 }
 
 export default function EmpCard(props) {
-  const [formState, setFormState] = useState({ phone1: '', phone2: '', phone3: '', email: '', timezone: '', });
-  const [show, setShow] = useState(false);
-  const [deleteConfirm, showDeleteConfirm] = useState(false);
-  const [editing, setEditing] = useState(false);
-  const [loading, setLoading] = useState(true);
-  const [empRole, setEmpRole] = useState();
+	const [formState, setFormState] = useState({
+		phone1: '',
+		phone2: '',
+		phone3: '',
+		email: '',
+		timezone: '',
+	});
+	const [show, setShow] = useState(false);
+	const [deleteConfirm, showDeleteConfirm] = useState(false);
+	const [editing, setEditing] = useState(false);
+	const [loading, setLoading] = useState(true);
+	const [empRole, setEmpRole] = useState();
 
-  const [phoneNumber, setPhoneNumber] = useState(() => props.number ? 
-    ({ 
-      groupOne: props.number.slice(0,3), 
-      groupTwo: props.number.slice(3,6), 
-      groupThree: props.number.slice(6,10) 
-    }) : ({
-      groupOne: "", 
-      groupTwo: "", 
-      groupThree: ""
-    })
-  )
-  
-  
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+	const [phoneNumber, setPhoneNumber] = useState(() =>
+		props.number
+			? {
+					groupOne: props.number.slice(0, 3),
+					groupTwo: props.number.slice(3, 6),
+					groupThree: props.number.slice(6, 10),
+			  }
+			: {
+					groupOne: '',
+					groupTwo: '',
+					groupThree: '',
+			  }
+	);
 
-  const handleChange = (event) => {
-    const { name, value } = event.target;
+	const handleClose = () => setShow(false);
+	const handleShow = () => setShow(true);
 
-    setFormState({
-      ...formState,
-      [name]: value,
-    });
-  };
+	const handleChange = (event) => {
+		const { name, value } = event.target;
 
-  const handleEditSubmit = async (event) => {
-    event.preventDefault();
+		setFormState({
+			...formState,
+			[name]: value,
+		});
+	};
 
-    const phonenumbers = [formState.phone1.trim(), formState.phone2.trim(), formState.phone3.trim()];
-    const email = formState.email.trim();
+	const handleEditSubmit = async (event) => {
+		event.preventDefault();
 
-    if(phonenumbers && email) {
-      if(phonenumbers[0].length === 3 && phonenumbers[1].length === 3 && phonenumbers[2].length === 4) {
-        const number = phonenumbers[0] + phonenumbers[1] + phonenumbers[2];
+		const phonenumbers = [
+			formState.phone1.trim(),
+			formState.phone2.trim(),
+			formState.phone3.trim(),
+		];
+		const email = formState.email.trim();
 
-        await axios.put(`/api/managers/${props.managers[0].id}`, { phone: number, email: email })
-          .then((res) => {
-            console.log(`Manager updated`);
+		if (phonenumbers && email) {
+			if (
+				phonenumbers[0].length === 3 &&
+				phonenumbers[1].length === 3 &&
+				phonenumbers[2].length === 4
+			) {
+				const number = phonenumbers[0] + phonenumbers[1] + phonenumbers[2];
 
-            setPhoneNumber((phoneNumber) => (
-              { 
-                groupOne: props.number.slice(0,3), 
-                groupTwo: props.number.slice(3,6), 
-                groupThree: props.number.slice(6,10) 
-              }
-            ));
-          })
-          .catch((err) => console.log(`Failed to update manager: ${err}`));
-      }
-    }
+				await axios
+					.put(`/api/managers/${props.managers[0].id}`, {
+						phone: number,
+						email: email,
+					})
+					.then((res) => {
+						console.log(`Manager updated`);
 
-    setFormState(
-      { 
-        phone1: phoneNumber.groupOne, 
-        phone2: phoneNumber.groupTwo, 
-        phone3: phoneNumber.groupThree, 
-        email: email, 
-        timezone: '' 
-      });
+						setPhoneNumber((phoneNumber) => ({
+							groupOne: props.number.slice(0, 3),
+							groupTwo: props.number.slice(3, 6),
+							groupThree: props.number.slice(6, 10),
+						}));
+					})
+					.catch((err) => console.log(`Failed to update manager: ${err}`));
+			}
+		}
 
-      setEditing(!editing);
-  }
+		setFormState({
+			phone1: phoneNumber.groupOne,
+			phone2: phoneNumber.groupTwo,
+			phone3: phoneNumber.groupThree,
+			email: email,
+			timezone: '',
+		});
 
-  useEffect(() => {
-    const getRole = async () => {
-      await axios.get(`/api/roles/${props.role}`)
-        .then((res) => setEmpRole(res.data.title))
-        .catch((err) => console.log(err));
-      setLoading(!loading);
-    }
-    
-    getRole();
-  }, [])
+		setEditing(!editing);
+	};
 
-  const deleteEmployee = (employee) => {
-    if (employee.role === 'manager') {
-      let index = employee.id - 1;
-      delete props.managers[index];
-    }
-  };
+	useEffect(() => {
+		const getRole = async () => {
+			await axios
+				.get(`/api/roles/${props.role}`)
+				.then((res) => setEmpRole(res.data.title))
+				.catch((err) => console.log(err));
+			setLoading(!loading);
+		};
 
-  return (
-    <>
-      {loading ? (
-        <>
-        </>
-      ) : (
-        <>
-          <div className='emp-card' onClick={handleShow}>
-            <div className='emp-card-header'>
-              <div className='emp-picture'>
-                {props.picture ? (
-                  <>
-                    <img src={props.picture} alt='' />
-                  </>
-                ) : (
-                  <>
-                    <i className='fa-solid fa-user'></i>
-                  </>
-                )}
-              </div>
-              <div className='emp-info-header'>
-                <h6 className='emp-name'>
-                  <strong>{props.abbreviatedname}</strong>
-                </h6>
-                <h6 className='emp-role'>
-                  {!empRole ? 'Team Lead' : empRole}
-                </h6>
-                {props.manager ? (
-                  <>
-                  <EmpPhoneNumber header={true}
-                    number1={phoneNumber.groupOne} 
-                    number2={phoneNumber.groupTwo} 
-                    number3={phoneNumber.groupThree} />
-                  </>
-                ) : (
-                  <>
-                  </>
-                )}
-              </div>
-            </div>
-          </div>
+		getRole();
+	}, []);
 
-          {/* <Modal
+	const deleteEmployee = (employee) => {
+		if (employee.role === 'manager') {
+			let index = employee.id - 1;
+			delete props.managers[index];
+		}
+	};
+
+	return (
+		<>
+			{loading ? (
+				<></>
+			) : (
+				<>
+					<div className='emp-card' onClick={handleShow}>
+						<div className='emp-card-header'>
+							<div className='emp-picture'>
+								{props.picture ? (
+									<>
+										<img src={props.picture} alt='' />
+									</>
+								) : (
+									<>
+										<i className='fa-solid fa-user'></i>
+									</>
+								)}
+							</div>
+							<div className='emp-info-header'>
+								<h6 className='emp-name'>
+									<strong>{props.abbreviatedname}</strong>
+								</h6>
+								<h6 className='emp-role'>{!empRole ? 'Team Lead' : empRole}</h6>
+								{props.manager ? (
+									<>
+										<EmpPhoneNumber
+											header={true}
+											number1={phoneNumber.groupOne}
+											number2={phoneNumber.groupTwo}
+											number3={phoneNumber.groupThree}
+										/>
+									</>
+								) : (
+									<></>
+								)}
+							</div>
+						</div>
+					</div>
+
+					{/* <Modal
             {...props}
             aria-labelledby='contained-modal-title-vcenter'
             centered
@@ -291,10 +314,8 @@ export default function EmpCard(props) {
               </div>
             </div>
           </Modal> */}
-        </>
-      )}
-
-    </>
-  );
+				</>
+			)}
+		</>
+	);
 }
-

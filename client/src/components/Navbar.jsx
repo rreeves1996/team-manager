@@ -10,7 +10,11 @@ export default function Navbar() {
 	return (
 		<nav>
 			<div className='navbar-brand'>
-				<Link to='/' className='index-button'>
+				<Link
+					to={
+						state.isLoggedIn || localStorage.getItem('teamID') ? '/' : '/init'
+					}
+					className='index-button'>
 					<h3 className='brand-logo'>
 						<span className='brand-text'>
 							Team<span className='ez'>EZ</span>
