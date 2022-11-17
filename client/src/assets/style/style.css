@@ -821,7 +821,13 @@ header i:active,
 .role-select {
 	width: 78%;
 }
-
+.role-select:active {
+	border-color: rgb(118, 118, 118) !important;
+	border-radius: 3px;
+}
+.role-select:focus {
+	outline: none;
+}
 @media screen and (max-width: 768px) {
 	.mobile-background-container {
 		position: absolute;

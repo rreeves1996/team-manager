@@ -1,4 +1,5 @@
 import React from 'react';
+import { v4 as uuidv4 } from 'uuid';
 import EmpCard from '../../cards/EmpCard';
 
 export default function YourTeam(props) {
@@ -27,13 +28,11 @@ export default function YourTeam(props) {
 								<>
 									<EmpCard
 										manager={true}
-										managers={props.managers}
-										key={props.id}
-										id={props.id}
+										key={uuidv4()}
+										id={manager.id}
 										abbreviatedname={managerNameAbbreviated}
 										name={manager.name}
-										role={manager.role}
-										lead={manager.lead}
+										lead={manager.lead ? true : false}
 										number={manager.phone}
 										email={manager.email}
 										timeZone={manager.timeZone}
@@ -57,7 +56,7 @@ export default function YourTeam(props) {
 								<>
 									<EmpCard
 										manager={false}
-										key={employee.id}
+										key={uuidv4()}
 										id={employee.id}
 										abbreviatedname={employeeNameAbbreviated}
 										name={employee.name}

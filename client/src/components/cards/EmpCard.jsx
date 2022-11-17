@@ -33,7 +33,7 @@ function EmpEmail(props) {
 	return (
 		<>
 			<p>
-				<strong>Email:</strong> {props.email}
+				<strong>Email:</strong> {props.email ? props.email : 'No email found'}
 			</p>
 		</>
 	);
@@ -97,6 +97,7 @@ export default function EmpCard(props) {
 			formState.phone2.trim(),
 			formState.phone3.trim(),
 		];
+
 		const email = formState.email.trim();
 
 		if (phonenumbers && email) {
@@ -138,11 +139,17 @@ export default function EmpCard(props) {
 
 	useEffect(() => {
 		const getRole = async () => {
-			await axios
-				.get(`/api/roles/${props.role}`)
-				.then((res) => setEmpRole(res.data.title))
-				.catch((err) => console.log(err));
-			setLoading(!loading);
+			if (props.role) {
+				await axios
+					.get(`/api/roles/${props.role}`)
+					.then((res) => setEmpRole(res.data.title))
+					.finally(() => setLoading(!loading))
+					.catch((err) => console.log(err));
+			} else {
+				setEmpRole('Manager');
+				setLoading(!loading);
+				console.log(props);
+			}
 		};
 
 		getRole();
@@ -178,7 +185,14 @@ export default function EmpCard(props) {
 								<h6 className='emp-name'>
 									<strong>{props.abbreviatedname}</strong>
 								</h6>
-								<h6 className='emp-role'>{!empRole ? 'Team Lead' : empRole}</h6>
+								{props.manager ? (
+									<h6 className='emp-role'>
+										{props.lead ? 'Team Lead' : 'Manager'}
+									</h6>
+								) : (
+									<h6 className='emp-role'>{empRole}</h6>
+								)}
+
 								{props.manager ? (
 									<>
 										<EmpPhoneNumber
@@ -195,125 +209,150 @@ export default function EmpCard(props) {
 						</div>
 					</div>
 
-					{/* <Modal
-            {...props}
-            aria-labelledby='contained-modal-title-vcenter'
-            centered
-            show={show}
-            onHide={() => {
-              handleClose();
-              setTimeout(() => {
-                showDeleteConfirm(false);
-                setEditing(false);
-              }, 300);
-            }}>
-            <div className='emp-card-modal-container'>
-              <i className='fa-solid fa-xmark exit-button' onClick={() => handleClose()}></i>
-              <div className='emp-card-header-modal'>
-                <div className='emp-picture'>
-                  {props.picture ? (
-                    <>
-                      <img src={props.picture} alt='' />
-                    </>
-                  ) : (
-                    <>
-                      <i className='fa-solid fa-user'></i>
-                    </>
-                  )}
-                </div>
-                <div className='emp-info-header'>
-                  <h6 className='emp-name'>
-                    <strong>{props.name}</strong>
-                  </h6>
-                  <h6 className='emp-role'>
-                    {!empRole ? 'Team Lead' : empRole}
-                  </h6>
-                </div>
-              </div>
-              <div className='emp-contact-info'>
-                {props.manager ? (
-                  <>
-                    {editing ? (
-                      <>
-                        <form className='card-edit' onSubmit={handleEditSubmit}>
-                          <p>
-                            <strong>Phone #:</strong>
-                            <input type="text" 
-                              className='card-input number-input' 
-                              id="number-input1"
-                              name='phone1'
-                              value={formState.phone1}
-                              onChange={handleChange} />-
-                            <input type="text" 
-                              className='card-input number-input' 
-                              id="number-input2"
-                              name='phone2'
-                              value={formState.phone2}
-                              onChange={handleChange} />-
-                            <input type="text" 
-                              className='card-input number-input' 
-                              id="number-input3"
-                              name='phone3'
-                              value={formState.phone3}
-                              onChange={handleChange} />
-                          </p>
-                          <p>
-                            <strong>Email:</strong>
-                            <input type="text" 
-                              className='card-input'
-                              name='email'
-                              value={formState.email}
-                              onChange={handleChange} />
-                          </p>
-                          <p>
-                            <strong>Time:</strong> 
-                            <button className='timezone-button'>Timezones <i className='fa-solid fa-caret-down'></i></button>
-                          </p>
-                          <div className='emp-card-button-container'>
-                            <button 
-                              className='edit-button' 
-                              onClick={() => setEditing(!editing)}>
-                                Cancel
-                            </button>
-                            <button 
-                              className='submit-button' 
-                              type='submit'>
-                                Submit
-                            </button>
-                          </div>
-                        </form>
-                      </>
-                    ) : (
-                      <>
-                        <EmpPhoneNumber header={false}
-                          number1={phoneNumber.groupOne} 
-                          number2={phoneNumber.groupTwo} 
-                          number3={phoneNumber.groupThree} />
-                        <EmpEmail email={props.email} />
-                        <EmpTimeZone timezone={props.timeZone} />
-                        <div className='emp-card-button-container'>
-                          <button 
-                            className='edit-button' 
-                            onClick={() => setEditing(!editing)}>
-                              Edit
-                          </button>
+					<Modal
+						aria-labelledby='contained-modal-title-vcenter'
+						centered
+						show={show}
+						onHide={() => {
+							handleClose();
+							setTimeout(() => {
+								showDeleteConfirm(false);
+								setEditing(false);
+							}, 300);
+						}}>
+						<div className='emp-card-modal-container'>
+							<i
+								className='fa-solid fa-xmark exit-button'
+								onClick={() => handleClose()}></i>
+							<div className='emp-card-header-modal'>
+								<div className='emp-picture'>
+									{props.picture ? (
+										<>
+											<img src={props.picture} alt='' />
+										</>
+									) : (
+										<>
+											<i className='fa-solid fa-user'></i>
+										</>
+									)}
+								</div>
+								<div className='emp-info-header'>
+									<h6 className='emp-name'>
+										<strong>{props.name}</strong>
+									</h6>
+									{props.manager ? (
+										<h6 className='emp-role'>
+											{props.lead ? 'Team Lead' : 'Manager'}
+										</h6>
+									) : (
+										<h6 className='emp-role'>{empRole}</h6>
+									)}
+								</div>
+							</div>
+							<div className='emp-contact-info'>
+								{props.manager ? (
+									<>
+										{editing ? (
+											<>
+												<form className='card-edit' onSubmit={handleEditSubmit}>
+													<p>
+														<strong>Phone #:</strong>
+														<input
+															type='text'
+															className='card-input number-input'
+															id='number-input1'
+															name='phone1'
+															value={formState.phone1}
+															onChange={handleChange}
+														/>
+														-
+														<input
+															type='text'
+															className='card-input number-input'
+															id='number-input2'
+															name='phone2'
+															value={formState.phone2}
+															onChange={handleChange}
+														/>
+														-
+														<input
+															type='text'
+															className='card-input number-input'
+															id='number-input3'
+															name='phone3'
+															value={formState.phone3}
+															onChange={handleChange}
+														/>
+													</p>
+													<p>
+														<strong>Email:</strong>
+														<input
+															type='text'
+															className='card-input'
+															name='email'
+															value={formState.email}
+															onChange={handleChange}
+														/>
+													</p>
+													<p>
+														<strong>Time:</strong>
+														<button className='timezone-button'>
+															Timezones{' '}
+															<i className='fa-solid fa-caret-down'></i>
+														</button>
+													</p>
+													<div className='emp-card-button-container'>
+														<button
+															className='edit-button'
+															onClick={() => setEditing(!editing)}>
+															Cancel
+														</button>
+														<button className='submit-button' type='submit'>
+															Submit
+														</button>
+													</div>
+												</form>
+											</>
+										) : (
+											<>
+												<EmpPhoneNumber
+													header={false}
+													number1={phoneNumber.groupOne}
+													number2={phoneNumber.groupTwo}
+													number3={phoneNumber.groupThree}
+												/>
+												<EmpEmail email={props.email} />
+												<EmpTimeZone timezone={props.timeZone} />
+												<div className='emp-card-button-container'>
+													<button
+														className='edit-button'
+														onClick={() => setEditing(!editing)}>
+														Edit
+													</button>
 
-                          <button
-                            className={deleteConfirm ? 'delete-button confirm' : 'delete-button'}
-                            onClick={deleteConfirm ? deleteEmployee(props) : () => showDeleteConfirm(true)}>
-                              {deleteConfirm ? 'Are you sure?' : 'Delete'}
-                          </button>
-                        </div>
-                      </>
-                    )}
-                  </>
-                ) : (
-                  <>
-                  </>
-                )}
-              </div>
-            </div>
-          </Modal> */}
+													<button
+														className={
+															deleteConfirm
+																? 'delete-button confirm'
+																: 'delete-button'
+														}
+														onClick={
+															deleteConfirm
+																? deleteEmployee(props)
+																: () => showDeleteConfirm(true)
+														}>
+														{deleteConfirm ? 'Are you sure?' : 'Delete'}
+													</button>
+												</div>
+											</>
+										)}
+									</>
+								) : (
+									<></>
+								)}
+							</div>
+						</div>
+					</Modal>
 				</>
 			)}
 		</>
