@@ -17,16 +17,21 @@ export default function Info() {
 					<p>
 						<strong>Username:</strong> {userData.username}
 					</p>
-					<p>
-						<strong>Email:</strong> {userData.email}
-					</p>
+
 					<p>
 						<strong>Name:</strong> {userData.name}
 					</p>
+
+					<p>
+						<strong>Email:</strong> {userData.email}
+					</p>
+
 					<p>
 						<strong>Total Teams:</strong> {userData.teams.length}
 					</p>
+
 					<div className='divider'></div>
+
 					<p>
 						You can currently create{' '}
 						<strong>{allowedTeams - userData.teams.length}</strong> more teams.

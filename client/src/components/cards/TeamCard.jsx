@@ -25,7 +25,7 @@ export default function TeamCard(props) {
 						</h3>
 						<p className='tc-header-manager'>
 							<AiOutlineRight className='right-caret' />
-							team led by <strong>{props.team.manager.name}</strong>
+							Team led by <strong>{props.team.manager.name}</strong>
 						</p>
 					</div>
 				</div>
