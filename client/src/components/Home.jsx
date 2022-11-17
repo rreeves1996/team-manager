@@ -1,5 +1,7 @@
 import React, { useState, useEffect, createContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { FaUser } from 'react-icons/fa';
+import { HiPencilSquare } from 'react-icons/hi2';
 import axios from 'axios';
 import HomeTab from './tabs/HomeTab';
 import ManageTab from './tabs/ManageTab';
@@ -60,15 +62,15 @@ export default function Home(props) {
 							<div className='header-text'>
 								<h1>{teamData && teamData.name}</h1>
 								<h4>
-									<i className='fa-solid fa-user'></i> Manager:{' '}
+									<FaUser className='manager-icon' /> Manager:{' '}
 									<strong>{teamData && teamData.manager.name}</strong>
 								</h4>
 							</div>
 							<div
 								className={collapsedMenu ? 'menu-button' : 'menu-button open'}>
-								<i
-									className='fa-solid fa-pen-to-square'
-									onClick={() => toggleCollapseMenu(!collapsedMenu)}></i>
+								<HiPencilSquare
+									onClick={() => toggleCollapseMenu(!collapsedMenu)}
+								/>
 								<ul
 									className={
 										!collapsedMenu ? 'team-menu' : 'team-menu collapse'

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-// import customParseFormat from 'dayjs/plugin/customParseFormat';
+import { AiOutlineCaretDown } from 'react-icons/ai';
+import { HiPencilSquare, HiExclamationCircle } from 'react-icons/hi2';
 import dayjs from 'dayjs';
-// dayjs.extend(customParseFormat);
 
 export default function Summary(props) {
 	const [collapsed, collapseStats] = useState(true);
@@ -24,12 +24,9 @@ export default function Summary(props) {
 					className='more-stats-toggler'
 					onClick={() => collapseStats((prevState) => !prevState)}>
 					More stats{' '}
-					<i
-						className={
-							collapsed
-								? 'fa-solid fa-caret-down'
-								: 'fa-solid fa-caret-down rotated'
-						}></i>
+					<AiOutlineCaretDown
+						className={collapsed ? 'stats-toggler' : 'stats-toggler rotated'}
+					/>
 				</span>
 
 				<div className={collapsed ? 'more-stats collapsed' : 'more-stats'}>
@@ -49,14 +46,14 @@ export default function Summary(props) {
           })} */}
 				</div>
 				<div className='info'>
-					<i className='fa-solid fa-circle-exclamation'></i>
+					<HiExclamationCircle />
 					<p>
 						To edit your team name, manager, or delete your team, click the{' '}
-						<i className='fa-solid fa-pen-to-square'></i> icon
+						<HiPencilSquare /> icon
 					</p>
 				</div>
 				<div className='info'>
-					<i className='fa-solid fa-circle-exclamation'></i>
+					<HiExclamationCircle />
 					<p>
 						To add/edit roles or salaries, select the <strong>Manage</strong>{' '}
 						tab

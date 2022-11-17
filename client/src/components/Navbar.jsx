@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { FaChalkboardTeacher, FaBars, FaChevronDown } from 'react-icons/fa';
 import { useAppContext } from '../utils/GlobalState';
 import Auth from '../utils/auth';
 
@@ -10,16 +11,12 @@ export default function Navbar() {
 	return (
 		<nav>
 			<div className='navbar-brand'>
-				<Link
-					to={
-						state.isLoggedIn || localStorage.getItem('teamID') ? '/' : '/init'
-					}
-					className='index-button'>
+				<Link to={'/'} className='index-button'>
 					<h3 className='brand-logo'>
 						<span className='brand-text'>
 							Team<span className='ez'>EZ</span>
 						</span>
-						<i className='fa-solid fa-chalkboard-user navbar-brand-icon'></i>
+						<FaChalkboardTeacher className='navbar-brand-icon' />
 					</h3>
 				</Link>
 			</div>
@@ -36,8 +33,8 @@ export default function Navbar() {
 				<div
 					className={collapsed ? 'navbar-toggler' : 'navbar-toggler open'}
 					onClick={() => toggleCollapse(!collapsed)}>
-					<i className='fa-solid fa-bars'></i>
-					<i className='fa-solid fa-chevron-down navbar-hover-arrow'></i>
+					<FaBars />
+					<FaChevronDown className='navbar-hover-arrow' />
 					<div
 						className={
 							!collapsed ? 'nav-link-container' : 'nav-link-container collapse'

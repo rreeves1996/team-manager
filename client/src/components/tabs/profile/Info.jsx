@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { UserContext } from '../../Profile';
-import { FaUserAlt } from 'react-icons/fa';
+import { FaUser } from 'react-icons/fa';
 
 export default function Info() {
 	const [loading, setLoading] = useState(true);
@@ -11,7 +11,7 @@ export default function Info() {
 		<>
 			<div className='profile-info'>
 				<h2>
-					<FaUserAlt className='user-icon card-icon' /> Your Account
+					<FaUser className='user-icon card-icon' /> Your Account
 				</h2>
 				<div className='card-body account-info'>
 					<p>

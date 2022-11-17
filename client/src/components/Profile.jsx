@@ -1,5 +1,4 @@
 import React, { useState, useEffect, createContext } from 'react';
-import { useAppContext } from '../utils/GlobalState';
 import axios from 'axios';
 import Auth from '../utils/auth';
 import General from './tabs/PGeneral';
@@ -11,8 +10,6 @@ export default function Profile() {
 	const [loading, setLoading] = useState(true);
 	const [currentTab, setCurrentTab] = useState('General');
 	const [userData, setUserData] = useState({});
-	const [state, dispatch] = useAppContext();
-
 	const renderTab = () => {
 		if (currentTab === 'General') {
 			return <General />;

@@ -1,6 +1,7 @@
-import axios from 'axios';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { FaChalkboardTeacher } from 'react-icons/fa';
+import axios from 'axios';
 
 export default function Register() {
 	const navigate = useNavigate();
@@ -51,10 +52,7 @@ export default function Register() {
 					.catch((err) => console.log(`Failed to login: ${err}`));
 			}
 		} else {
-			// If password does not match the password confirm, Isaac scolds you:
-			alert(
-				'LMFAO imagine getting an alert in 2022 haahaha. oh u wrote different passwords btw.'
-			);
+			alert('Passwords do not match');
 		}
 	};
 
@@ -65,7 +63,7 @@ export default function Register() {
 					<div className='brand'>
 						<h1>
 							Team<span className='ez'>EZ</span>
-							<i className='fa-solid fa-chalkboard-user brand-icon'></i>
+							<FaChalkboardTeacher className='brand-icon' />
 						</h1>
 
 						<h5>Team Management</h5>

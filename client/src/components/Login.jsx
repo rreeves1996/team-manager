@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { FaChalkboardTeacher } from 'react-icons/fa';
 import axios from 'axios';
 import Auth from '../utils/auth';
 
@@ -103,7 +104,7 @@ export default function Login() {
 					<div className='brand'>
 						<h1>
 							Team<span className='ez'>EZ</span>
-							<i className='fa-solid fa-chalkboard-user brand-icon'></i>
+							<FaChalkboardTeacher className='brand-icon' />
 						</h1>
 
 						<h5>Team Management</h5>

@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import { UserContext } from '../Profile';
 import Info from './profile/Info';
 import Teams from './profile/Teams';
