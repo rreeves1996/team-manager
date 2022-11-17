@@ -35,8 +35,6 @@ export default function InitPrompt() {
 						.put(`/api/managers/${res[1].data.id}`, { team_id: teamId })
 						.then((res) => {
 							console.log(`Manager's team ID(${teamId}) updated: ${res}`);
-
-							navigate('/');
 						})
 						.catch((err) =>
 							console.log(`Failed to update manager's team ID: ${err}`)
@@ -44,6 +42,7 @@ export default function InitPrompt() {
 
 					localStorage.setItem('teamID', teamId);
 				})
+				.finally(() => navigate('/'))
 				.catch((err) => console.log(`Failed to create team/manager: ${err}`));
 		} else if (!teamName || !managerName) {
 			teamName = 'The Seattle Puddlechickens';
@@ -64,8 +63,6 @@ export default function InitPrompt() {
 						})
 						.then((res) => {
 							console.log(`Manager's team ID(${teamId}) updated`);
-
-							navigate('/');
 						})
 						.catch((err) =>
 							console.log(`Failed to update manager's team ID: ${err}`)
@@ -73,6 +70,7 @@ export default function InitPrompt() {
 
 					localStorage.setItem('teamID', teamId);
 				})
+				.finally(() => navigate('/'))
 				.catch((err) => console.log(`Failed to create team/manager: ${err}`));
 		}
 
