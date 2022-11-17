@@ -4,8 +4,17 @@ const { signToken } = require('../../utils/auth');
 
 //? https://webdeasy.de/en/complete-login-system-with-node-js-vue-js-restapi-jwt-part-1-2/
 
-//* /api/users endpoint
+// Get all Users
+//* /api/users
+router.get('/', async (req, res) => {
+	try {
+		const users = await User.findAll();
 
+		res.status(200).json(users);
+	} catch (err) {
+		res.status(500).json(err);
+	}
+});
 // Create a User
 //* /api/users/create
 router.post('/create', async (req, res) => {
@@ -88,18 +97,6 @@ router.post('/logout', (req, res) => {
 		});
 	} else {
 		res.status(404).end();
-	}
-});
-
-// Get all Users
-//* /api/users
-router.get('/', async (req, res) => {
-	try {
-		const users = await User.findAll();
-
-		res.status(200).json(users);
-	} catch (err) {
-		res.status(500).json(err);
 	}
 });
 

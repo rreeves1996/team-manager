@@ -29,7 +29,7 @@ class AuthService {
 	logout() {
 		localStorage.removeItem('id_token');
 		localStorage.removeItem('teamID');
-		window.location.assign('/init');
+		window.location.assign('/');
 	}
 }
 

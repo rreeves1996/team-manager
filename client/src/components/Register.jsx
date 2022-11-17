@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FaChalkboardTeacher } from 'react-icons/fa';
 import axios from 'axios';
+import Auth from '../utils/auth';
 
 export default function Register() {
 	const navigate = useNavigate();
@@ -10,6 +11,7 @@ export default function Register() {
 		username: '',
 		firstname: '',
 		lastname: '',
+		teamname: '',
 		email: '',
 		password: '',
 		passconfirm: '',
@@ -45,9 +47,13 @@ export default function Register() {
 						password: password,
 					})
 					.then((res) => {
-						console.log('Registration successful!');
-
+						// Login with auth, replace '/register' with '/profile'
+						Auth.login(res.data.token);
 						navigate('/profile', { replace: true });
+					})
+					.finally(() => {
+						// Refresh the page to properly load '/profile'
+						navigate(0);
 					})
 					.catch((err) => console.log(`Failed to login: ${err}`));
 			}
@@ -80,7 +86,7 @@ export default function Register() {
 								<div className='control name-control'>
 									<input
 										className='input name-input'
-										type='firstname'
+										type='text'
 										name='firstname'
 										placeholder='First name'
 										value={formState.firstname}
@@ -88,7 +94,7 @@ export default function Register() {
 									/>
 									<input
 										className='input name-input'
-										type='lastname'
+										type='text'
 										name='lastname'
 										placeholder='Last name'
 										value={formState.lastname}
@@ -118,7 +124,7 @@ export default function Register() {
 								<div className='control'>
 									<input
 										className='input'
-										type='text'
+										type='username'
 										name='username'
 										placeholder='Your desired username'
 										value={formState.username}
@@ -133,6 +139,7 @@ export default function Register() {
 									<input
 										className='input'
 										type='email'
+										autoComplete='email'
 										name='email'
 										placeholder='Your email address'
 										value={formState.email}
@@ -147,6 +154,7 @@ export default function Register() {
 									<input
 										className='input password-input'
 										type='password'
+										autoComplete='new-password'
 										name='password'
 										placeholder='8 character min.'
 										value={formState.password}
@@ -155,6 +163,7 @@ export default function Register() {
 									<input
 										className='input password-input'
 										type='password'
+										autoComplete='new-password'
 										name='passconfirm'
 										placeholder='Re-enter'
 										value={formState.passconfirm}

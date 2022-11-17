@@ -458,7 +458,8 @@ p {
 }
 .brand-icon {
 	color: var(--blue-light);
-	font-size: 4rem;
+	font-size: 4.5rem;
+	filter: drop-shadow(1px 2px 1px rgb(0, 0, 0));
 	display: flex;
 	z-index: 555;
 }
