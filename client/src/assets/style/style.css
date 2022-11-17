@@ -187,18 +187,43 @@ p {
 	align-items: center;
 	font-size: 2.5rem;
 	margin: 0 0 0 12px;
+	transition: all 200ms ease;
+}
+.navbar-burger {
+	font-size: 3rem;
+	transition: all 200ms ease;
+}
+.navbar-toggler:hover .navbar-burger {
+	transform: scale(1.1);
+}
+.navbar-toggler:not(.open):hover .navbar-hover-arrow {
+	transform: translateY(1.7rem);
+	opacity: 1;
+}
+.navbar-toggler.open .navbar-hover-arrow {
+	transform: rotate(180deg) translateY(-1rem);
+}
+.navbar-toggler.open:hover .navbar-hover-arrow {
+	transform: rotate(180deg) translateY(-1.7rem);
+	opacity: 1;
 }
 .navbar-hover-arrow {
 	position: absolute;
+	pointer-events: none;
+	opacity: 0;
+	transform: translateY(1rem);
+	font-size: 1.2rem;
+	transition: all 270ms ease;
 }
-.collapse {
-	display: none !important;
-}
+
 .nav-link-container {
 	transform: translateY(85%);
+	opacity: 1;
 	width: 110px;
 	align-items: center;
+	transition: all 270ms;
 }
+
 .nav-button {
 	display: flex;
 	justify-content: center;
@@ -231,7 +256,18 @@ p {
 	color: white !important;
 	text-decoration: none !important;
 }
-
+.collapse {
+	opacity: 0;
+	pointer-events: none;
+	transform: translateY(70%);
+}
+.link {
+	margin-top: 0;
+	transition: all 270ms ease;
+}
+.collapse .link {
+	margin-top: -7px;
+}
 .container {
 	margin-top: 45px;
 	border-radius: 8px;

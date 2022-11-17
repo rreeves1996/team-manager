@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { HiBars3 } from 'react-icons/hi2';
 import { FaChalkboardTeacher, FaBars, FaChevronDown } from 'react-icons/fa';
 import { useAppContext } from '../utils/GlobalState';
 import Auth from '../utils/auth';
@@ -33,27 +34,27 @@ export default function Navbar() {
 				<div
 					className={collapsed ? 'navbar-toggler' : 'navbar-toggler open'}
 					onClick={() => toggleCollapse(!collapsed)}>
-					<FaBars />
+					<HiBars3 className='navbar-burger' />
 					<FaChevronDown className='navbar-hover-arrow' />
 					<div
 						className={
 							!collapsed ? 'nav-link-container' : 'nav-link-container collapse'
 						}>
 						<Link to='/about' className='nav-button' id='about-button'>
-							<div className='about-link'>About</div>
+							<div className='about-link link'>About</div>
 						</Link>
 						<Link to='/contact' className='nav-button' id='contact-button'>
-							<div className='contact-link'>Contact</div>
+							<div className='contact-link link'>Contact</div>
 						</Link>
 						{state.isLoggedIn ? (
 							<Link className='nav-button' id='login-button'>
-								<div className='login-link' onClick={Auth.logout}>
+								<div className='login-link link' onClick={Auth.logout}>
 									Logout
 								</div>
 							</Link>
 						) : (
 							<Link to='/login' className='nav-button' id='login-button'>
-								<div className='login-link'>Login</div>
+								<div className='login-link link'>Login</div>
 							</Link>
 						)}
 					</div>
