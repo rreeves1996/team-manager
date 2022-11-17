@@ -94,7 +94,7 @@ export default function Login() {
 							<div className='divider form-divider'></div>
 							<div className='sub-container d-flex flex-column align-items-center mb-4'>
 								<p className='mt-1 mb-1'>Want to create a new account?</p>
-								<a href='#'>Register</a>
+								<a href='/register'>Register</a>
 							</div>
 						</div>
 					</form>
