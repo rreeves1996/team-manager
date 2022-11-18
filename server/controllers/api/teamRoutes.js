@@ -69,9 +69,9 @@ router.post('/:teamId', async (req, res) => {
 			return;
 		}
 
-		const updatedteam = await Team.findByPk(req.params.teamId);
+		const updatedTeam = await Team.findByPk(req.params.teamId);
 
-		res.status(200).json(updatedteam);
+		res.status(200).json(updatedTeam);
 	} catch (err) {
 		res.status(500).json(err);
 	}

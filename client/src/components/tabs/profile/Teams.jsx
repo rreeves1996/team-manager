@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import axios from 'axios';
+import { v4 as uuidv4 } from 'uuid';
 import { UserContext } from '../../Profile';
 import { FaGlobeAmericas } from 'react-icons/fa';
 import TeamCard from '../../cards/TeamCard';
@@ -8,7 +9,7 @@ export default function Teams() {
 	const [loading, setLoading] = useState(true);
 	const [teamData, setTeamData] = useState([]);
 	const userData = useContext(UserContext);
-
+	console.log(teamData);
 	useEffect(() => {
 		const teams = [];
 
@@ -47,9 +48,9 @@ export default function Teams() {
 						<></>
 					) : (
 						<>
-							{userData.teams.map((team, index) => (
+							{teamData.map((team) => (
 								<>
-									<TeamCard team={teamData[index]} />
+									<TeamCard key={uuidv4()} team={team} />
 								</>
 							))}
 						</>

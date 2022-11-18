@@ -75,20 +75,31 @@ function EmpSalary(props) {
 	);
 }
 
+// TODO: Split employee and manager cards
+
 export default function EmpCard(props) {
 	const [show, setShow] = useState(false);
 	const [deleteConfirm, showDeleteConfirm] = useState(false);
 	const [editing, setEditing] = useState(false);
 	const [loading, setLoading] = useState(true);
+
 	const [employee, setEmployee] = useState(() =>
-		props.employee ? props.employee : props.manager
+		props.employee
+			? props.employee
+			: { ...props.manager, role: { title: 'Manager' } }
 	);
 	const [phoneNumber, setPhoneNumber] = useState(
-		props.manager && {
-			groupOne: (props.manager && props.manager.number.slice(0, 3)) || '',
-			groupTwo: (props.manager && props.manager.number.slice(0, 3)) || '',
-			groupThree: (props.manager && props.manager.number.slice(0, 3)) || '',
-		}
+		props.manager
+			? {
+					groupOne: props.manager.phone.slice(0, 3),
+					groupTwo: props.manager.phone.slice(3, 6),
+					groupThree: props.manager.phone.slice(6, 10),
+			  }
+			: {
+					groupOne: '',
+					groupTwo: '',
+					groupThree: '',
+			  }
 	);
 	const [formState, setFormState] = useState({
 		phone1: phoneNumber.groupOne,
@@ -97,8 +108,7 @@ export default function EmpCard(props) {
 		email: props.manager && props.manager.email,
 		timezone: '',
 	});
-	console.log(employee);
-
+	console.log(props.manager.phone);
 	const handleClose = () => setShow(false);
 	const handleShow = () => setShow(true);
 
@@ -131,7 +141,7 @@ export default function EmpCard(props) {
 				const number = phonenumbers[0] + phonenumbers[1] + phonenumbers[2];
 
 				await axios
-					.put(`/api/managers/${manager.id}`, {
+					.put(`/api/managers/${employee.id}`, {
 						phone: number,
 						email: email,
 					})
@@ -163,9 +173,9 @@ export default function EmpCard(props) {
 					<div className='emp-card' onClick={handleShow}>
 						<div className='emp-card-header'>
 							<div className='emp-picture'>
-								{picture ? (
+								{employee.picture ? (
 									<>
-										<img src={picture} alt='' />
+										<img src={employee.picture} alt='' />
 									</>
 								) : (
 									<>
@@ -175,15 +185,12 @@ export default function EmpCard(props) {
 							</div>
 							<div className='emp-info-header'>
 								<h6 className='emp-name'>
-									<strong>{props.abbreviatedname}</strong>
+									<strong>{employee.abbreviatedname}</strong>
 								</h6>
-								{props.manager ? (
-									<h6 className='emp-role'>
-										{props.lead ? 'Team Lead' : 'Manager'}
-									</h6>
-								) : (
-									<h6 className='emp-role'>{empRole.title}</h6>
-								)}
+
+								<h6 className='emp-role'>
+									{employee.is_lead ? 'Team Lead' : employee.role.title}
+								</h6>
 
 								{props.manager ? (
 									<>
@@ -218,9 +225,9 @@ export default function EmpCard(props) {
 								onClick={() => handleClose()}></i>
 							<div className='emp-card-header-modal'>
 								<div className='emp-picture'>
-									{props.picture ? (
+									{employee.picture ? (
 										<>
-											<img src={props.picture} alt='' />
+											<img src={employee.picture} alt='' />
 										</>
 									) : (
 										<>
@@ -230,11 +237,11 @@ export default function EmpCard(props) {
 								</div>
 								<div className='emp-info-header'>
 									<h6 className='emp-name'>
-										<strong>{props.name}</strong>
+										<strong>{employee.name}</strong>
 									</h6>
 									{props.manager ? (
 										<h6 className='emp-role'>
-											{props.lead ? 'Team Lead' : 'Manager'}
+											{props.lead ? 'Team Lead' : employee.role}
 										</h6>
 									) : (
 										<></>
@@ -313,8 +320,8 @@ export default function EmpCard(props) {
 													number2={phoneNumber.groupTwo}
 													number3={phoneNumber.groupThree}
 												/>
-												<EmpEmail email={props.email} />
-												<EmpTimeZone timezone={props.timeZone} />
+												<EmpEmail email={employee.email} />
+												<EmpTimeZone timezone={employee.timeZone} />
 												<div className='emp-card-button-container'>
 													<button
 														className='edit-button'
@@ -404,8 +411,8 @@ export default function EmpCard(props) {
 											</>
 										) : (
 											<>
-												<EmpRole role={empRole.title} />
-												<EmpSalary salary={empRole.salary} />
+												<EmpRole role={employee.role.title} />
+												<EmpSalary salary={employee.role.salary} />
 												<div className='emp-card-button-container'>
 													<button
 														className='edit-button'
