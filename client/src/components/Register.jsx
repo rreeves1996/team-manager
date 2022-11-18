@@ -165,7 +165,7 @@ export default function Register() {
 										type='password'
 										autoComplete='new-password'
 										name='passconfirm'
-										placeholder='Re-enter'
+										placeholder='Confirm pass.'
 										value={formState.passconfirm}
 										onChange={handleChange}
 									/>

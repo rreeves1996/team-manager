@@ -1,8 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { v4 as uuidv4 } from 'uuid';
+import { DataContext } from '../../Home';
 import EmpCard from '../../cards/EmpCard';
 
-export default function YourTeam(props) {
+export default function YourTeam() {
+	const teamData = useContext(DataContext);
+	const { employees, managers } = teamData;
+
 	return (
 		<div className='your-team'>
 			<h2>Your Team</h2>
@@ -12,7 +16,7 @@ export default function YourTeam(props) {
 						<strong>Managers</strong>
 					</h5>
 					<div className='card-container'>
-						{props.managers.map((manager) => {
+						{managers.map((manager) => {
 							const managerNameSplit = manager.name.split(' ');
 							const managerFirst = managerNameSplit[0].split('');
 							const managerNameAbbreviated = [];
@@ -27,15 +31,11 @@ export default function YourTeam(props) {
 							return (
 								<>
 									<EmpCard
-										manager={true}
 										key={uuidv4()}
-										id={manager.id}
-										abbreviatedname={managerNameAbbreviated}
-										name={manager.name}
-										lead={manager.lead ? true : false}
-										number={manager.phone}
-										email={manager.email}
-										timeZone={manager.timeZone}
+										manager={{
+											...manager,
+											abbreviatedname: managerNameAbbreviated,
+										}}
 									/>
 								</>
 							);
@@ -47,7 +47,7 @@ export default function YourTeam(props) {
 						<strong>Employees</strong>
 					</h5>
 					<div className='card-container'>
-						{props.employees.map((employee) => {
+						{employees.map((employee) => {
 							const employeeNameSplit = employee.name.split(' ');
 							const employeeFirst = employeeNameSplit[0].split('');
 							const employeeNameAbbreviated = `${employeeFirst[0]}. ${employeeNameSplit[1]}`;
@@ -55,15 +55,11 @@ export default function YourTeam(props) {
 							return (
 								<>
 									<EmpCard
-										manager={false}
 										key={uuidv4()}
-										id={employee.id}
-										abbreviatedname={employeeNameAbbreviated}
-										name={employee.name}
-										role={employee.role_id}
-										number={employee.phone}
-										email={employee.email}
-										timeZone={employee.timeZone}
+										employee={{
+											...employee,
+											abbreviatedname: employeeNameAbbreviated,
+										}}
 									/>
 								</>
 							);

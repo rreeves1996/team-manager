@@ -3,9 +3,16 @@ import axios from 'axios';
 import { v4 as uuidv4 } from 'uuid';
 import { DataContext } from '../../Home';
 
-export default function QuickAdd(props) {
-	const [formState, setFormState] = useState({ empname: '', emprole: '' });
+export default function QuickAdd() {
 	const teamData = useContext(DataContext);
+	const [formState, setFormState] = useState({
+		empname: '',
+		emprole: 'default',
+	});
+	const [collapsed, setCollapsed] = useState(() =>
+		formState.emprole !== 'default' ? false : true
+	);
+	const { id, lead, roles } = teamData;
 
 	const handleChange = (event) => {
 		const { name, value } = event.target;
@@ -25,8 +32,8 @@ export default function QuickAdd(props) {
 				.post('/api/employees/', {
 					name: newEmpName,
 					role_id: newEmpRole,
-					manager_id: teamData.manager.id,
-					team_id: teamData.id,
+					manager_id: lead.id,
+					team_id: id,
 				})
 				.then((res) => console.log(res))
 				.catch((err) => console.log(err));
@@ -69,7 +76,7 @@ export default function QuickAdd(props) {
 								<option value='default' disabled>
 									Select role...
 								</option>
-								{props.roles.map((role) => (
+								{roles.map((role) => (
 									<option key={uuidv4()} value={role.id}>
 										{role.title}
 									</option>

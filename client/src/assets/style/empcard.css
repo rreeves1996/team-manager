@@ -16,10 +16,12 @@
 	align-items: center;
 }
 .card-input {
-	height: 16px !important;
+	height: 17px !important;
 	width: 50%;
 	margin: 0 3px;
+	text-indent: 3px !important;
 }
+
 #number-input1,
 #number-input2,
 #number-input3 {
@@ -28,10 +30,17 @@
 }
 #number-input1,
 #number-input2 {
-	width: 30px;
+	width: 31px;
 }
 #number-input3 {
 	width: 38px;
+}
+.number-input {
+	text-indent: -1px !important;
+}
+.email-input {
+	height: 18px !important;
+	line-height: 2 !important;
 }
 .emp-card-modal-container {
 	background-color: white;
@@ -92,7 +101,7 @@
 	background-color: var(--blue-light);
 	margin-right: 13px;
 }
-.emp-picture i {
+.emp-picture-icon {
 	margin: 0 auto;
 	font-size: 3em;
 }

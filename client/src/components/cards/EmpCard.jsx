@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { BsExclamationLg } from 'react-icons/bs';
+import { FaUser } from 'react-icons/fa';
 import Modal from 'react-bootstrap/Modal';
 import axios from 'axios';
 import '../../assets/style/empcard.css';
@@ -17,9 +18,13 @@ function EmpPhoneNumber(props) {
 				)}
 				{props.number1 === '' ? (
 					<>
-						<h6 className='phone-missing'>
-							<BsExclamationLg className='alert-icon' /> Phone # missing
-						</h6>
+						{props.header ? (
+							<span className='phone-missing'>
+								<BsExclamationLg className='alert-icon' /> Phone # missing
+							</span>
+						) : (
+							<>No phone number found</>
+						)}
 					</>
 				) : (
 					<>{`(${props.number1}) ${props.number2}-${props.number3}`}</>
@@ -49,33 +54,50 @@ function EmpTimeZone(props) {
 	);
 }
 
+function EmpRole(props) {
+	return (
+		<>
+			<p>
+				<strong>Role:</strong> {props.title ? props.title : 'No role found'}
+			</p>
+		</>
+	);
+}
+
+function EmpSalary(props) {
+	return (
+		<>
+			<p>
+				<strong>Salary:</strong> $
+				{props.salary ? props.salary : 'No salary found'}
+			</p>
+		</>
+	);
+}
+
 export default function EmpCard(props) {
-	const [formState, setFormState] = useState({
-		phone1: '',
-		phone2: '',
-		phone3: '',
-		email: '',
-		timezone: '',
-	});
 	const [show, setShow] = useState(false);
 	const [deleteConfirm, showDeleteConfirm] = useState(false);
 	const [editing, setEditing] = useState(false);
 	const [loading, setLoading] = useState(true);
-	const [empRole, setEmpRole] = useState();
-
-	const [phoneNumber, setPhoneNumber] = useState(() =>
-		props.number
-			? {
-					groupOne: props.number.slice(0, 3),
-					groupTwo: props.number.slice(3, 6),
-					groupThree: props.number.slice(6, 10),
-			  }
-			: {
-					groupOne: '',
-					groupTwo: '',
-					groupThree: '',
-			  }
+	const [employee, setEmployee] = useState(() =>
+		props.employee ? props.employee : props.manager
 	);
+	const [phoneNumber, setPhoneNumber] = useState(
+		props.manager && {
+			groupOne: (props.manager && props.manager.number.slice(0, 3)) || '',
+			groupTwo: (props.manager && props.manager.number.slice(0, 3)) || '',
+			groupThree: (props.manager && props.manager.number.slice(0, 3)) || '',
+		}
+	);
+	const [formState, setFormState] = useState({
+		phone1: phoneNumber.groupOne,
+		phone2: phoneNumber.groupTwo,
+		phone3: phoneNumber.groupThree,
+		email: props.manager && props.manager.email,
+		timezone: '',
+	});
+	console.log(employee);
 
 	const handleClose = () => setShow(false);
 	const handleShow = () => setShow(true);
@@ -109,51 +131,21 @@ export default function EmpCard(props) {
 				const number = phonenumbers[0] + phonenumbers[1] + phonenumbers[2];
 
 				await axios
-					.put(`/api/managers/${props.managers[0].id}`, {
+					.put(`/api/managers/${manager.id}`, {
 						phone: number,
 						email: email,
 					})
 					.then((res) => {
-						console.log(`Manager updated`);
-
-						setPhoneNumber((phoneNumber) => ({
-							groupOne: props.number.slice(0, 3),
-							groupTwo: props.number.slice(3, 6),
-							groupThree: props.number.slice(6, 10),
-						}));
+						console.log(`Manager updated: ${res}`);
 					})
 					.catch((err) => console.log(`Failed to update manager: ${err}`));
+			} else {
+				alert('Invalid phone number or email');
 			}
 		}
 
-		setFormState({
-			phone1: phoneNumber.groupOne,
-			phone2: phoneNumber.groupTwo,
-			phone3: phoneNumber.groupThree,
-			email: email,
-			timezone: '',
-		});
-
 		setEditing(!editing);
 	};
-
-	useEffect(() => {
-		const getRole = async () => {
-			if (props.role) {
-				await axios
-					.get(`/api/roles/${props.role}`)
-					.then((res) => setEmpRole(res.data.title))
-					.finally(() => setLoading(!loading))
-					.catch((err) => console.log(err));
-			} else {
-				setEmpRole('Manager');
-				setLoading(!loading);
-				console.log(props);
-			}
-		};
-
-		getRole();
-	}, []);
 
 	const deleteEmployee = (employee) => {
 		if (employee.role === 'manager') {
@@ -171,13 +163,13 @@ export default function EmpCard(props) {
 					<div className='emp-card' onClick={handleShow}>
 						<div className='emp-card-header'>
 							<div className='emp-picture'>
-								{props.picture ? (
+								{picture ? (
 									<>
-										<img src={props.picture} alt='' />
+										<img src={picture} alt='' />
 									</>
 								) : (
 									<>
-										<i className='fa-solid fa-user'></i>
+										<FaUser className='emp-picture-icon' />
 									</>
 								)}
 							</div>
@@ -190,7 +182,7 @@ export default function EmpCard(props) {
 										{props.lead ? 'Team Lead' : 'Manager'}
 									</h6>
 								) : (
-									<h6 className='emp-role'>{empRole}</h6>
+									<h6 className='emp-role'>{empRole.title}</h6>
 								)}
 
 								{props.manager ? (
@@ -232,7 +224,7 @@ export default function EmpCard(props) {
 										</>
 									) : (
 										<>
-											<i className='fa-solid fa-user'></i>
+											<FaUser className='emp-picture-icon' />
 										</>
 									)}
 								</div>
@@ -245,12 +237,109 @@ export default function EmpCard(props) {
 											{props.lead ? 'Team Lead' : 'Manager'}
 										</h6>
 									) : (
-										<h6 className='emp-role'>{empRole}</h6>
+										<></>
 									)}
 								</div>
 							</div>
 							<div className='emp-contact-info'>
 								{props.manager ? (
+									<>
+										{editing ? (
+											<>
+												<form className='card-edit' onSubmit={handleEditSubmit}>
+													<p>
+														<strong>Phone #:</strong>
+														<input
+															type='text'
+															className='card-input number-input'
+															id='number-input1'
+															name='phone1'
+															value={formState.phone1}
+															onChange={handleChange}
+														/>
+														-
+														<input
+															type='text'
+															className='card-input number-input'
+															id='number-input2'
+															name='phone2'
+															value={formState.phone2}
+															onChange={handleChange}
+														/>
+														-
+														<input
+															type='text'
+															className='card-input number-input'
+															id='number-input3'
+															name='phone3'
+															value={formState.phone3}
+															onChange={handleChange}
+														/>
+													</p>
+													<p>
+														<strong>Email:</strong>
+														<input
+															type='text'
+															className='card-input email-input'
+															name='email'
+															value={formState.email}
+															onChange={handleChange}
+														/>
+													</p>
+													<p>
+														<strong>Time:</strong>
+														<button className='timezone-button'>
+															Timezones{' '}
+															<i className='fa-solid fa-caret-down'></i>
+														</button>
+													</p>
+													<div className='emp-card-button-container'>
+														<button
+															className='edit-button'
+															onClick={() => setEditing(!editing)}>
+															Cancel
+														</button>
+														<button className='submit-button' type='submit'>
+															Submit
+														</button>
+													</div>
+												</form>
+											</>
+										) : (
+											<>
+												<EmpPhoneNumber
+													header={false}
+													number1={phoneNumber.groupOne}
+													number2={phoneNumber.groupTwo}
+													number3={phoneNumber.groupThree}
+												/>
+												<EmpEmail email={props.email} />
+												<EmpTimeZone timezone={props.timeZone} />
+												<div className='emp-card-button-container'>
+													<button
+														className='edit-button'
+														onClick={() => setEditing(!editing)}>
+														Edit
+													</button>
+
+													<button
+														className={
+															deleteConfirm
+																? 'delete-button confirm'
+																: 'delete-button'
+														}
+														onClick={
+															deleteConfirm
+																? deleteEmployee(props)
+																: () => showDeleteConfirm(true)
+														}>
+														{deleteConfirm ? 'Are you sure?' : 'Delete'}
+													</button>
+												</div>
+											</>
+										)}
+									</>
+								) : (
 									<>
 										{editing ? (
 											<>
@@ -315,14 +404,8 @@ export default function EmpCard(props) {
 											</>
 										) : (
 											<>
-												<EmpPhoneNumber
-													header={false}
-													number1={phoneNumber.groupOne}
-													number2={phoneNumber.groupTwo}
-													number3={phoneNumber.groupThree}
-												/>
-												<EmpEmail email={props.email} />
-												<EmpTimeZone timezone={props.timeZone} />
+												<EmpRole role={empRole.title} />
+												<EmpSalary salary={empRole.salary} />
 												<div className='emp-card-button-container'>
 													<button
 														className='edit-button'
@@ -347,8 +430,6 @@ export default function EmpCard(props) {
 											</>
 										)}
 									</>
-								) : (
-									<></>
 								)}
 							</div>
 						</div>

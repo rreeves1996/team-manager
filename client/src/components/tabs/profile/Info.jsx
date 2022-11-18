@@ -35,6 +35,7 @@ export default function Info() {
 					<p>
 						You can currently create{' '}
 						<strong>{allowedTeams - userData.teams.length}</strong> more teams.
+						(Limit: 5)
 					</p>
 				</div>
 			</div>

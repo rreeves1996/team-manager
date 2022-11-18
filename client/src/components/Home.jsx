@@ -26,7 +26,7 @@ export default function Home(props) {
 
 	const deleteTeam = () => {
 		localStorage.clear();
-		navigate('/init');
+		navigate(0);
 	};
 
 	const handleTabChange = (tab) => setCurrentTab(tab);
@@ -37,16 +37,19 @@ export default function Home(props) {
 
 			await axios
 				.get(`/api/teams/${reqTeam}`)
-				.then(async (res) => {
-					setTeamData(res.data);
-					console.log(res.data);
+				.then((res) => {
+					// Find team lead and add in isolation to the 'teamData' object for easier access/referencing later
+					const lead = res.data.managers.filter((manager) => manager.is_lead);
+					const newTeam = { ...res.data, lead: lead[0] };
+
+					setTeamData(newTeam);
 				})
 				.catch((err) => console.error(`Failed to get teams: ${err}`));
-
-			setLoading(!loading);
 		};
 
-		fetchData().catch(console.error);
+		fetchData().then(() => {
+			setLoading(!loading);
+		});
 	}, []);
 
 	return (
@@ -60,15 +63,16 @@ export default function Home(props) {
 					<header>
 						<div className='row'>
 							<div className='header-text'>
-								<h1>{teamData && teamData.name}</h1>
+								<h1>{teamData.name}</h1>
 								<h4>
 									<FaUser className='manager-icon' /> Manager:{' '}
-									<strong>{teamData && teamData.manager.name}</strong>
+									<strong>{teamData.lead.name}</strong>
 								</h4>
 							</div>
 							<div
 								className={collapsedMenu ? 'menu-button' : 'menu-button open'}>
 								<HiPencilSquare
+									className='pencil-icon'
 									onClick={() => toggleCollapseMenu(!collapsedMenu)}
 								/>
 								<ul

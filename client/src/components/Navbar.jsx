@@ -6,13 +6,13 @@ import { useAppContext } from '../utils/GlobalState';
 import Auth from '../utils/auth';
 
 export default function Navbar() {
-	const [collapsed, toggleCollapse] = useState(true);
+	const [collapsed, setCollapsed] = useState(true);
 	const [state, dispatch] = useAppContext();
 
 	return (
 		<nav>
 			<div className='navbar-brand'>
-				<Link to={'/'} className='index-button'>
+				<Link to={state.isLoggedIn ? '/profile' : '/'} className='index-button'>
 					<h3 className='brand-logo'>
 						<span className='brand-text'>
 							Team<span className='ez'>EZ</span>
@@ -32,10 +32,10 @@ export default function Navbar() {
 					</Link>
 				)}
 				<div
-					className={collapsed ? 'navbar-toggler' : 'navbar-toggler open'}
-					onClick={() => toggleCollapse(!collapsed)}>
+					className={collapsed ? 'navbar-toggle' : 'navbar-toggle open'}
+					onClick={() => setCollapsed(!collapsed)}>
 					<HiBars3 className='navbar-burger' />
-					<FaChevronDown className='navbar-hover-arrow' />
+					<FaChevronDown className='navbar-chevron' />
 					<div
 						className={
 							!collapsed ? 'nav-link-container' : 'nav-link-container collapse'
