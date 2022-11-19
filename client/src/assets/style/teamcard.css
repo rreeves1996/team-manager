@@ -11,7 +11,7 @@
 	transform: translateY(-2px);
 }
 .team-card-header {
-	width: 50%;
+	width: 56%;
 	border-right: 1px solid rgba(192, 192, 192, 0.486);
 }
 .team-header-text {
@@ -51,7 +51,7 @@
 }
 .tc-managers,
 .tc-employees {
-	width: 18.5%;
+	width: 15.5%;
 	border-right: 1px solid rgba(192, 192, 192, 0.486);
 	border-left: 1px solid rgb(255, 255, 255);
 }
@@ -78,7 +78,7 @@
 	display: flex;
 	justify-content: center;
 	width: 100%;
-	padding: 3px 25%;
+	padding: 3px 20%;
 	flex-wrap: wrap;
 }
 .tc-manager-icon,

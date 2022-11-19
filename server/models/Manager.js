@@ -38,10 +38,6 @@ Manager.init(
 			type: DataTypes.INTEGER,
 			allowNull: true,
 		},
-		role: {
-			type: DataTypes.STRING,
-			defaultValue: 'Manager',
-		},
 		team_id: {
 			type: DataTypes.INTEGER,
 			references: {

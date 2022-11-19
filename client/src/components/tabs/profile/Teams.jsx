@@ -26,7 +26,6 @@ export default function Teams() {
 			.then((data) => setTeamData(teams))
 			.finally(() => {
 				setLoading(!loading);
-				console.log(teamData);
 			});
 	}, []);
 

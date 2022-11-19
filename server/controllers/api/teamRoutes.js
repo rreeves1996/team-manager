@@ -56,7 +56,7 @@ router.post('/', async (req, res) => {
 
 // Update a Team
 //* PUT /api/teams/:teamId
-router.post('/:teamId', async (req, res) => {
+router.put('/:teamId', async (req, res) => {
 	try {
 		const team = await Team.update(req.body, {
 			where: {

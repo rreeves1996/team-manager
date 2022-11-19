@@ -1,6 +1,8 @@
 :root {
 	--off-black: #1b1b1b;
 	--off-white: #fcfbfd;
+	--grey: #e7e3e3;
+	--grey-dark: #5a5858;
 	--blue: #324e70;
 	--blue-light: #91b0d4;
 	--accent: #cfc6d1;
@@ -29,6 +31,8 @@ h2,
 h3,
 h4 {
 	font-family: 'Alumni Sans Pinstripe';
+	pointer-events: none;
+	user-select: none;
 }
 h1 {
 	font-size: 5rem;
@@ -44,6 +48,12 @@ h4 {
 }
 h5 {
 	font-size: 1.2em !important;
+	pointer-events: none;
+	user-select: none;
+}
+h6 {
+	pointer-events: none;
+	user-select: none;
 }
 body {
 	font-family: 'Montserrat';
@@ -74,6 +84,7 @@ main {
 button {
 	border: none;
 	cursor: pointer;
+	user-select: none;
 	background-color: var(--blue);
 	font-family: 'Montserrat';
 	color: var(--off-white);
@@ -98,6 +109,7 @@ header {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
+	user-select: contain;
 	width: 100%;
 	padding: 5px calc((100vw - 1180px) / 2);
 	padding-bottom: 20px;
@@ -276,12 +288,18 @@ p {
 	pointer-events: none;
 	transform: translateY(70%);
 }
+.team-menu li,
 .link {
 	margin-top: 0;
 	transition: all 270ms ease;
 }
-.collapse .link {
+.collapse .link,
+.team-menu.collapse li {
 	margin-top: -7px;
+}
+.team-menu.collapse li {
+	padding-top: -10px !important;
+	padding-bottom: 0 !important;
 }
 .container {
 	margin-top: 45px;
@@ -506,25 +524,25 @@ header h1 {
 	position: absolute;
 	right: 0;
 	top: 0;
+	padding: 3px;
 	width: 26px;
 	height: 26px;
 	border: none;
+	transition: all 270ms;
 }
 header .pencil-icon,
 .exit-button {
 	color: var(--blue-light);
-
-	transition: transform 100ms;
 }
 header .pencil-icon {
 	font-size: 1.5rem;
+	transition: transform 100ms;
 }
 header .pencil-icon:hover,
 .exit-button:hover {
 	cursor: pointer;
 	color: #bdd4ee;
 	filter: drop-shadow(0px 0px 2px rgba(255, 255, 255, 0.342));
-	transition: color 0.1s, transform 100ms, filter 0.05s;
 }
 header .pencil-icon:active,
 .exit-button:active {
@@ -536,7 +554,6 @@ header .pencil-icon:active,
 .open .pencil-icon:hover {
 	color: white;
 	filter: drop-shadow(0px 0px 3px rgba(255, 255, 255, 0.541));
-	transition: color 0.1s, transform 100ms, filter 0.05s;
 }
 .header-text h1 {
 	line-height: 1;
@@ -553,8 +570,12 @@ header .pencil-icon:active,
 .team-menu {
 	transform: translate(-91%, 3px);
 	width: 155px;
+	opacity: 1;
+	transition: all 270ms ease;
 }
-
+.team-menu.collapse {
+	opacity: 0;
+}
 .team-menu,
 .nav-link-container {
 	position: absolute;
@@ -569,7 +590,7 @@ header .pencil-icon:active,
 	padding: 8px 10px;
 	cursor: pointer;
 	background-color: #2424248e;
-	transition: background-color 100ms;
+	transition: all 270ms ease;
 }
 .team-menu li:hover,
 .nav-button:hover {
@@ -628,14 +649,16 @@ header .pencil-icon:active,
 .profile-info,
 .profile-teams,
 .team-card-container {
-	background-color: #e7e3e3;
+	background-color: var(--grey);
 	border-radius: 8px 8px 6px 6px;
 	color: var(--off-black);
 }
 .profile-info {
 	width: 100%;
 }
-
+.col {
+	min-height: auto;
+}
 .col-home {
 	display: flex;
 	flex-direction: column;
@@ -648,10 +671,10 @@ header .pencil-icon:active,
 	flex-direction: column;
 }
 .col-profile-sm {
-	width: calc(33% - 16px);
+	width: calc(34% - 16px);
 }
 .col-profile-lg {
-	width: 67%;
+	width: 66%;
 }
 .summary {
 	display: flex;
@@ -728,11 +751,12 @@ header .pencil-icon:active,
 	letter-spacing: 0px;
 }
 #profile-name {
-	width: 50%;
+	width: 56%;
 }
 #profile-managers,
 #profile-employees {
-	width: 18.5%;
+	width: 15.5%;
+	padding-left: 1rem;
 }
 #profile-delete {
 	width: 13%;
@@ -760,15 +784,41 @@ header .pencil-icon:active,
 	margin: 0 auto;
 }
 .account-info {
-	padding: 8px 10%;
+	flex-direction: row;
+	padding: 23px 38px 13px;
 	width: 100%;
+	margin: auto !important;
 }
-.account-info .divider {
-	width: 80%;
-	margin: 10px auto;
+.account-info .col {
+	padding: 0;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
 }
+.account-picture {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	min-width: 6rem;
+	height: 100%;
+	min-height: 6rem;
+	border-radius: 4px;
+	background-color: var(--grey-dark);
+}
+.account-picture-icon {
+	color: var(--off-white);
+	margin: 0 auto;
+	font-size: 3em;
+}
+
 .account-info p {
-	line-height: 1.35;
+	font-size: 0.9rem;
+	line-height: 0;
+}
+.profile-info .divider {
+	width: 70%;
+	opacity: 70%;
+	margin: 13px auto;
 }
 .card-body,
 .container-body p {
@@ -806,7 +856,7 @@ header .pencil-icon:active,
 	font-size: 1.5rem;
 	width: 30px !important;
 	height: 30px !important;
-	margin: 3px 10px 3px;
+	margin: 3px 13px 3px 8px;
 }
 .info p {
 	font-size: 0.8em;
@@ -867,6 +917,13 @@ header .pencil-icon:active,
 	flex-wrap: wrap;
 	width: 100%;
 	justify-content: center;
+}
+.allowed-teams {
+	line-height: 1.5;
+	padding: 5px 0 23px;
+	width: 80%;
+	text-align: center;
+	margin: 0 auto;
 }
 .employee-input .field {
 	display: flex;

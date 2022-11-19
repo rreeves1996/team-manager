@@ -13,7 +13,7 @@ export default function General() {
 			</div>
 
 			<div className='col-profile-lg'>
-				<Teams teams={userData.teams} />
+				<Teams />
 			</div>
 		</>
 	);

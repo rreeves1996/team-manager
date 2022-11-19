@@ -1,11 +1,11 @@
 import React, { useContext } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { DataContext } from '../../Home';
-import EmpCard from '../../cards/EmpCard';
+import { EmpCard, MngrCard } from '../../cards/EmpCard';
 
 export default function YourTeam() {
 	const teamData = useContext(DataContext);
-	const { employees, managers } = teamData;
+	const { employees, managers, roles } = teamData;
 
 	return (
 		<div className='your-team'>
@@ -29,15 +29,13 @@ export default function YourTeam() {
 							}
 
 							return (
-								<>
-									<EmpCard
-										key={uuidv4()}
-										manager={{
-											...manager,
-											abbreviatedname: managerNameAbbreviated,
-										}}
-									/>
-								</>
+								<MngrCard
+									key={uuidv4()}
+									manager={{
+										...manager,
+										abbreviatedname: managerNameAbbreviated,
+									}}
+								/>
 							);
 						})}
 					</div>
@@ -53,15 +51,15 @@ export default function YourTeam() {
 							const employeeNameAbbreviated = `${employeeFirst[0]}. ${employeeNameSplit[1]}`;
 
 							return (
-								<>
-									<EmpCard
-										key={uuidv4()}
-										employee={{
-											...employee,
-											abbreviatedname: employeeNameAbbreviated,
-										}}
-									/>
-								</>
+								<EmpCard
+									key={uuidv4()}
+									employee={{
+										...employee,
+										abbreviatedname: employeeNameAbbreviated,
+									}}
+									roles={roles}
+									managers={managers}
+								/>
 							);
 						})}
 					</div>
