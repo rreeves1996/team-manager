@@ -85,22 +85,12 @@ TeamEZ is a MERN app (MySQL database) that functions as a team management app. I
 
 ## Getting Started
 
-To use the app, simple visit the [Heroku Deployment](teamez.herokuapp.com/)
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-<!-- USAGE EXAMPLES -->
-
-## Usage
-
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
-
-_For more examples, please refer to the [Documentation]()_
+To use the app, simple visit the [Heroku Deployment](teamez.herokuapp.com/) and either register or create a team locally by following the instructions on the init page. From there, all of the functions are accessible on the home screen. If you choose to create an account, you have the ability to create more than one team and access them from the profile page.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- ROADMAP -->
-
+<!--
 ## Roadmap
 
 - [ ] Feature 1
@@ -127,23 +117,23 @@ Don't forget to give the project a star! Thanks again!
 4. Push to the Branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+<p align="right">(<a href="#readme-top">back to top</a>)</p> -->
 
 <!-- LICENSE -->
 
-## License
+<!-- ## License
 
 Distributed under the MIT License. See `LICENSE.txt` for more information.
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+<p align="right">(<a href="#readme-top">back to top</a>)</p> -->
 
 <!-- CONTACT -->
 
 ## Contact
 
-Your Name - [@twitter_handle](https://twitter.com/twitter_handle) - email@email_client.com
+Ryan Reeves - [LinkedIn](https://www.linkedin.com/in/rreevesdev/) - rreeves@gmail.com
 
-Project Link: [https://github.com/github_username/repo_name](https://github.com/github_username/repo_name)
+Project Link: [https://github.com/rreeves1996/team-manager](https://github.com/rreeves1996/team-manager)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -151,9 +141,9 @@ Project Link: [https://github.com/github_username/repo_name](https://github.com/
 
 ## Acknowledgments
 
-- []()
-- []()
-- []()
+- [Isaac LaFlamme](https://github.com/EyesackEl) - General assistance with backend, original model structure
+<!-- - []()
+- []() -->
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
