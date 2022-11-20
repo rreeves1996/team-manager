@@ -36,6 +36,7 @@ Manager.init(
 		},
 		salary: {
 			type: DataTypes.INTEGER,
+			defaultValue: 100000,
 			allowNull: true,
 		},
 		team_id: {

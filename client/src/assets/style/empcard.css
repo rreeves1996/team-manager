@@ -15,6 +15,9 @@
 	justify-content: center;
 	align-items: center;
 }
+.card-edit p {
+	width: 100%;
+}
 .card-input {
 	height: 17px !important;
 	width: 50%;
@@ -39,10 +42,22 @@
 	text-indent: -1px !important;
 }
 .email-input {
+	display: flex;
+	width: 141px;
 	height: 18px !important;
 	line-height: 2 !important;
 }
+.salary-input {
+	width: 131px;
+}
+.timezone-input {
+	height: 100% !important;
+	width: 146px;
+	border: 1px solid rgb(168, 166, 166);
+	border-radius: 3px;
+}
 .emp-card-modal-container {
+	min-width: 229px;
 	background-color: white;
 	border-radius: 6px;
 	border-top-left-radius: 12px;
@@ -150,6 +165,11 @@
 .phone-missing {
 	display: flex;
 }
+.phone-missing .alert-icon {
+	margin: 0 auto;
+	width: 10px !important;
+	height: 10px !important;
+}
 .edit-button,
 .delete-button,
 .timezone-button,
@@ -157,19 +177,12 @@
 	background-color: transparent;
 	border: 2px solid var(--blue);
 	text-transform: uppercase;
-	font-size: 0.8em;
+	font-size: 0.75em;
 	color: var(--blue);
 	text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.089);
 	padding: 7px 10px;
 	margin: 0px 3px 0px 5px;
 	transition: all 0.2s;
-}
-.timezone-button {
-	background-color: var(--blue);
-	border: none;
-	font-size: 0.7em;
-	color: var(--off-white);
-	padding-right: 8px;
 }
 .edit-button:hover,
 .delete-button:hover,

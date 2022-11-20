@@ -33,7 +33,10 @@ export default function InitPrompt() {
 					const teamId = res[0].data.id;
 
 					await axios
-						.put(`/api/managers/${res[1].data.id}`, { team_id: teamId })
+						.put(`/api/managers/${res[1].data.id}`, {
+							team_id: teamId,
+							is_lead: true,
+						})
 						.then((res) => {
 							console.log(`Manager's team ID(${teamId}) updated: ${res}`);
 						})
@@ -43,7 +46,7 @@ export default function InitPrompt() {
 
 					localStorage.setItem('teamID', teamId);
 				})
-				.finally(() => navigate('/'))
+				.finally(() => navigate(0))
 				.catch((err) => console.log(`Failed to create team/manager: ${err}`));
 		} else if (!teamName || !managerName) {
 			teamName = 'The Seattle Puddlechickens';

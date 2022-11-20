@@ -25,7 +25,7 @@ function EmpPhoneNumber(props) {
 							<BsExclamationLg className='alert-icon' /> Phone # missing
 						</span>
 					) : (
-						<>No phone number found</>
+						<>No # found</>
 					)}
 				</>
 			) : (
@@ -92,7 +92,7 @@ export function MngrCard(props) {
 	const [show, setShow] = useState(false);
 	const [deleteConfirm, showDeleteConfirm] = useState(false);
 	const [editing, setEditing] = useState(false);
-	const [loading, setLoading] = useState(false);
+	const [loading, setLoading] = useState(true);
 	const [phoneNumber, setPhoneNumber] = useState({
 		groupOne: phone ? phone.slice(0, 3) : '',
 		groupTwo: phone ? phone.slice(3, 6) : '',
@@ -106,6 +106,7 @@ export function MngrCard(props) {
 		mngrEmail: email ? email : '',
 		mngrTimezone: timezone ? timezone : '',
 	});
+	const timezones = [];
 
 	const handleClose = () => {
 		setShow(false);
@@ -129,7 +130,7 @@ export function MngrCard(props) {
 		event.preventDefault();
 
 		const emailFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-		const { mngrSalary, mngrEmail, mngrTimezone } = formState.trim();
+		const { mngrSalary, mngrEmail, mngrTimezone } = formState;
 		const phonenumbers = [
 			formState.phone1.trim(),
 			formState.phone2.trim(),
@@ -168,6 +169,19 @@ export function MngrCard(props) {
 
 		setEditing(!editing);
 	};
+
+	useEffect(() => {
+		const setTimeZones = () => {
+			for (let i = 0; i < 24; i++) {
+				timezones.push(i);
+				console.log(timezones);
+			}
+
+			setLoading(!loading);
+		};
+
+		setTimeZones();
+	}, []);
 
 	const deleteEmployee = (employee) => {
 		if (employee.role === 'manager') {
@@ -249,6 +263,16 @@ export function MngrCard(props) {
 									<>
 										<form className='card-edit' onSubmit={handleEditSubmit}>
 											<p>
+												<strong>Salary:</strong> $
+												<input
+													type='text'
+													className='card-input salary-input'
+													name='mngrSalary'
+													value={formState.mngrSalary}
+													onChange={handleChange}
+												/>
+											</p>
+											<p>
 												<strong>Phone #:</strong>
 												<input
 													type='text'
@@ -277,22 +301,37 @@ export function MngrCard(props) {
 													onChange={handleChange}
 												/>
 											</p>
+
 											<p>
 												<strong>Email:</strong>
 												<input
 													type='text'
 													className='card-input email-input'
-													name='email'
+													name='mngrEmail'
 													value={formState.mngrEmail}
 													onChange={handleChange}
 												/>
 											</p>
-											<p>
-												<strong>Time:</strong>
-												<button className='timezone-button'>
-													Timezones <AiOutlineCaretDown />
-												</button>
-											</p>
+
+											<strong>Time:</strong>
+											<div className='field role-field'>
+												<select
+													type='timezone'
+													className='card-input timezone-input'
+													name='mngrTimezone'
+													defaultValue={'default'}
+													onChange={handleChange}>
+													<option value='default' disabled>
+														Select timezone...
+													</option>
+													{timezones.map((time) => (
+														<option value={time}>
+															<p>UTC -{JSON.stringify(time)}:00</p>
+														</option>
+													))}
+													{/* <option value={timezones[0]}>{timezones[0]}</option> */}
+												</select>
+											</div>
 											<div className='emp-card-button-container'>
 												<button
 													className='edit-button'
@@ -307,6 +346,7 @@ export function MngrCard(props) {
 									</>
 								) : (
 									<>
+										<EmpSalary salary={salary} />
 										<EmpPhoneNumber
 											header={false}
 											number1={phoneNumber.groupOne}

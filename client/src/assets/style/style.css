@@ -71,7 +71,7 @@ nav {
 	padding: 0.5rem calc((100vw - 1150px) / 2);
 	align-items: center;
 	filter: drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.705));
-	background-color: black;
+	background-color: rgb(22, 22, 22);
 	z-index: 99999 !important;
 }
 main {
@@ -135,6 +135,7 @@ select {
 	font-size: 90% !important;
 	text-indent: 3px;
 }
+
 footer {
 	position: relative;
 	display: flex;
@@ -939,11 +940,13 @@ header .pencil-icon:active,
 .role-select {
 	width: 78%;
 }
-.role-select:active {
+.role-select:active,
+select:active {
 	border-color: rgb(118, 118, 118) !important;
 	border-radius: 3px;
 }
-.role-select:focus {
+.role-select:focus,
+select:focus {
 	outline: none;
 }
 @media screen and (max-width: 768px) {

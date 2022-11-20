@@ -8,6 +8,7 @@ export default function Header({ deleteTeam }) {
 	const teamData = useContext(DataContext);
 	const [collapsedMenu, toggleCollapseMenu] = useState(true);
 
+	console.log(teamData);
 	return (
 		<header>
 			<div className='row'>
