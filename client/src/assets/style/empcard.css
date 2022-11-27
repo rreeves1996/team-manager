@@ -144,9 +144,11 @@
 	font-size: 0.8em;
 }
 .emp-contact-info {
+	min-width: 210px;
+	margin: auto;
+	padding: 8px 0 13px 8%;
 	color: var(--off-black);
 	font-size: 0.85em;
-	padding: 8px 13px;
 }
 .emp-contact-info p {
 	height: 18px;

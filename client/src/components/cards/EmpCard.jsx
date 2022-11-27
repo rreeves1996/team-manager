@@ -313,8 +313,8 @@ export function MngrCard(props) {
 												/>
 											</p>
 
-											<strong>Time:</strong>
-											<div className='field role-field'>
+											<p>
+												<strong>Time:</strong>
 												<select
 													type='timezone'
 													className='card-input timezone-input'
@@ -326,12 +326,12 @@ export function MngrCard(props) {
 													</option>
 													{timezones.map((time) => (
 														<option value={time}>
-															<p>UTC -{JSON.stringify(time)}:00</p>
+															<p>UTC -{time}:00</p>
 														</option>
 													))}
 													{/* <option value={timezones[0]}>{timezones[0]}</option> */}
 												</select>
-											</div>
+											</p>
 											<div className='emp-card-button-container'>
 												<button
 													className='edit-button'
@@ -574,7 +574,7 @@ export function EmpCard(props) {
 											<p>
 												<strong>Role:</strong>
 												<select
-													className='role-select'
+													className='card-role-select'
 													type='emprole'
 													name='emprole'
 													onChange={handleChange}>
@@ -641,7 +641,7 @@ export function EmpCard(props) {
 											<p>
 												<strong>Manager:</strong>
 												<select
-													className='role-select'
+													className='card-manager-select'
 													type='text'
 													name='empmanager'
 													onChange={handleChange}>
