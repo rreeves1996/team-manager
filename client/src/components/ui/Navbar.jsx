@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { HiBars3 } from 'react-icons/hi2';
 import { FaChalkboardTeacher, FaChevronDown } from 'react-icons/fa';
-import { useAppContext } from '../utils/GlobalState';
-import Auth from '../utils/auth';
+import { useAppContext } from '../../utils/GlobalState';
+import Auth from '../../utils/auth';
 
 export default function Navbar() {
 	const [collapsed, setCollapsed] = useState(true);

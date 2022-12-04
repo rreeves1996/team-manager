@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FaChalkboardTeacher } from 'react-icons/fa';
 import axios from 'axios';
-import Auth from '../utils/auth';
+import Auth from '../../utils/auth';
 
 export default function Login() {
 	const navigate = useNavigate();

@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import { DataContext } from '../../Home';
-import { EmpCard, MngrCard } from '../../cards/EmpCard';
+import { DataContext } from '../../../Home';
+import { EmpCard, MngrCard } from '../../../../components/cards/EmpCard';
 
 export default function YourTeam() {
 	const teamData = useContext(DataContext);

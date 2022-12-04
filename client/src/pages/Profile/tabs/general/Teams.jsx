@@ -1,9 +1,9 @@
 import React, { useEffect, useState, useContext } from 'react';
 import axios from 'axios';
 import { v4 as uuidv4 } from 'uuid';
-import { UserContext } from '../../Profile';
+import { UserContext } from '../../../Profile';
 import { FaGlobeAmericas } from 'react-icons/fa';
-import TeamCard from '../../cards/TeamCard';
+import TeamCard from '../../../../components/cards/TeamCard';
 
 export default function Teams() {
 	const [loading, setLoading] = useState(true);

@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { FaUser } from 'react-icons/fa';
 import { HiPencilSquare } from 'react-icons/hi2';
-import { DataContext } from '../../Home';
+import { DataContext } from '../../../Home';
 import axios from 'axios';
 
 export default function Header({ deleteTeam }) {

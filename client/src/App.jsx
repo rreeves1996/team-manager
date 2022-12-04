@@ -1,14 +1,14 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { useAppContext } from './utils/GlobalState';
-import Navbar from './components/Navbar';
-import Footer from './components/Footer';
-import InitPrompt from './components/InitPrompt';
-import Home from './components/Home';
-import Register from './components/Register';
-import Login from './components/Login';
-import Profile from './components/Profile';
-import About from './components/About';
+import Navbar from './components/ui/Navbar';
+import Footer from './components/ui/Footer';
+import InitPrompt from './pages/Init';
+import Home from './pages/Home';
+import Register from './pages/Register';
+import Login from './pages/Login';
+import Profile from './pages/Profile';
+import About from './pages/About';
 
 import './assets/style/style.css';
 

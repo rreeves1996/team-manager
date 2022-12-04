@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 // import { AiOutlineCaretDown } from 'react-icons/ai';
 import { HiPencilSquare, HiExclamationCircle } from 'react-icons/hi2';
 import dayjs from 'dayjs';
-import { DataContext } from '../../Home';
+import { DataContext } from '../../../Home';
 
 export default function Summary() {
 	const teamData = useContext(DataContext);

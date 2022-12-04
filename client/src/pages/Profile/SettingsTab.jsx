@@ -1,5 +1,5 @@
 import React from 'react';
 
-export default function PSettings() {
+export default function SettingsTab() {
 	return <div>PSettings</div>;
 }

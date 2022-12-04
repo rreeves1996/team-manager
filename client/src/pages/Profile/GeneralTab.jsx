@@ -1,9 +1,9 @@
 import React, { useContext } from 'react';
-import { UserContext } from '../Profile';
-import Info from './profile/Info';
-import Teams from './profile/Teams';
+import { UserContext } from '.';
+import Info from './tabs/general/Info';
+import Teams from './tabs/general/Teams';
 
-export default function General() {
+export default function GeneralTab() {
 	const userData = useContext(UserContext);
 
 	return (

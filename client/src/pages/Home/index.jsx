@@ -1,8 +1,8 @@
 import React, { useState, useEffect, createContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import HomeTab from './tabs/HomeTab';
-import ManageTab from './tabs/ManageTab';
+import HomeTab from './HomeTab';
+import ManageTab from './ManageTab';
 import Header from './tabs/home/Header';
 
 export const DataContext = createContext();

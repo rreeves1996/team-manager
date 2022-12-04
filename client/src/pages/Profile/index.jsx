@@ -1,8 +1,8 @@
 import React, { useState, useEffect, createContext } from 'react';
 import axios from 'axios';
-import Auth from '../utils/auth';
-import General from './tabs/PGeneral';
-import Settings from './tabs/PSettings';
+import Auth from '../../utils/auth';
+import GeneralTab from './GeneralTab';
+import SettingsTab from './SettingsTab';
 
 export const UserContext = createContext();
 
@@ -12,9 +12,9 @@ export default function Profile() {
 	const [userData, setUserData] = useState({});
 	const renderTab = () => {
 		if (currentTab === 'General') {
-			return <General />;
+			return <GeneralTab />;
 		} else if (currentTab === 'Settings') {
-			return <Settings />;
+			return <SettingsTab />;
 		}
 	};
 
