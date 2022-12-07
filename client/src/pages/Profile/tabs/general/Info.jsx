@@ -1,12 +1,11 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { UserContext } from '../../../../context/UserContext';
+import React, { useContext } from 'react';
+import { UserContext } from '../../index';
 import { FaUser } from 'react-icons/fa';
 
-export default function Info() {
-	const [loading, setLoading] = useState(true);
-	const userData = useContext(UserContext);
+export default function Info(props) {
+	const { userData } = props;
 	const allowedTeams = 5;
-
+	console.log(userData);
 	return (
 		<>
 			<div className='profile-info'>
@@ -28,9 +27,7 @@ export default function Info() {
 							<strong>Email:</strong> {userData.email}
 						</p>
 
-						<p>
-							<strong>Total Teams:</strong> {userData.teams.length}
-						</p>
+						<p>{/* <strong>Total Teams:</strong> {userData.teams.length} */}</p>
 					</div>
 					<div className='account-picture'>
 						{userData.picture ? (
@@ -44,8 +41,8 @@ export default function Info() {
 
 				<p className='allowed-teams'>
 					You can currently create up to{' '}
-					<strong>{allowedTeams - userData.teams.length}</strong> more teams.
-					(Limit: 5)
+					{/* <strong>{allowedTeams - userData.teams.length}</strong> more teams.
+					(Limit: 5) */}
 				</p>
 			</div>
 		</>

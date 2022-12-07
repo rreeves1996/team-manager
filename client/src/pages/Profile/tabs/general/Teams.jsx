@@ -1,33 +1,33 @@
 import React, { useEffect, useState, useContext } from 'react';
 import axios from 'axios';
 import { v4 as uuidv4 } from 'uuid';
-import { UserContext } from '../../../../context/UserContext';
+import UserContext from '../../index';
 import { FaGlobeAmericas } from 'react-icons/fa';
 import TeamCard from '../../../../components/cards/TeamCard';
 
-export default function Teams() {
+export default function Teams(props) {
 	const [loading, setLoading] = useState(true);
-	const [teamData, setTeamData] = useState([]);
+	const { teamData } = props;
 	const userData = useContext(UserContext);
 	console.log(teamData);
-	useEffect(() => {
-		const teams = [];
+	// useEffect(() => {
+	// 	const teams = [];
 
-		Promise.all(
-			userData.teams.map((team) =>
-				axios
-					.get(`/api/teams/${team.id}`)
-					.then((res) => {
-						teams.push(res.data);
-					})
-					.catch((err) => console.log(`GET failed: ${err}`))
-			)
-		)
-			.then((data) => setTeamData(teams))
-			.finally(() => {
-				setLoading(!loading);
-			});
-	}, []);
+	// 	Promise.all(
+	// 		userData.teams.map((team) =>
+	// 			axios
+	// 				.get(`/api/teams/${team.id}`)
+	// 				.then((res) => {
+	// 					teams.push(res.data);
+	// 				})
+	// 				.catch((err) => console.log(`GET failed: ${err}`))
+	// 		)
+	// 	)
+	// 		.then((data) => setTeamData(teams))
+	// 		.finally(() => {
+	// 			setLoading(!loading);
+	// 		});
+	// }, []);
 
 	return (
 		<div className='profile-teams'>

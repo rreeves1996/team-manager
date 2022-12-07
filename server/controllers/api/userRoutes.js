@@ -47,7 +47,17 @@ router.post('/create', async (req, res) => {
 //* /api/users/login
 router.post('/login', async (req, res) => {
 	try {
-		const userData = await User.findOne({ where: { email: req.body.email } });
+		const userData = await User.findOne(
+			{ where: { email: req.body.email } },
+			{
+				include: [
+					{
+						model: Team,
+						attributes: ['id', 'name', 'user_id'],
+					},
+				],
+			}
+		);
 		const user = {
 			id: userData.id,
 			email: userData.email,

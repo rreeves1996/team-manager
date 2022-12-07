@@ -1,15 +1,11 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { UserContext } from '../../context/UserContext';
 import useAuth from '../../hooks/useAuth';
 import { FaChalkboardTeacher } from 'react-icons/fa';
-import axios from 'axios';
-import Auth from '../../utils/auth';
 
 export default function Register() {
 	const navigate = useNavigate();
-	const { userData, setUserData } = useContext(UserContext);
-	const { data, message, loading, registerUser } = useAuth();
+	const { registerUser } = useAuth();
 
 	const [formState, setFormState] = useState({
 		username: '',
@@ -49,9 +45,6 @@ export default function Register() {
 				registerUser(payload)
 					.then((res) => {
 						navigate('/profile', { replace: true });
-
-						console.log(message);
-						setUserData(data);
 					})
 					.finally(() => {
 						// Refresh the page to properly load '/profile'
