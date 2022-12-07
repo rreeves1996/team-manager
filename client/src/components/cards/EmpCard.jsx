@@ -92,7 +92,7 @@ export function MngrCard(props) {
 	const [show, setShow] = useState(false);
 	const [deleteConfirm, showDeleteConfirm] = useState(false);
 	const [editing, setEditing] = useState(false);
-	const [loading, setLoading] = useState(true);
+	const [loading, setLoading] = useState(false);
 	const [phoneNumber, setPhoneNumber] = useState({
 		groupOne: phone ? phone.slice(0, 3) : '',
 		groupTwo: phone ? phone.slice(3, 6) : '',
@@ -106,7 +106,11 @@ export function MngrCard(props) {
 		mngrEmail: email ? email : '',
 		mngrTimezone: timezone ? timezone : '',
 	});
-	const timezones = [];
+	// Create an Array.range fucntion which takes in a custom start and end point and returns an array of numbers from start to end
+	Array.range = (start, end) =>
+		Array.from({ length: end - start }, (v, k) => k + start);
+	// Create timezones array for listing timezones
+	const timezones = Array.range(-12, 13);
 
 	const handleClose = () => {
 		setShow(false);
@@ -118,12 +122,18 @@ export function MngrCard(props) {
 	const handleShow = () => setShow(true);
 
 	const handleChange = (event) => {
-		const { name, value } = event.target;
+		const { name, value, maxLength } = event.target;
 
 		setFormState({
 			...formState,
 			[name]: value,
 		});
+
+		if (maxLength === 3) {
+			if (value.length >= maxLength) {
+				event.target.nextElementSibling.focus();
+			}
+		}
 	};
 
 	const handleEditSubmit = async (event) => {
@@ -170,26 +180,13 @@ export function MngrCard(props) {
 		setEditing(!editing);
 	};
 
-	useEffect(() => {
-		const setTimeZones = () => {
-			for (let i = 0; i < 24; i++) {
-				timezones.push(i);
-				console.log(timezones);
-			}
-
-			setLoading(!loading);
-		};
-
-		setTimeZones();
-	}, []);
-
 	const deleteEmployee = (employee) => {
 		if (employee.role === 'manager') {
 			let index = employee.id - 1;
 			delete props.managers[index];
 		}
 	};
-
+	console.log(timezones);
 	return (
 		<>
 			{loading ? (
@@ -279,6 +276,7 @@ export function MngrCard(props) {
 													className='card-input number-input'
 													id='number-input1'
 													name='phone1'
+													maxLength={3}
 													value={formState.phone1}
 													onChange={handleChange}
 												/>
@@ -288,6 +286,7 @@ export function MngrCard(props) {
 													className='card-input number-input'
 													id='number-input2'
 													name='phone2'
+													maxLength={3}
 													value={formState.phone2}
 													onChange={handleChange}
 												/>
@@ -297,6 +296,7 @@ export function MngrCard(props) {
 													className='card-input number-input'
 													id='number-input3'
 													name='phone3'
+													maxLength={4}
 													value={formState.phone3}
 													onChange={handleChange}
 												/>
@@ -329,7 +329,7 @@ export function MngrCard(props) {
 															<p>UTC -{time}:00</p>
 														</option>
 													))}
-													{/* <option value={timezones[0]}>{timezones[0]}</option> */}
+													<option value={timezones[0]}>{timezones[0]}</option>
 												</select>
 											</p>
 											<div className='emp-card-button-container'>
@@ -423,12 +423,18 @@ export function EmpCard(props) {
 	const handleShow = () => setShow(true);
 
 	const handleChange = (event) => {
-		const { name, value } = event.target;
+		const { name, value, maxLength } = event.target;
 
 		setFormState({
 			...formState,
 			[name]: value,
 		});
+
+		if (maxLength === 3) {
+			if (value.length >= maxLength) {
+				event.target.nextElementSibling.focus();
+			}
+		}
 	};
 
 	const handleEditSubmit = async (event) => {
@@ -511,7 +517,6 @@ export function EmpCard(props) {
 		fetchData().catch((err) => alert(err));
 	}, []);
 
-	console.log(formState);
 	return (
 		<>
 			{loading ? (
@@ -576,7 +581,7 @@ export function EmpCard(props) {
 												<select
 													className='card-role-select'
 													type='emprole'
-													name='emprole'
+													name='empRole'
 													onChange={handleChange}>
 													{props.roles.map((role) => (
 														<option key={uuidv4()} value={formState.empRole}>
@@ -591,7 +596,7 @@ export function EmpCard(props) {
 												<input
 													className='card-input'
 													type='text'
-													name='empsalary'
+													name='empSalary'
 													value={formState.empSalary}
 													onChange={handleChange}
 												/>
@@ -604,6 +609,7 @@ export function EmpCard(props) {
 													type='text'
 													id='number-input1'
 													name='phone1'
+													maxLength={3}
 													value={formState.phone1}
 													onChange={handleChange}
 												/>
@@ -613,6 +619,7 @@ export function EmpCard(props) {
 													type='text'
 													id='number-input2'
 													name='phone2'
+													maxLength={3}
 													value={formState.phone2}
 													onChange={handleChange}
 												/>
@@ -622,6 +629,7 @@ export function EmpCard(props) {
 													type='text'
 													id='number-input3'
 													name='phone3'
+													maxLength={4}
 													value={formState.phone3}
 													onChange={handleChange}
 												/>
@@ -632,7 +640,7 @@ export function EmpCard(props) {
 												<input
 													className='card-input'
 													type='text'
-													name='empemail'
+													name='empEmail'
 													value={formState.empEmail}
 													onChange={handleChange}
 												/>
@@ -643,7 +651,7 @@ export function EmpCard(props) {
 												<select
 													className='card-manager-select'
 													type='text'
-													name='empmanager'
+													name='empManager'
 													onChange={handleChange}>
 													{props.managers.map((manager) => (
 														<option key={uuidv4()} value={formState.empManager}>

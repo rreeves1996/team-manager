@@ -27,7 +27,9 @@ export default function Info(props) {
 							<strong>Email:</strong> {userData.email}
 						</p>
 
-						<p>{/* <strong>Total Teams:</strong> {userData.teams.length} */}</p>
+						<p>
+							<strong>Total Teams:</strong> {userData.teams.length}
+						</p>
 					</div>
 					<div className='account-picture'>
 						{userData.picture ? (
@@ -41,8 +43,8 @@ export default function Info(props) {
 
 				<p className='allowed-teams'>
 					You can currently create up to{' '}
-					{/* <strong>{allowedTeams - userData.teams.length}</strong> more teams.
-					(Limit: 5) */}
+					<strong>{allowedTeams - userData.teams.length}</strong> more teams.
+					(Limit: 5)
 				</p>
 			</div>
 		</>
