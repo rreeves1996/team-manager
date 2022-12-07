@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { Team, Manager, Employee, Role } = require('../../models');
+const { Team, Manager, Employee, Role, User } = require('../../models');
 
 // Get All Teams
 //* GET /api/teams
@@ -35,6 +35,34 @@ router.get('/:id', async (req, res) => {
 		});
 
 		res.status(200).json(newTeam);
+	} catch (err) {
+		res.status(400).json(err);
+	}
+});
+
+// Get Teams by user_id
+//* /api/teams/user/:id
+router.get('/user/:userId', async (req, res) => {
+	try {
+		const team = await Team.findAll({
+			where: { user_id: req.params.userId },
+			include: [
+				{
+					model: Manager,
+					atttributes: ['name', 'id', 'salary'],
+				},
+				{
+					model: Employee,
+					atttributes: ['name', 'id'],
+				},
+				{
+					model: Role,
+					attributes: ['id', 'title', 'salary'],
+				},
+			],
+		});
+
+		res.status(200).json(team);
 	} catch (err) {
 		res.status(400).json(err);
 	}

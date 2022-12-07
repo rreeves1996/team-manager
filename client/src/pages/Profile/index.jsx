@@ -6,14 +6,14 @@ import useQuery from '../../hooks/useQuery';
 
 export default function Profile() {
 	const userData = useSelector((state) => state.user.data);
-	const { queryUser } = useQuery();
+	const { queryUser, queryTeamsByUser } = useQuery();
 	const [currentTab, setCurrentTab] = useState('General');
 	const [loading, setLoading] = useState(true);
-	const [data, setData] = useState([]);
+	const [data, setData] = useState({});
 
 	const renderTab = () => {
 		if (currentTab === 'General') {
-			return <GeneralTab userdata={data[0]} teamdata={data[0].teams} />;
+			return <GeneralTab userdata={data.userData} teamdata={data.teamData} />;
 		} else if (currentTab === 'Settings') {
 			return <SettingsTab />;
 		}
@@ -23,8 +23,16 @@ export default function Profile() {
 	useEffect(() => {
 		const fetchTeamData = () => {
 			queryUser(userData.id)
-				.then((res) => setData((prevState) => [...prevState, res.data]))
-				.finally(() => setLoading(false));
+				.then((res) =>
+					setData((prevState) => ({ ...prevState, userData: res.data }))
+				)
+				.finally(() =>
+					queryTeamsByUser(userData.id)
+						.then((res) =>
+							setData((prevState) => ({ ...prevState, teamData: res.data }))
+						)
+						.finally(() => setLoading(false))
+				);
 		};
 
 		fetchTeamData();

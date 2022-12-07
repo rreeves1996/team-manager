@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { login, logout } from '../utils/userSlice';
 import axios from 'axios';
 
-const API_ROUTE = '/api/users/';
+const API_ROUTE = '/api/users';
 
 export default function useAuth() {
 	const dispatch = useDispatch();
@@ -12,7 +12,7 @@ export default function useAuth() {
 		const { username, name, email, password } = payload;
 
 		try {
-			const res = await axios.post(API_ROUTE + 'create', {
+			const res = await axios.post(API_ROUTE + '/create', {
 				username,
 				name,
 				email,
@@ -30,7 +30,7 @@ export default function useAuth() {
 		const { email, password } = payload;
 
 		try {
-			const res = await axios.post(API_ROUTE + 'login', {
+			const res = await axios.post(API_ROUTE + '/login', {
 				email,
 				password,
 			});
@@ -44,7 +44,7 @@ export default function useAuth() {
 
 	async function logoutUser() {
 		try {
-			await axios.post(API_ROUTE + 'logout');
+			await axios.post(API_ROUTE + '/logout');
 
 			dispatch(logout());
 		} catch (err) {

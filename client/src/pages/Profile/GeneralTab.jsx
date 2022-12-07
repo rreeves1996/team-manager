@@ -1,5 +1,4 @@
 import React from 'react';
-import { UserContext } from '.';
 import Info from './tabs/general/Info';
 import Teams from './tabs/general/Teams';
 
@@ -11,7 +10,7 @@ export default function GeneralTab(props) {
 			</div>
 
 			<div className='col-profile-lg'>
-				<Teams teamData={props.teamData} />
+				<Teams teamData={props.teamdata} />
 			</div>
 		</>
 	);

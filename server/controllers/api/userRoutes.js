@@ -47,17 +47,15 @@ router.post('/create', async (req, res) => {
 //* /api/users/login
 router.post('/login', async (req, res) => {
 	try {
-		const userData = await User.findOne(
-			{ where: { email: req.body.email } },
-			{
-				include: [
-					{
-						model: Team,
-						attributes: ['id', 'name', 'user_id'],
-					},
-				],
-			}
-		);
+		const userData = await User.findOne({
+			include: [
+				{
+					model: Team,
+					attributes: ['id', 'name', 'user_id'],
+				},
+			],
+			where: { email: req.body.email },
+		});
 		const user = {
 			id: userData.id,
 			email: userData.email,
@@ -124,6 +122,7 @@ router.get('/:id', async (req, res) => {
 		});
 
 		res.status(200).json(newUser);
+		console.log(JSON.stringify(newUser.teams));
 	} catch (err) {
 		res.status(400).json(err);
 	}
