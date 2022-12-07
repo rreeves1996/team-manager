@@ -1,11 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { UserContext } from '../../context/UserContext';
+import useAuth from '../../hooks/useAuth';
 import { FaChalkboardTeacher } from 'react-icons/fa';
 import axios from 'axios';
 import Auth from '../../utils/auth';
 
 export default function Register() {
 	const navigate = useNavigate();
+	const { userData, setUserData } = useContext(UserContext);
+	const { data, message, loading, registerUser } = useAuth();
 
 	const [formState, setFormState] = useState({
 		username: '',
@@ -26,30 +30,28 @@ export default function Register() {
 		});
 	};
 
-	const handleFormSubmit = async (event) => {
+	const handleFormSubmit = (event) => {
 		event.preventDefault();
 
-		let username = formState.username.trim();
-		let name = `${formState.firstname.trim()} ${formState.lastname.trim()}`;
-		let email = formState.email.trim();
 		let password = formState.password.trim();
 		let passconfirm = formState.passconfirm.trim();
 
 		// If password matches the password confirm, and
 		if (password === passconfirm) {
-			// There is an inputted username, name, email and password
-			if (username && name && email && password) {
-				await axios
-					.post('/api/users/create', {
-						username: username,
-						name: name,
-						email: email,
-						password: password,
-					})
+			const payload = {
+				username: formState.username.trim(),
+				name: `${formState.firstname.trim()} ${formState.lastname.trim()}`,
+				email: formState.email.trim(),
+				password,
+			};
+
+			if (payload) {
+				registerUser(payload)
 					.then((res) => {
-						// Login with auth, replace '/register' with '/profile'
-						Auth.login(res.data.token);
 						navigate('/profile', { replace: true });
+
+						console.log(message);
+						setUserData(data);
 					})
 					.finally(() => {
 						// Refresh the page to properly load '/profile'

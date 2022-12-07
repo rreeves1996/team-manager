@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { UserContext } from '../../../Profile';
+import { UserContext } from '../../../../context/UserContext';
 import { FaUser } from 'react-icons/fa';
 
 export default function Info() {

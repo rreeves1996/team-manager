@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FaChalkboardTeacher } from 'react-icons/fa';
-import axios from 'axios';
-import Auth from '../../utils/auth';
+import AuthService from '../../utils/auth';
+import useAuth from '../../hooks/useAuth';
 
 export default function Login() {
 	const navigate = useNavigate();
-
+	const { loginUser } = useAuth();
 	const [formState, setFormState] = useState({ email: '', password: '' });
 
 	const handleChange = (event) => {
@@ -18,35 +18,41 @@ export default function Login() {
 		});
 	};
 
-	const handleFormSubmit = async (event) => {
+	const handleFormSubmit = (event) => {
 		event.preventDefault();
 
-		const userEmail = formState.email.trim();
-		const userPassword = formState.password.trim();
+		const payload = {
+			email: formState.email.trim(),
+			password: formState.password.trim(),
+		};
 
-		console.log(userEmail);
-		console.log(userPassword);
+		if (payload) {
+			loginUser(payload).then((res) => {
+				AuthService.login(res);
+			});
+			// .finally(() => {
+			// 	navigate(0);
+			// });
 
-		if (userEmail && userPassword) {
-			await axios
-				.post('/api/users/login', {
-					email: userEmail,
-					password: userPassword,
-				})
-				.then((res) => {
-					console.log(`Success! Token: ${res.data.token}`);
-					Auth.login(res.data.token);
+			// loginUser(payload)
+			// 	.then((res) => {
+			// 		console.log(data);
 
-					navigate('/profile');
-				})
-				.finally(() => navigate(0))
-				.catch((err) => console.log(`Failed to login: ${err}`));
+			// 		setUserData(data.userData);
+			// 		navigate('/profile');
+			// 	})
+			// 	.finally(() => navigate(0))
+			// 	.catch((err) => console.log(`Failed to login: ${err}`));
+		} else {
+			window.alert('Invalid username or password!');
 		}
 
 		setFormState({
 			email: '',
 			password: '',
 		});
+
+		navigate('/profile', { replace: true });
 	};
 
 	return (

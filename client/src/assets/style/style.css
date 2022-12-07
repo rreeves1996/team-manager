@@ -181,19 +181,22 @@ p {
 	text-decoration: none;
 	filter: brightness(0.75);
 }
-.register-link {
+.additional-link {
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	width: 100%;
 	height: 100%;
-	padding: 12px 2px !important;
+	padding: 12px !important;
+
+	border-radius: 5px;
+	color: var(--off-white) !important;
 }
 .navbar-links {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	width: 205px;
+	width: 13rem;
 }
 .navbar-toggle {
 	display: flex;
@@ -211,7 +214,7 @@ p {
 	cursor: pointer;
 }
 .navbar-toggle:hover .navbar-burger {
-	transform: scale(1.15);
+	transform: scale(1.1);
 }
 .navbar-toggle:active .navbar-burger,
 .navbar-toggle.open:active .navbar-burger {
@@ -222,19 +225,14 @@ p {
 	transform: translateY(1.7rem);
 	opacity: 1;
 }
-.navbar-toggle.open .navbar-burger {
-	transform: scale(1.1);
-}
 .navbar-toggle.open .navbar-chevron {
-	transform: rotate(180deg) translateY(-1rem);
-}
-.navbar-toggle.open:hover .navbar-chevron {
 	transform: rotate(180deg) translateY(-1.7rem);
 	opacity: 1;
 }
-.navbar-toggle.open:hover .navbar-burger {
-	transform: scale(1.15);
+.navbar-toggle.open:hover .navbar-chevron {
+	transform: rotate(180deg) translateY(-1.5rem);
 }
+
 .navbar-chevron {
 	position: absolute;
 	pointer-events: none;
@@ -271,14 +269,6 @@ p {
 #about-button {
 	border-bottom: 1px solid var(--off-white);
 	border-radius: 6px 6px 0px 0px;
-}
-.register-link {
-	width: 100%;
-	height: 100%;
-	background-color: red;
-	margin: 0 12px;
-	border-radius: 5px;
-	color: var(--off-white) !important;
 }
 .navbar-links a:hover {
 	color: white !important;
@@ -610,7 +600,7 @@ header .pencil-icon:active,
 	border-bottom-right-radius: 5px;
 }
 .tab-button,
-.register-link {
+.additional-link {
 	height: 45px;
 	padding: 0 15px;
 	margin-right: 5px;
@@ -618,7 +608,7 @@ header .pencil-icon:active,
 	transition: background-color 100ms;
 }
 .tab-button:hover,
-.register-link:hover {
+.additional-link:hover {
 	background-color: rgba(255, 255, 255, 0.048);
 }
 .tab-container {
@@ -950,6 +940,9 @@ select:focus {
 	outline: none;
 }
 @media screen and (max-width: 768px) {
+	main {
+		min-height: 800px;
+	}
 	.mobile-background-container {
 		position: absolute;
 		display: flex;
@@ -979,19 +972,19 @@ select:focus {
 		display: none;
 	}
 	.init-container {
-		margin-top: 180px;
+		transform: translateY(6.5rem);
 		padding: 0;
-		width: 90%;
-		min-width: 350px;
-		max-width: 470px;
+		width: 100%;
+		min-width: 22rem;
+		max-width: 35rem;
 	}
 	.form-side {
 		width: 100%;
-		border-radius: 20px 20px 8px 8px;
+		border-radius: 0 !important;
 	}
 	.form-side h1 {
 		font-size: 5.5rem;
-		border-radius: 8px 8px 0 0;
+		border-radius: 0;
 	}
 	.form-side h6 {
 		width: 90%;
@@ -1014,7 +1007,7 @@ select:focus {
 		width: 100%;
 		height: auto;
 		top: 0;
-		transform: translateY(-150%) scale(1.3);
+		transform: translateY(-8rem);
 	}
 	.banner-side {
 		position: absolute;

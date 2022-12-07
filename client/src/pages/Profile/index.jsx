@@ -1,15 +1,14 @@
 import React, { useState, useEffect, createContext } from 'react';
-import axios from 'axios';
-import Auth from '../../utils/auth';
+import { useSelector } from 'react-redux';
 import GeneralTab from './GeneralTab';
 import SettingsTab from './SettingsTab';
 
-export const UserContext = createContext();
+const UserContext = createContext();
 
 export default function Profile() {
-	const [loading, setLoading] = useState(true);
 	const [currentTab, setCurrentTab] = useState('General');
-	const [userData, setUserData] = useState({});
+	const userData = useSelector((state) => state.user.data);
+
 	const renderTab = () => {
 		if (currentTab === 'General') {
 			return <GeneralTab />;
@@ -17,62 +16,54 @@ export default function Profile() {
 			return <SettingsTab />;
 		}
 	};
-
+	console.log(userData);
 	const handleTabChange = (tab) => setCurrentTab(tab);
 
-	useEffect(() => {
-		const fetchData = async () => {
-			const user = Auth.getProfile();
+	// useEffect(() => {
+	// 	const fetchData = async () => {
+	// 		const user = Auth.getProfile();
 
-			await axios
-				.get(`/api/users/${user.data.id}`)
-				.then((res) => {
-					setUserData(res.data);
-				})
-				.catch((err) => console.log(`Failed to login: ${err}`));
+	// 		await axios
+	// 			.get(`/api/users/${user.data.id}`)
+	// 			.then((res) => {
+	// 				setUserData(res.data);
+	// 			})
+	// 			.catch((err) => console.log(`Failed to login: ${err}`));
 
-			setLoading(!loading);
-		};
+	// 		setLoading(!loading);
+	// 	};
 
-		fetchData();
-	}, []);
+	// 	fetchData();
+	// }, []);
 
 	return (
 		<>
-			{loading ? (
-				<>
-					<h1>Loading...</h1>
-				</>
-			) : (
-				<>
-					<header>
-						<div className='row'>
-							<div className='header-text'>
-								<h1>My Profile</h1>
-							</div>
-						</div>
-					</header>
-					<div className='tab-container'>
-						<button
-							className='tab-button'
-							onClick={() => {
-								handleTabChange('General');
-							}}>
-							General
-						</button>
-						<button
-							className='tab-button'
-							onClick={() => {
-								handleTabChange('Settings');
-							}}>
-							Settings
-						</button>
+			<header>
+				<div className='row'>
+					<div className='header-text'>
+						<h1>My Profile</h1>
 					</div>
-					<UserContext.Provider value={userData}>
-						<div className='profile-container'>{renderTab()}</div>
-					</UserContext.Provider>
-				</>
-			)}
+				</div>
+			</header>
+			<div className='tab-container'>
+				<button
+					className='tab-button'
+					onClick={() => {
+						handleTabChange('General');
+					}}>
+					General
+				</button>
+				<button
+					className='tab-button'
+					onClick={() => {
+						handleTabChange('Settings');
+					}}>
+					Settings
+				</button>
+			</div>
+			<UserContext.Provider value={userData}>
+				<div className='profile-container'>{renderTab()}</div>
+			</UserContext.Provider>
 		</>
 	);
 }
