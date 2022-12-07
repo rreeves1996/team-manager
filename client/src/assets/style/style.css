@@ -249,7 +249,21 @@ p {
 	align-items: center;
 	transition: all 270ms;
 }
-
+.help-button:hover .help-container {
+	transform: translateY(0%), translateX(0%);
+	pointer-events: all;
+	opacity: 1;
+}
+.help-container button {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-color: #16223175;
+	padding: 0;
+	width: 100% !important;
+	height: 3rem;
+	transition: all 570ms;
+}
 .nav-button {
 	display: flex;
 	justify-content: center;
@@ -279,16 +293,37 @@ p {
 	pointer-events: none;
 	transform: translateY(70%);
 }
+.help-button {
+	display: flex;
+}
+.help-button .help-container {
+	opacity: 0;
+	pointer-events: none;
+	transform: translateY(-15%), translateX(50%);
+	transition: all 270ms;
+}
+.help-container {
+	z-index: 999;
+	position: absolute;
+	transform: translateX(60%);
+	width: 10rem;
+	background-color: var(--off-black);
+	border-radius: 6px;
+	overflow: hidden;
+}
 .team-menu li,
-.link {
+.link,
+.help-button:hover .help-container button {
 	margin-top: 0;
 	transition: all 270ms ease;
 }
 .collapse .link,
-.team-menu.collapse li {
+.team-menu.collapse li,
+.help-container button {
 	margin-top: -7px;
 }
-.team-menu.collapse li {
+.team-menu.collapse li,
+.help-container button {
 	padding-top: -10px !important;
 	padding-bottom: 0 !important;
 }
@@ -600,7 +635,7 @@ header .pencil-icon:active,
 	border-bottom-right-radius: 5px;
 }
 .tab-button,
-.additional-link {
+.help-button .additional-link {
 	height: 45px;
 	padding: 0 15px;
 	margin-right: 5px;
@@ -608,10 +643,12 @@ header .pencil-icon:active,
 	transition: background-color 100ms;
 }
 .tab-button:hover,
-.additional-link:hover {
+.additional-link:hover,
+.help-container button:hover {
 	background-color: rgba(255, 255, 255, 0.048);
 }
 .tab-container {
+	display: flex;
 	width: 100% !important;
 	padding: 10px calc((100vw - 1180px) / 2);
 	background-color: #16223175;

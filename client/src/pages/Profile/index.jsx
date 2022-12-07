@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { AiOutlineCaretDown } from 'react-icons/ai';
 import { useSelector } from 'react-redux';
 import GeneralTab from './GeneralTab';
 import SettingsTab from './SettingsTab';
@@ -60,15 +61,21 @@ export default function Profile() {
 						onClick={() => {
 							handleTabChange('General');
 						}}>
-						General
+						Logout
 					</button>
-					<button
-						className='tab-button'
-						onClick={() => {
-							handleTabChange('Settings');
-						}}>
-						Settings
-					</button>
+					<div className='help-button'>
+						<button
+							className='tab-button'
+							onClick={() => {
+								handleTabChange('Settings');
+							}}>
+							Help <AiOutlineCaretDown />
+						</button>
+						<div className='help-container'>
+							<button>Submit Ticket</button>
+							<button>Delete Account</button>
+						</div>
+					</div>
 				</div>
 				<div className='profile-container'>{renderTab()}</div>
 			</>
