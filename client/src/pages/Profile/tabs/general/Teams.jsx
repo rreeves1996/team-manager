@@ -1,5 +1,6 @@
 import React from 'react';
 import { v4 as uuidv4 } from 'uuid';
+import { AiOutlineRight } from 'react-icons/ai';
 import { FaGlobeAmericas } from 'react-icons/fa';
 import TeamCard from '../../../../components/cards/TeamCard';
 
@@ -23,6 +24,14 @@ export default function Teams(props) {
 					{teamData.map((team) => (
 						<TeamCard key={uuidv4()} team={team} />
 					))}
+					{teamData.length < 5 ? (
+						<button className='new-team-button'>
+							<AiOutlineRight className='right-caret' />
+							Create New
+						</button>
+					) : (
+						<></>
+					)}
 				</div>
 			</div>
 		</div>

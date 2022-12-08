@@ -1068,6 +1068,32 @@ select:focus {
 	cursor: pointer;
 	text-decoration: underline;
 }
+.new-team-button {
+	background-color: transparent;
+	display: flex;
+	align-items: center;
+	padding-right: 0.9rem;
+	height: 4rem;
+	font-size: 3rem;
+	text-transform: uppercase;
+	font-family: 'Alumni Sans Pinstripe';
+	margin-bottom: 13px;
+	transition: text-indent 270ms, background-color 120ms;
+	text-indent: -0.2rem;
+}
+.new-team-button:hover {
+	background-color: rgba(255, 255, 255, 0.068);
+	text-indent: 0.1rem;
+	filter: brightness(1);
+}
+.new-team-button .right-caret {
+	font-size: 2.5rem;
+	transform: translateX(-0.2rem);
+	transition: all 270ms;
+}
+.new-team-button:hover .right-caret {
+	transform: translateX(0.1rem);
+}
 @media screen and (max-width: 768px) {
 	main {
 		min-height: 800px;
