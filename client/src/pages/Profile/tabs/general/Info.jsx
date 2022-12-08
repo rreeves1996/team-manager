@@ -1,5 +1,4 @@
-import React, { useContext } from 'react';
-import { UserContext } from '../../index';
+import React from 'react';
 import { FaUser } from 'react-icons/fa';
 
 export default function Info(props) {

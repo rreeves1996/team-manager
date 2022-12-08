@@ -23,5 +23,39 @@ export default function useQuery() {
 			console.log(`Registration failed! Error:\n${err}`);
 		}
 	}
-	return { queryUser, queryTeamsByUser };
+
+	async function addEmployee(payload) {
+		const { name, role_id, manager_id, team_id } = payload;
+
+		try {
+			const res = await axios.post(`${API_ROUTE}/employees`, {
+				name,
+				role_id,
+				manager_id,
+				team_id,
+			});
+
+			return res;
+		} catch (err) {
+			console.log(`Registration failed! Error:\n${err}`);
+		}
+	}
+
+	async function addManager(payload) {
+		const { name, is_lead, team_id } = payload;
+
+		try {
+			const res = await axios.post(`${API_ROUTE}/managers`, {
+				name,
+				is_lead,
+				team_id,
+			});
+
+			return res;
+		} catch (err) {
+			console.log(`Registration failed! Error:\n${err}`);
+		}
+	}
+
+	return { queryUser, queryTeamsByUser, addEmployee, addManager };
 }

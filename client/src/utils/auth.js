@@ -28,6 +28,7 @@ class AuthService {
 	}
 	logout() {
 		localStorage.removeItem('id_token');
+		localStorage.removeItem('teamID');
 		localStorage.removeItem('persist:root');
 	}
 }

@@ -337,9 +337,12 @@ p {
 	min-width: 770px;
 	min-height: 496px;
 }
-.init-container,
-.login-container {
+.init-container {
 	height: 496px;
+}
+.login-container {
+	min-height: 30rem;
+	height: 32rem;
 }
 .register-container {
 	height: 698px;
@@ -399,7 +402,9 @@ p {
 .form-container {
 	width: 80%;
 }
-
+.quick-add .form-container {
+	width: 100% !important;
+}
 .label {
 	margin: 8px 0;
 	font-weight: 900;
@@ -411,6 +416,9 @@ p {
 	align-items: center;
 
 	margin-top: 5px;
+}
+.quick-add .form-button {
+	margin: 13px 0 8px;
 }
 .required {
 	width: 100%;
@@ -482,6 +490,10 @@ p {
 	width: 140%;
 	right: -20%;
 }
+.login-container .banner::before {
+	width: 130%;
+	right: -15%;
+}
 .brand {
 	display: flex;
 	flex-direction: column;
@@ -512,7 +524,7 @@ p {
 	line-height: 0;
 	text-shadow: 1px 2px 2px black;
 }
-.sub-container {
+.quick-add .sub-container {
 	margin-top: -5px;
 }
 .brand-icon {
@@ -664,7 +676,7 @@ header .pencil-icon:active,
 .home-container,
 .profile-container {
 	display: flex;
-	padding: 16px 0px;
+	padding: 16px 0px 4px;
 	justify-content: space-between;
 	height: 100%;
 }
@@ -813,11 +825,21 @@ header .pencil-icon:active,
 }
 .container-body {
 	padding: 13px 0;
-	width: 90%;
+	width: 90% !important;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	margin: 0 auto;
+}
+.quick-add .container-body {
+	position: relative;
+	padding: 18px 0;
+	width: 80%;
+	display: flex;
+	align-items: center;
+	margin: 0 auto;
+	height: 15.7rem;
+	overflow: hidden;
 }
 .account-info {
 	flex-direction: row;
@@ -983,6 +1005,26 @@ select:active {
 .role-select:focus,
 select:focus {
 	outline: none;
+}
+.add-employee-container,
+.add-manager-container {
+	position: absolute;
+	transition: all 570ms;
+	width: 17rem;
+}
+
+.add-employee-container .divider,
+.add-manager-container .divider {
+	width: 100%;
+	margin: 13px 0 16px;
+}
+.quickadd-toggler {
+	color: #007bff;
+}
+.quickadd-toggler:hover {
+	color: #105daf;
+	cursor: pointer;
+	text-decoration: underline;
 }
 @media screen and (max-width: 768px) {
 	main {

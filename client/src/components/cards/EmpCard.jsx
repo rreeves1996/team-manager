@@ -186,7 +186,7 @@ export function MngrCard(props) {
 			delete props.managers[index];
 		}
 	};
-	console.log(timezones);
+
 	return (
 		<>
 			{loading ? (

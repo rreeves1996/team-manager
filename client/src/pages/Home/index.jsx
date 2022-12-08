@@ -27,7 +27,7 @@ export default function Home(props) {
 		navigate(0);
 	};
 
-	const handleTabChange = (tab) => setCurrentTab(tab);
+	// const handleTabChange = (tab) => setCurrentTab(tab);
 
 	useEffect(() => {
 		const fetchData = async () => {
