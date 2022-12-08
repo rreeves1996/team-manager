@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useAuth from '../../hooks/useAuth';
+import AuthService from '../../utils/auth';
 import { FaChalkboardTeacher } from 'react-icons/fa';
 
 export default function Register() {
@@ -42,18 +43,18 @@ export default function Register() {
 			};
 
 			if (payload) {
-				registerUser(payload)
-					.then((res) => {
-						navigate('/profile', { replace: true });
-					})
-					.finally(() => {
-						// Refresh the page to properly load '/profile'
-						navigate(0);
-					})
-					.catch((err) => console.log(`Failed to login: ${err}`));
+				try {
+					const res = registerUser(payload);
+
+					AuthService.login(res);
+					window.alert(`Registration succeeded! Logging you in...`);
+				} catch (err) {
+					window.alert(`Registration failed! Error: ${err}`);
+				}
+				navigate('/profile', { replace: true });
 			}
 		} else {
-			alert('Passwords do not match');
+			window.alert('Passwords do not match!');
 		}
 	};
 

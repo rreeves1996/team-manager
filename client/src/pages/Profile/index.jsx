@@ -1,25 +1,35 @@
 import React, { useState, useEffect } from 'react';
-import { AiOutlineCaretDown } from 'react-icons/ai';
+import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import AuthService from '../../utils/auth';
+import useQuery from '../../hooks/useQuery';
+import useAuth from '../../hooks/useAuth';
+import { AiOutlineCaretDown } from 'react-icons/ai';
 import GeneralTab from './GeneralTab';
 import SettingsTab from './SettingsTab';
-import useQuery from '../../hooks/useQuery';
+import Teams from './tabs/general/Teams';
+import Info from './tabs/general/Info';
 
 export default function Profile() {
+	const navigate = useNavigate();
 	const userData = useSelector((state) => state.user.data);
+	const { logoutUser } = useAuth();
 	const { queryUser, queryTeamsByUser } = useQuery();
-	const [currentTab, setCurrentTab] = useState('General');
 	const [loading, setLoading] = useState(true);
 	const [data, setData] = useState({});
 
-	const renderTab = () => {
-		if (currentTab === 'General') {
-			return <GeneralTab userdata={data.userData} teamdata={data.teamData} />;
-		} else if (currentTab === 'Settings') {
-			return <SettingsTab />;
+	const handleUserLogout = () => {
+		try {
+			logoutUser();
+
+			AuthService.logout();
+			window.alert('Logout successful!');
+		} catch (err) {
+			window.alert(`Logout failed! Error: ${err}`);
 		}
+
+		navigate(0);
 	};
-	const handleTabChange = (tab) => setCurrentTab(tab);
 
 	useEffect(() => {
 		const fetchTeamData = () => {
@@ -54,16 +64,12 @@ export default function Profile() {
 					<button
 						className='tab-button'
 						onClick={() => {
-							handleTabChange('General');
+							handleUserLogout();
 						}}>
 						Logout
 					</button>
 					<div className='help-button'>
-						<button
-							className='tab-button'
-							onClick={() => {
-								handleTabChange('Settings');
-							}}>
+						<button className='tab-button'>
 							Help <AiOutlineCaretDown />
 						</button>
 						<div className='help-container'>
@@ -72,7 +78,14 @@ export default function Profile() {
 						</div>
 					</div>
 				</div>
-				<div className='profile-container'>{renderTab()}</div>
+				<div className='profile-container'>
+					<div className='col-profile-sm'>
+						<Info userData={data.userData} />
+					</div>
+					<div className='col-profile-lg'>
+						<Teams teamData={data.teamData} />
+					</div>
+				</div>
 			</>
 		);
 }

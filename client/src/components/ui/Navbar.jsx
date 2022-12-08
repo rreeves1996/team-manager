@@ -14,11 +14,16 @@ export default function Navbar() {
 	const { logoutUser } = useAuth();
 
 	const handleUserLogout = () => {
-		logoutUser()
-			.then(() => AuthService.logout())
-			.finally(() => navigate(0));
+		try {
+			logoutUser();
 
-		navigate('/');
+			AuthService.logout();
+			window.alert('Logout successful!');
+		} catch (err) {
+			window.alert(`Logout failed! Error: ${err}`);
+		}
+
+		navigate(0);
 	};
 
 	return (

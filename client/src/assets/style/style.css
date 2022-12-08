@@ -258,8 +258,10 @@ p {
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	text-decoration: line-through;
 	background-color: #16223175;
 	padding: 0;
+	color: var(--grey-dark);
 	width: 100% !important;
 	height: 3rem;
 	transition: all 570ms;
@@ -704,10 +706,10 @@ header .pencil-icon:active,
 	background-color: rgba(255, 255, 255, 0.151);
 }
 .help-container button:hover {
-	background-color: rgba(151, 177, 250, 0.164);
+	/* background-color: rgba(151, 177, 250, 0.164); */
 }
 .help-container button:active {
-	background-color: rgba(178, 198, 252, 0.253);
+	/* background-color: rgba(178, 198, 252, 0.253); */
 }
 .tab-container {
 	display: flex;
@@ -804,8 +806,11 @@ header .pencil-icon:active,
 	letter-spacing: 2px;
 }
 .card-icon {
-	font-size: 1.4rem;
+	font-size: 1.3rem;
 	margin: 0 0.4rem;
+}
+.user-icon.card-icon {
+	font-size: 1.2rem;
 }
 .summary h6 {
 	font-size: 1.05em;
@@ -1073,26 +1078,26 @@ select:focus {
 	display: flex;
 	align-items: center;
 	padding-right: 0.9rem;
-	height: 4rem;
-	font-size: 3rem;
+	height: 3.5rem;
+	font-size: 2.5rem;
 	text-transform: uppercase;
 	font-family: 'Alumni Sans Pinstripe';
 	margin-bottom: 13px;
-	transition: text-indent 270ms, background-color 120ms;
-	text-indent: -0.2rem;
+	transition: text-indent 220ms, background-color 120ms;
+	text-indent: 0.2rem;
 }
 .new-team-button:hover {
 	background-color: rgba(255, 255, 255, 0.068);
-	text-indent: 0.1rem;
+	text-indent: 0.3rem;
 	filter: brightness(1);
 }
 .new-team-button .right-caret {
-	font-size: 2.5rem;
-	transform: translateX(-0.2rem);
-	transition: all 270ms;
+	font-size: 2rem;
+	transform: translateX(0.2rem);
+	transition: all 220ms;
 }
 .new-team-button:hover .right-caret {
-	transform: translateX(0.1rem);
+	transform: translateX(0.3rem);
 }
 @media screen and (max-width: 768px) {
 	main {

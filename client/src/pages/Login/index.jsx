@@ -27,22 +27,14 @@ export default function Login() {
 		};
 
 		if (payload) {
-			loginUser(payload).then((res) => {
+			try {
+				const res = loginUser(payload);
+
 				AuthService.login(res);
-			});
-			// .finally(() => {
-			// 	navigate(0);
-			// });
-
-			// loginUser(payload)
-			// 	.then((res) => {
-			// 		console.log(data);
-
-			// 		setUserData(data.userData);
-			// 		navigate('/profile');
-			// 	})
-			// 	.finally(() => navigate(0))
-			// 	.catch((err) => console.log(`Failed to login: ${err}`));
+				window.alert('Login succeeded!');
+			} catch (err) {
+				window.alert(`Login failed! Error: ${err}`);
+			}
 		} else {
 			window.alert('Invalid username or password!');
 		}
@@ -52,7 +44,7 @@ export default function Login() {
 			password: '',
 		});
 
-		navigate('/profile', { replace: true });
+		navigate(0);
 	};
 
 	return (
