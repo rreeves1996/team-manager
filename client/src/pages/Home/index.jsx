@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import HomeTab from './HomeTab';
 import ManageTab from './ManageTab';
-import Header from './tabs/home/Header';
+import Header from './Header';
 
 export const DataContext = createContext();
 

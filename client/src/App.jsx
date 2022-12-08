@@ -1,7 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import useWindowResize from './hooks/useWindowResize';
 import Navbar from './components/ui/Navbar';
 import Footer from './components/ui/Footer';
 import InitPrompt from './pages/Init';
@@ -15,19 +14,14 @@ import './assets/style/style.css';
 
 export default function App() {
 	const isLogged = useSelector((state) => state.user.isLogged);
-	const { width } = useWindowResize();
 
 	return (
 		<>
 			<Navbar />
 			<main>
-				{width < 768 ? (
-					<div className='mobile-background-container'>
-						<div className='mobile-background'></div>
-					</div>
-				) : (
-					<></>
-				)}
+				<div className='mobile-background-container'>
+					<div className='mobile-background'></div>
+				</div>
 				<Routes>
 					<Route
 						path='/'
