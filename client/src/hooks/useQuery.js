@@ -57,5 +57,55 @@ export default function useQuery() {
 		}
 	}
 
-	return { queryUser, queryTeamsByUser, addEmployee, addManager };
+	async function editTeamName(payload) {
+		const { name, id } = payload;
+
+		try {
+			const res = await axios.put(`${API_ROUTE}/teams/${id}`, {
+				name,
+			});
+
+			return res;
+		} catch (err) {
+			console.log(`Registration failed! Error:\n${err}`);
+		}
+	}
+
+	async function editTeamLead(payload) {
+		const { lead_id, manager_id } = payload;
+
+		try {
+			const reqOne = axios.put(`${API_ROUTE}/managers/${lead_id}`, {
+				is_lead: false,
+			});
+			const reqTwo = axios.put(`${API_ROUTE}/managers/${manager_id}`, {
+				is_lead: true,
+			});
+			const res = await axios.all([reqOne, reqTwo]);
+
+			return res;
+		} catch (err) {
+			console.log(`Registration failed! Error:\n${err}`);
+		}
+	}
+
+	async function deleteTeam(id) {
+		try {
+			const res = await axios.delete(`${API_ROUTE}/teams/${id}`);
+
+			return res;
+		} catch (err) {
+			console.log(`Registration failed! Error:\n${err}`);
+		}
+	}
+
+	return {
+		queryUser,
+		queryTeamsByUser,
+		addEmployee,
+		addManager,
+		editTeamName,
+		editTeamLead,
+		deleteTeam,
+	};
 }

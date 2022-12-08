@@ -64,6 +64,7 @@
 	border-radius: 0px 3px 3px 0px;
 	background-color: rgb(221, 88, 95);
 	transition: all 100ms;
+	z-index: 99999;
 }
 .tc-count {
 	display: flex;
@@ -74,12 +75,20 @@
 	font-size: 1.25rem;
 	font-weight: 900;
 }
+.manager-count {
+	margin-bottom: -0.75rem;
+}
 .tc-icon-container {
 	display: flex;
 	justify-content: center;
 	width: 100%;
 	padding: 3px 20%;
 	flex-wrap: wrap;
+}
+.tc-managers .tc-icon-container {
+	display: flex;
+	align-items: center;
+	height: 65%;
 }
 .tc-manager-icon,
 .tc-employee-icon {
@@ -92,10 +101,62 @@
 .tc-employee-icon {
 	font-size: 0.8rem;
 }
+.tc-delete-icon-container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	height: 100%;
+}
 .tc-delete-icon {
 	font-size: 2.5rem;
 	color: var(--off-white);
 }
 .tc-delete:hover {
 	background-color: rgb(250, 131, 137);
+}
+.no-hover:hover {
+	background-color: rgb(221, 88, 95) !important;
+}
+.tc-delete-icon,
+.tc-delete-confirm {
+	transition: all 270ms;
+}
+.tc-delete-confirm,
+.tc-delete-button-container {
+	position: absolute;
+	margin: auto;
+	color: var(--off-white);
+	width: 5rem;
+	font-family: 'Alumni Sans Pinstripe';
+	font-weight: 700;
+}
+.tc-delete-confirm {
+	text-align: center;
+	font-size: 1.5rem;
+	text-transform: uppercase;
+	transform: translateY(-30%);
+}
+.tc-delete-button-container {
+	display: flex;
+	justify-content: space-around;
+	transform: translateY(170%);
+	z-index: 999999;
+}
+.tc-delete-confirm-container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: absolute;
+	width: 5rem;
+	height: 5rem;
+}
+.tc-delete-confirm-button {
+	font-size: 1.5rem;
+	margin-top: -0.4rem;
+	transition: all 270ms;
+}
+.tc-delete-confirm-button:hover {
+	filter: drop-shadow(0px 0px 3px white);
+	color: white;
 }

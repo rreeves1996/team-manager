@@ -584,7 +584,7 @@ header .pencil-icon:hover,
 	pointer-events: all;
 	cursor: pointer;
 	color: #bdd4ee;
-	filter: drop-shadow(0px 0px 2px rgba(255, 255, 255, 0.342));
+	filter: drop-shadow(0px 0px 2px rgba(255, 255, 255, 0.342)) !important;
 }
 header .pencil-icon:active,
 .exit-button:active,
@@ -617,7 +617,7 @@ header .pencil-icon:active,
 	pointer-events: all;
 }
 .header-text h4 strong,
-.header-text h4 input {
+.header-text h4 select {
 	margin-left: 0.5rem;
 }
 .header-text input {
@@ -630,7 +630,7 @@ header .pencil-icon:active,
 	pointer-events: all;
 	user-select: all;
 }
-.header-text h4 input {
+.header-text h4 select {
 	margin: -2.5px 0.5rem;
 	pointer-events: all;
 	user-select: all;
@@ -644,6 +644,8 @@ header .pencil-icon:active,
 }
 .header-button {
 	margin: 1rem;
+	opacity: 0.8;
+	background-color: transparent;
 }
 .team-menu {
 	transform: translate(-91%, 3px);

@@ -39,7 +39,7 @@ export default function QuickAdd() {
 		});
 	};
 
-	const handleFormSubmit = async () => {
+	const handleFormSubmit = () => {
 		if (addType === 'employee') {
 			const newEmpName = formState.empname.trim();
 			const newEmpRole = formState.emprole.trim();
