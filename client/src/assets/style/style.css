@@ -330,24 +330,25 @@ p {
 	padding-bottom: 0 !important;
 }
 .container {
-	margin-top: 45px;
+	margin-top: 2.5rem;
 	border-radius: 8px;
 	filter: drop-shadow(2px 4px 5px rgba(0, 0, 0, 0.37));
 	display: flex;
 	flex-direction: row;
 	width: 40%;
-	min-width: 770px;
-	min-height: 496px;
+	min-width: 48rem;
+	min-height: 31rem;
 }
 .init-container {
-	height: 496px;
+	min-height: 31rem;
+	height: 31rem;
 }
 .login-container {
-	min-height: 30rem;
-	height: 32rem;
+	min-height: 31rem;
+	height: 31rem;
 }
 .register-container {
-	height: 698px;
+	height: 43.5rem;
 }
 .form-divider {
 	margin: 7px 0 22px;
@@ -492,7 +493,8 @@ p {
 	width: 140%;
 	right: -20%;
 }
-.login-container .banner::before {
+.login-container .banner::before,
+.init-container .banner::before {
 	width: 130%;
 	right: -15%;
 }

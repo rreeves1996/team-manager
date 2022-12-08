@@ -52,7 +52,7 @@ export default function Login() {
 			<div className='container login-container'>
 				<div className='form-side'>
 					<h1>Sign In</h1>
-					<h6>Enter your account information to continue</h6>
+					<h6>Enter account information to continue</h6>
 					<form className='form-container' onSubmit={handleFormSubmit}>
 						<div className='login-input'>
 							<div className='field'>
