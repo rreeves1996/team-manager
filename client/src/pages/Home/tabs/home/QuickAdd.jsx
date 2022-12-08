@@ -10,7 +10,7 @@ export default function QuickAdd() {
 		emprole: 'default',
 	});
 	const [collapsed, setCollapsed] = useState(() =>
-		formState.emprole !== 'default' ? false : true
+		formState.emprole === 'default' ? true : false
 	);
 	const { id, lead, roles } = teamData;
 

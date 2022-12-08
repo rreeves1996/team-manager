@@ -5,7 +5,7 @@ import { FaUser } from 'react-icons/fa';
 export default function Info(props) {
 	const { userData } = props;
 	const allowedTeams = 5;
-	console.log(userData);
+
 	return (
 		<>
 			<div className='profile-info'>

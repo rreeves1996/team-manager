@@ -15,7 +15,7 @@ function EmpPhoneNumber(props) {
 				<></>
 			) : (
 				<>
-					<strong>Phone #:</strong>
+					<strong>Phone:</strong>
 				</>
 			)}
 			{props.number1 === '' ? (
@@ -270,7 +270,7 @@ export function MngrCard(props) {
 												/>
 											</p>
 											<p>
-												<strong>Phone #:</strong>
+												<strong>Phone:</strong>
 												<input
 													type='text'
 													className='card-input number-input'
@@ -329,7 +329,6 @@ export function MngrCard(props) {
 															<p>UTC -{time}:00</p>
 														</option>
 													))}
-													<option value={timezones[0]}>{timezones[0]}</option>
 												</select>
 											</p>
 											<div className='emp-card-button-container'>
@@ -603,7 +602,7 @@ export function EmpCard(props) {
 											</p>
 
 											<p>
-												<strong>Phone #:</strong>
+												<strong>Phone:</strong>
 												<input
 													className='card-input number-input'
 													type='text'

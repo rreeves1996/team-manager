@@ -643,9 +643,17 @@ header .pencil-icon:active,
 	transition: background-color 100ms;
 }
 .tab-button:hover,
-.additional-link:hover,
-.help-container button:hover {
+.additional-link:hover {
 	background-color: rgba(255, 255, 255, 0.048);
+}
+.tab-button:active {
+	background-color: rgba(255, 255, 255, 0.151);
+}
+.help-container button:hover {
+	background-color: rgba(151, 177, 250, 0.164);
+}
+.help-container button:active {
+	background-color: rgba(178, 198, 252, 0.253);
 }
 .tab-container {
 	display: flex;
