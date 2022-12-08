@@ -14,22 +14,22 @@ export default function Info(props) {
 
 				<div className='card-body account-info'>
 					<div className='col'>
-						<p>
-							<strong>Username:</strong> {userData.username}
-						</p>
+						<div>
+							<strong>Username:</strong> <span>{userData.username}</span>
+						</div>
 
-						<p>
-							<strong>Name:</strong> {userData.name}
-						</p>
+						<div>
+							<strong>Name:</strong> <span>{userData.name}</span>
+						</div>
 
-						<p>
-							<strong>Email:</strong> {userData.email}
-						</p>
+						<div>
+							<strong>Email:</strong> <span>{userData.email}</span>
+						</div>
 
-						<p>
-							<strong>Total Teams:</strong> {userData.teams.length}
-						</p>
-					</div>
+						<div>
+							<strong>Total Teams:</strong> <span>{userData.teams.length}</span>
+						</div>
+					</div>{' '}
 					<div className='account-picture'>
 						{userData.picture ? (
 							<img src={userData.picture} alt='profile' />
