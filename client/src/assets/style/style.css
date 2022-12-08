@@ -348,7 +348,8 @@ p {
 	height: 31rem;
 }
 .register-container {
-	height: 43.5rem;
+	min-height: 40.5rem;
+	height: 40.5rem;
 }
 .form-divider {
 	margin: 7px 0 22px;
@@ -361,6 +362,9 @@ p {
 	flex-direction: column;
 	background-color: var(--accent);
 	color: var(--off-black);
+}
+.control {
+	height: 2.8rem !important;
 }
 .register-container .form-side {
 	border-radius: 0 20px 8px 0;

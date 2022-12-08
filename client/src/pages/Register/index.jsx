@@ -12,7 +12,6 @@ export default function Register() {
 		username: '',
 		firstname: '',
 		lastname: '',
-		teamname: '',
 		email: '',
 		password: '',
 		passconfirm: '',
@@ -99,22 +98,6 @@ export default function Register() {
 								</div>
 							</div>
 
-							<p className='required'>* - Optional</p>
-
-							<div className='field'>
-								<label className='label'>*Team name:</label>
-								<div className='control'>
-									<input
-										className='input'
-										type='text'
-										name='teamname'
-										placeholder="Your team's name"
-										value={formState.teamname}
-										onChange={handleChange}
-									/>
-								</div>
-							</div>
-
 							<div className='field'>
 								<label className='label'>Username:</label>
 								<div className='control'>
@@ -169,7 +152,7 @@ export default function Register() {
 							</div>
 						</div>
 
-						<div className='button-container mt-4'>
+						<div className='button-container'>
 							<button className='form-button' type='submit'>
 								Register Account
 							</button>
