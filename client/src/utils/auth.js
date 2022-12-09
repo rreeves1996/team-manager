@@ -25,13 +25,11 @@ class AuthService {
 	}
 	login(idToken) {
 		localStorage.setItem('id_token', idToken);
-		window.location.assign('/profile');
 	}
 	logout() {
 		localStorage.removeItem('id_token');
 		localStorage.removeItem('teamID');
 		localStorage.removeItem('persist:root');
-		window.location.assign('/');
 	}
 }
 

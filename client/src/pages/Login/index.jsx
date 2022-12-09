@@ -34,6 +34,8 @@ export default function Login() {
 				window.alert('Login succeeded!');
 			} catch (err) {
 				window.alert(`Login failed! Error: ${err}`);
+			} finally {
+				navigate('/profile', { replace: true });
 			}
 		} else {
 			window.alert('Invalid username or password!');

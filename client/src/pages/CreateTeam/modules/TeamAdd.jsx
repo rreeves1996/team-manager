@@ -1,18 +1,20 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import { DataContext } from '../../../Home';
-import useQuery from '../../../../hooks/useQuery';
+import { FaUserPlus } from 'react-icons/fa';
 
-export default function QuickAdd() {
-	const teamData = useContext(DataContext);
-	const { id, lead, roles } = teamData;
-	const { addEmployee, addManager } = useQuery();
+export default function TeamAdd(props) {
+	const { handleAddEmployee, handleAddManager, handleAddRole } = props;
+	const { managers, employees, roles } = props;
 	const [addType, setAddType] = useState('employee');
 	const [formState, setFormState] = useState({
 		empname: '',
 		emprole: 'default',
 		manname: '',
 		manlead: 'default',
+	});
+	const [roleFormState, setRoleFormState] = useState({
+		rolename: '',
+		rolesalary: null,
 	});
 	const styles = {
 		style1: {
@@ -33,6 +35,11 @@ export default function QuickAdd() {
 			...formState,
 			[name]: value,
 		});
+
+		setRoleFormState({
+			...roleFormState,
+			[name]: value,
+		});
 	};
 
 	const handleFormSubmit = () => {
@@ -44,17 +51,9 @@ export default function QuickAdd() {
 				const payload = {
 					name: newEmpName,
 					role_id: newEmpRole,
-					manager_id: lead.id,
-					team_id: id,
 				};
 
-				try {
-					addEmployee(payload);
-
-					window.alert('Successfully created employee!');
-				} catch (err) {
-					window.alert(`Failed to create new employee! Error: ${err}`);
-				}
+				handleAddEmployee(payload);
 			} else {
 				window.alert('Invalid employee name or role!');
 			}
@@ -66,13 +65,10 @@ export default function QuickAdd() {
 				const payload = {
 					name: newManName,
 					is_lead: newManLead === 'Team Lead' ? true : false,
-					team_id: id,
 				};
 
 				try {
-					addManager(payload);
-
-					window.alert('Successfully created manager!');
+					handleAddManager(payload);
 				} catch (err) {
 					window.alert(`Failed to create new manager! Error: ${err}`);
 				}
@@ -82,15 +78,97 @@ export default function QuickAdd() {
 		}
 
 		setFormState({
-			teamname: '',
-			leadname: '',
+			empname: '',
+			emprole: 'default',
+			manname: '',
+			manlead: 'default',
+		});
+	};
+
+	const handleRoleSubmit = () => {
+		const newRoleName = formState.rolename.trim();
+		const newRoleSalary = formState.rolesalary.trim();
+
+		if (newRoleName && newRoleSalary) {
+			if (newRoleSalary >= 0) {
+				const payload = {
+					name: newRoleName,
+					salary: newRoleSalary,
+				};
+
+				handleAddRole(payload);
+			} else {
+				window.alert('Salary must be a positive number!');
+			}
+		} else {
+			window.alert('Invalid role name or salary!');
+		}
+
+		setRoleFormState({
+			rolename: '',
+			rolesalary: null,
 		});
 	};
 
 	return (
-		<div className='quick-add'>
-			<h2>Quick-Add</h2>
+		<div className='team-add'>
+			<h2>
+				<FaUserPlus className='card-icon' /> Add To Team
+			</h2>
+			<h6>
+				<span>
+					Fill in the form below to add roles, managers, and employees to your
+					team.
+				</span>
+				<span>
+					Each team is only allotted one lead. Make sure to create roles before
+					trying to add employees!
+				</span>
+			</h6>
+
 			<div className='container-body'>
+				<div className='add-role-container'>
+					<form className='form-container' onSubmit={handleRoleSubmit}>
+						<div className='employee-input'>
+							<div className='field name-field'>
+								<label className='label role-name-label'>Role Name:</label>
+								<div className='control'>
+									<input
+										className='input'
+										type='text'
+										name='rolename'
+										placeholder='New role name'
+										value={formState.rolename}
+										onChange={handleChange}
+									/>
+								</div>
+							</div>
+
+							<div className='field name-field'>
+								<label className='label role-salary-label'>Salary: $</label>
+								<div className='control'>
+									<input
+										className='input role-salary-input'
+										type='number'
+										name='rolesalary'
+										placeholder='New role salary'
+										value={formState.rolesalary}
+										onChange={handleChange}
+									/>
+								</div>
+							</div>
+						</div>
+
+						<div className='button-container'>
+							<button className='form-button' type='submit'>
+								Add Role
+							</button>
+						</div>
+					</form>
+				</div>
+
+				<div className='divider'></div>
+
 				<div
 					className='add-employee-container'
 					style={addType === 'employee' ? styles.style2 : styles.style1}>
@@ -136,7 +214,7 @@ export default function QuickAdd() {
 							</button>
 						</div>
 					</form>
-					<div className='divider'></div>
+
 					<div className='sub-container d-flex flex-column align-items-center mb-4'>
 						<p className='mt-1 mb-1'>Create a manager instead?</p>
 						<span
@@ -146,6 +224,7 @@ export default function QuickAdd() {
 						</span>
 					</div>
 				</div>
+
 				<div
 					className='add-manager-container'
 					style={addType === 'employee' ? styles.style3 : styles.style2}>
@@ -193,8 +272,6 @@ export default function QuickAdd() {
 							</button>
 						</div>
 					</form>
-
-					<div className='divider'></div>
 
 					<div className='sub-container d-flex flex-column align-items-center mb-4'>
 						<p className='mt-1 mb-1'>Create an employee instead?</p>

@@ -424,6 +424,33 @@ p {
 
 	margin-top: 5px;
 }
+.team-add h6 {
+	display: flex;
+	flex-direction: column;
+	width: 90%;
+	margin: 0.8rem auto 0;
+	text-align: center;
+}
+.team-preview h3 {
+	font-size: 4rem;
+	line-height: 0.5;
+	margin: 0.4rem 0 1.5rem !important;
+}
+.team-preview h6,
+.team-preview h3 {
+	text-align: center;
+}
+.team-add h6 span,
+.team-name-container h6 span {
+	margin: 0.35rem;
+}
+.team-add .button-container {
+	margin-top: 0;
+}
+.team-add .form-button {
+	margin-top: 1.1rem;
+	margin-bottom: 0.6rem;
+}
 .quick-add .form-button {
 	margin: 13px 0 8px;
 }
@@ -746,7 +773,10 @@ header .pencil-icon:active,
 .summary,
 .profile-info,
 .profile-teams,
-.team-card-container {
+.team-card-container,
+.team-add,
+.team-name-container,
+.team-preview {
 	background-color: var(--grey);
 	border-radius: 8px 8px 6px 6px;
 	color: var(--off-black);
@@ -774,20 +804,43 @@ header .pencil-icon:active,
 .col-profile-lg {
 	width: 66%;
 }
-.summary {
+.summary,
+.team-name-container {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	margin-bottom: 16px;
 }
-.your-team {
+.your-team,
+.team-preview {
 	width: 72%;
+}
+.team-preview {
+	display: flex;
+	flex-direction: column;
+	margin-left: 16px;
+	height: auto;
+}
+.team-preview-header {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	padding: 0.4rem;
+	border-bottom: 1px solid rgba(192, 192, 192, 0.486);
+}
+.team-preview-body {
+	display: flex;
+	height: 100%;
+	width: 100%;
 }
 .quick-add h2,
 .your-team h2,
 .summary h2,
 .profile-info h2,
-.profile-teams h2 {
+.profile-teams h2,
+.team-add h2,
+.team-name-container h2,
+.team-preview h2 {
 	text-align: center;
 	text-transform: uppercase;
 	font-weight: 900;
@@ -802,7 +855,10 @@ header .pencil-icon:active,
 	width: 100%;
 }
 .profile-info h2,
-.profile-teams h2 {
+.profile-teams h2,
+.team-add h2,
+.team-name-container h2,
+.team-preview h2 {
 	display: flex;
 	align-items: center;
 	text-align: left;
@@ -813,12 +869,17 @@ header .pencil-icon:active,
 	line-height: 0;
 	height: 2rem;
 }
+
 .card-icon {
 	font-size: 1.3rem;
 	margin: 0 0.4rem;
 }
 .user-icon.card-icon {
 	font-size: 1.1rem;
+}
+.team-icon.card-icon {
+	font-size: 1.5rem;
+	margin: 0.4rem;
 }
 .summary h6 {
 	font-size: 1.05em;
@@ -871,6 +932,7 @@ header .pencil-icon:active,
 	flex-direction: column;
 	margin: 0 auto;
 }
+
 .summary .card-body p {
 	margin-bottom: 5px;
 }
@@ -886,26 +948,59 @@ header .pencil-icon:active,
 	align-items: center;
 	margin: 0 auto;
 }
-.quick-add .container-body {
+.quick-add .container-body,
+.team-add .container-body,
+.team-name-container .container-body {
 	position: relative;
 	padding: 18px 0;
 	width: 80%;
 	display: flex;
 	align-items: center;
 	margin: 0 auto;
-	height: 15.7rem;
+	height: 16.6rem;
 	overflow: hidden;
+}
+.team-add .container-body {
+	height: 25.2rem;
+}
+.team-name-container .container-body {
+	padding-top: 0;
+	padding-bottom: 0.7rem;
+}
+.team-preview .container-body {
+	display: flex;
+	width: 100% !important;
+	height: 100%;
+	padding-bottom: 0;
+}
+.team-name-container .container-body,
+.team-name-container h6 {
+	margin: 0 auto;
+	height: auto;
+	overflow: visible;
+	width: 80% !important;
+}
+.team-name-container h6 {
+	width: 100%;
+	text-align: center;
+	margin-top: 1rem;
+	margin-bottom: 0.2rem;
+}
+.team-name-container p {
+	font-size: 0.9rem !important;
+	margin-top: 0.1rem !important;
+	margin-bottom: 0.8rem !important;
 }
 .account-info {
 	flex-direction: row;
-	padding: 1rem 1.5rem 0;
-	width: 100%;
+	padding: 1rem 0 0.2rem;
+	width: 90%;
+	overflow: hidden;
 	align-items: center;
 	margin: auto !important;
 }
 .account-info .col {
 	padding: 0;
-
 	position: relative;
 	display: flex;
 	flex-direction: column;
@@ -915,6 +1010,10 @@ header .pencil-icon:active,
 	position: relative;
 	display: flex;
 	align-items: center;
+	font-size: 0.9rem;
+	letter-spacing: -0.7px;
+	line-height: 0;
+	margin: 0.3rem 0;
 }
 .account-info .col div strong {
 	margin-right: 0.3rem;
@@ -924,24 +1023,16 @@ header .pencil-icon:active,
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	/* margin: 0 auto !important; */
-	min-width: 5.5rem;
-	height: 5.5rem;
+	margin-right: 1rem !important;
+	min-width: 5.9rem;
+	height: 5.9rem;
 	border-radius: 4px;
 	background-color: var(--grey-dark);
-	float: left;
 }
 .account-picture-icon {
 	color: var(--off-white);
 	margin: 0 auto;
 	font-size: 3em;
-}
-
-.account-info div {
-	font-size: 0.9rem;
-	letter-spacing: -0.7px;
-	line-height: 0;
-	margin: 0.3rem 0;
 }
 .profile-info .divider {
 	width: 70%;
@@ -1067,6 +1158,17 @@ header .pencil-icon:active,
 .role-select {
 	width: 78%;
 }
+.team-name-container .field {
+	display: flex;
+}
+.team-name-container .label {
+	display: flex;
+	min-width: fit-content;
+	margin-right: 0.6rem;
+}
+.team-name-container .control {
+	width: 100%;
+}
 .role-select:active,
 select:active {
 	border-color: rgb(118, 118, 118) !important;
@@ -1082,12 +1184,45 @@ select:focus {
 	transition: all 570ms;
 	width: 17rem;
 }
-
+.team-add .add-employee-container,
+.team-add .add-manager-container {
+	margin-top: 11.1rem;
+}
+.add-role-container {
+	margin-top: 0rem;
+	width: 17rem;
+}
+.add-role-container button {
+	margin-top: 0.3rem !important;
+	margin-bottom: 0rem;
+}
+.add-role-container label {
+	width: 40% !important;
+}
 .add-employee-container .divider,
 .add-manager-container .divider {
 	width: 100%;
 	margin: 13px 0 16px;
 }
+.team-add .divider {
+	margin-top: 0.8rem;
+}
+.team-preview .divider {
+	margin: 0.8rem 0;
+}
+.team-summary .divider {
+	margin: 1rem auto;
+}
+.add-employee-container .form-container,
+.add-manager-container .form-container,
+.team-name-container .form-container,
+.add-role-container .form-container {
+	width: 100% !important;
+}
+.add-role-container .form-container {
+	margin-top: -0.3rem;
+}
+
 .quickadd-toggler {
 	color: #007bff;
 }
@@ -1121,6 +1256,33 @@ select:focus {
 }
 .new-team-button:hover .right-caret {
 	transform: translateX(0.3rem);
+}
+.team-summary {
+	width: 48%;
+	border-right: 1px solid rgba(192, 192, 192, 0.486);
+	border-top: 1px solid rgb(255, 255, 255);
+}
+.managers-preview {
+	border-right: 1px solid rgba(192, 192, 192, 0.486);
+}
+.managers-preview,
+.employees-preview {
+	width: 26%;
+	border-top: 1px solid rgb(255, 255, 255);
+	border-left: 1px solid rgb(255, 255, 255);
+	padding: 0.5rem 1rem;
+}
+.team-summary-header {
+	width: 90%;
+	margin: 1.3rem auto;
+}
+.ts-roles h4 {
+	margin: -0.1em 0 0.8rem;
+	margin-left: -2.5%;
+}
+.ts-roles {
+	width: 80%;
+	margin: 0 auto;
 }
 @media screen and (max-width: 768px) {
 	main {

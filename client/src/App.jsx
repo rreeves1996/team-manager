@@ -9,6 +9,7 @@ import Register from './pages/Register';
 import Login from './pages/Login';
 import Profile from './pages/Profile';
 import About from './pages/About';
+import CreateTeam from './pages/CreateTeam';
 
 import './assets/style/style.css';
 
@@ -34,6 +35,10 @@ export default function App() {
 						}
 					/>
 					<Route path='/profile' element={isLogged ? <Profile /> : <Login />} />
+					<Route
+						path='/createteam'
+						element={isLogged ? <CreateTeam /> : <InitPrompt />}
+					/>
 					<Route path='/login' element={<Login />} />
 					<Route path='/register' element={<Register />} />
 					<Route path='/about' element={<About />} />

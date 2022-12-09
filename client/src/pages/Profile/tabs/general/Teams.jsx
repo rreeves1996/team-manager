@@ -3,9 +3,10 @@ import { v4 as uuidv4 } from 'uuid';
 import { AiOutlineRight } from 'react-icons/ai';
 import { FaGlobeAmericas } from 'react-icons/fa';
 import TeamCard from '../../../../components/cards/TeamCard';
+import { useNavigate } from 'react-router-dom';
 
-export default function Teams(props) {
-	const { teamData } = props;
+export default function Teams({ teamData }) {
+	const navigate = useNavigate();
 
 	return (
 		<div className='profile-teams'>
@@ -25,7 +26,9 @@ export default function Teams(props) {
 						<TeamCard key={uuidv4()} team={team} />
 					))}
 					{teamData.length < 5 ? (
-						<button className='new-team-button'>
+						<button
+							className='new-team-button'
+							onClick={() => navigate('/createteam')}>
 							<AiOutlineRight className='right-caret' />
 							Create New
 						</button>

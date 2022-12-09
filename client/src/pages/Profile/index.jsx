@@ -61,11 +61,7 @@ export default function Profile() {
 					</div>
 				</header>
 				<div className='tab-container'>
-					<button
-						className='tab-button'
-						onClick={() => {
-							handleUserLogout();
-						}}>
+					<button className='tab-button' onClick={() => handleUserLogout()}>
 						Logout
 					</button>
 					<div className='help-button'>
