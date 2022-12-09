@@ -1,7 +1,7 @@
 import React from 'react';
 import { FaUsers } from 'react-icons/fa';
 
-export default function Preview() {
+export default function Preview({ roles, managers, employees }) {
 	return (
 		<div className='team-preview'>
 			<h2>
@@ -29,25 +29,35 @@ export default function Preview() {
 							<h4 className='ts-header-text'>
 								<strong>Roles:</strong>
 							</h4>
-							<div className='ts-roles-container'></div>
+							<div className='ts-roles-container'>
+								{roles.map((role) => (
+									<div className='ts-role'>
+										<h6>{role.name}</h6>
+										<p>Salary: ${role.salary}</p>
+										<p>Total employees: </p>
+									</div>
+								))}
+							</div>
 						</div>
 					</div>
+					<div className='preview-row'>
+						<div className='managers-preview'>
+							<h4 className='ts-header-text'>
+								<strong>Lead:</strong>
+							</h4>
+							<div className='ts-lead-container'></div>
+							<h4 className='ts-header-text'>
+								<strong>Managers:</strong>
+							</h4>
+							<div className='ts-managers-container'></div>
+						</div>
 
-					<div className='managers-preview'>
-						<h4 className='ts-header-text'>
-							<strong>Lead:</strong>
-						</h4>
-						<div className='ts-lead-container'></div>
-						<h4 className='ts-header-text'>
-							<strong>Managers:</strong>
-						</h4>
-						<div className='ts-managers-container'></div>
-					</div>
-					<div className='employees-preview'>
-						<h4 className='ts-header-text'>
-							<strong>Employees:</strong>
-						</h4>
-						<div className='ts-managers-container'></div>
+						<div className='employees-preview'>
+							<h4 className='ts-header-text'>
+								<strong>Employees:</strong>
+							</h4>
+							<div className='ts-managers-container'></div>
+						</div>
 					</div>
 				</div>
 			</div>

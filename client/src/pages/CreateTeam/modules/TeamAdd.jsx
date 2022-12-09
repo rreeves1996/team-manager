@@ -14,7 +14,7 @@ export default function TeamAdd(props) {
 	});
 	const [roleFormState, setRoleFormState] = useState({
 		rolename: '',
-		rolesalary: null,
+		rolesalary: 0,
 	});
 	const styles = {
 		style1: {
@@ -42,7 +42,9 @@ export default function TeamAdd(props) {
 		});
 	};
 
-	const handleFormSubmit = () => {
+	const handleFormSubmit = (event) => {
+		event.preventDefault();
+
 		if (addType === 'employee') {
 			const newEmpName = formState.empname.trim();
 			const newEmpRole = formState.emprole.trim();
@@ -85,9 +87,11 @@ export default function TeamAdd(props) {
 		});
 	};
 
-	const handleRoleSubmit = () => {
-		const newRoleName = formState.rolename.trim();
-		const newRoleSalary = formState.rolesalary.trim();
+	const handleRoleSubmit = (event) => {
+		event.preventDefault();
+
+		const newRoleName = roleFormState.rolename.trim();
+		const newRoleSalary = roleFormState.rolesalary.trim();
 
 		if (newRoleName && newRoleSalary) {
 			if (newRoleSalary >= 0) {
@@ -97,17 +101,16 @@ export default function TeamAdd(props) {
 				};
 
 				handleAddRole(payload);
+				setRoleFormState({
+					rolename: '',
+					rolesalary: 0,
+				});
 			} else {
 				window.alert('Salary must be a positive number!');
 			}
 		} else {
 			window.alert('Invalid role name or salary!');
 		}
-
-		setRoleFormState({
-			rolename: '',
-			rolesalary: null,
-		});
 	};
 
 	return (
@@ -138,7 +141,7 @@ export default function TeamAdd(props) {
 										type='text'
 										name='rolename'
 										placeholder='New role name'
-										value={formState.rolename}
+										value={roleFormState.rolename}
 										onChange={handleChange}
 									/>
 								</div>
@@ -152,7 +155,7 @@ export default function TeamAdd(props) {
 										type='number'
 										name='rolesalary'
 										placeholder='New role salary'
-										value={formState.rolesalary}
+										value={roleFormState.rolesalary}
 										onChange={handleChange}
 									/>
 								</div>
@@ -194,7 +197,6 @@ export default function TeamAdd(props) {
 									className='role-select'
 									name='emprole'
 									defaultValue='default'
-									value={formState.emprole}
 									onChange={handleChange}>
 									<option value='default' disabled>
 										Select role...

@@ -18,7 +18,6 @@ export default function Navbar() {
 			logoutUser();
 
 			AuthService.logout();
-			window.alert('Logout successful!');
 		} catch (err) {
 			window.alert(`Logout failed! Error: ${err}`);
 		}

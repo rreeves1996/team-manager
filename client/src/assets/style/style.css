@@ -751,14 +751,21 @@ header .pencil-icon:active,
 	background-color: #16223175;
 }
 .home-container,
-.profile-container {
+.profile-container,
+.create-team-container {
 	display: flex;
-	padding: 16px 0px 4px;
+	padding: 16px 37px 4px 16px !important;
 	justify-content: space-between;
 	height: 100%;
 }
 .home-container {
 	width: 1300px;
+}
+.create-team-container {
+	justify-content: center;
+	flex-wrap: wrap;
+	max-width: 1300px;
+	width: 100%;
 }
 .profile-container {
 	width: 1190px;
@@ -787,11 +794,19 @@ header .pencil-icon:active,
 .col {
 	min-height: auto;
 }
-.col-home {
+.col-home,
+.col-team {
 	display: flex;
 	flex-direction: column;
 	width: calc(28% - 16px);
 	min-height: calc(100% - 0px) !important;
+}
+.col-team {
+	flex-direction: row;
+	flex-wrap: wrap;
+	flex-grow: 1;
+	flex-basis: 20rem;
+	justify-content: center;
 }
 .col-profile-sm,
 .col-profile-lg {
@@ -811,6 +826,18 @@ header .pencil-icon:active,
 	align-items: center;
 	margin-bottom: 16px;
 }
+.team-name-container,
+.team-add {
+	margin-right: 16px;
+	margin-bottom: 16px;
+	max-width: 30rem;
+	flex-grow: 1;
+	width: 100%;
+	min-width: calc(50%-16px);
+}
+.team-name-container {
+	max-height: 10rem;
+}
 .your-team,
 .team-preview {
 	width: 72%;
@@ -818,8 +845,10 @@ header .pencil-icon:active,
 .team-preview {
 	display: flex;
 	flex-direction: column;
-	margin-left: 16px;
 	height: auto;
+	margin-bottom: 16px;
+	flex-grow: 1;
+	min-height: 35rem;
 }
 .team-preview-header {
 	display: flex;
@@ -829,7 +858,10 @@ header .pencil-icon:active,
 	border-bottom: 1px solid rgba(192, 192, 192, 0.486);
 }
 .team-preview-body {
+	border-radius: 8px;
+	overflow: hidden;
 	display: flex;
+	flex-wrap: wrap;
 	height: 100%;
 	width: 100%;
 }
@@ -868,6 +900,7 @@ header .pencil-icon:active,
 	letter-spacing: 2px;
 	line-height: 0;
 	height: 2rem;
+	min-height: 2rem;
 }
 
 .card-icon {
@@ -1258,16 +1291,26 @@ select:focus {
 	transform: translateX(0.3rem);
 }
 .team-summary {
+	flex-basis: 18rem;
+	flex-grow: 2;
+	min-width: 48%;
 	width: 48%;
 	border-right: 1px solid rgba(192, 192, 192, 0.486);
 	border-top: 1px solid rgb(255, 255, 255);
+	border-bottom: 1px solid rgba(192, 192, 192, 0.486);
+}
+.preview-row {
+	display: flex;
+	flex-grow: 1;
+	width: 52%;
 }
 .managers-preview {
 	border-right: 1px solid rgba(192, 192, 192, 0.486);
 }
 .managers-preview,
 .employees-preview {
-	width: 26%;
+	border-right: 1px solid rgba(192, 192, 192, 0.486);
+	width: 50%;
 	border-top: 1px solid rgb(255, 255, 255);
 	border-left: 1px solid rgb(255, 255, 255);
 	padding: 0.5rem 1rem;

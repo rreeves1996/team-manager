@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Preview from './modules/Preview';
 import TeamAdd from './modules/TeamAdd';
@@ -9,22 +9,28 @@ export default function CreateTeam() {
 	const [name, setName] = useState('');
 	const [employees, setEmployees] = useState([]);
 	const [managers, setManagers] = useState([]);
+	// const roles = [];
 	const [roles, setRoles] = useState([]);
-
-	const handleSetName = (name) => {
-		setName((prevState) => name);
+	console.log(roles);
+	const handleSetName = (teamName) => {
+		setName((prevState) => teamName);
+		console.log(name);
 	};
 
 	const handleAddEmployee = (employee) => {
 		setEmployees((prevState) => [...prevState, employee]);
+		console.log(employees);
 	};
 
 	const handleAddManager = (manager) => {
 		setManagers((prevState) => [...prevState, manager]);
+		console.log(managers);
 	};
 
 	const handleAddRole = (role) => {
+		// roles.push(role);
 		setRoles((prevState) => [...prevState, role]);
+		console.log(roles);
 	};
 
 	return (
@@ -44,8 +50,8 @@ export default function CreateTeam() {
 					Submit
 				</button>
 			</div>
-			<div className='home-container'>
-				<div className='col-home'>
+			<div className='create-team-container'>
+				<div className='col-team'>
 					<TeamName handleSetName={handleSetName} />
 					<TeamAdd
 						employees={employees}
@@ -56,7 +62,7 @@ export default function CreateTeam() {
 						handleAddRole={handleAddRole}
 					/>
 				</div>
-				<Preview />
+				<Preview employees={employees} managers={managers} roles={roles} />
 			</div>
 		</>
 	);
