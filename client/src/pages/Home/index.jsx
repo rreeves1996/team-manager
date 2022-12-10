@@ -22,11 +22,6 @@ export default function Home(props) {
 		}
 	};
 
-	const deleteTeam = () => {
-		localStorage.clear();
-		navigate(0);
-	};
-
 	// const handleTabChange = (tab) => setCurrentTab(tab);
 
 	useEffect(() => {
@@ -59,7 +54,7 @@ export default function Home(props) {
 			) : (
 				<>
 					<DataContext.Provider value={teamData}>
-						<Header deleteTeam={deleteTeam} />
+						<Header />
 						{/* <div className='tab-container'>
 							<button
 								className='tab-button'
