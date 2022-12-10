@@ -720,14 +720,10 @@ export function PreviewCard({ employee }) {
 	const { abbreviateName } = useFormat();
 
 	return (
-		<div className='emp-card'>
-			<div className='emp-card-header'>
-				<div className='emp-info-header'>
-					<h6 className='emp-name'>
-						<strong>{abbreviateName(employee.name)}</strong>
-					</h6>
-				</div>
-			</div>
+		<div className='preview-card'>
+			<h6 className='emp-name'>
+				<strong>{abbreviateName(employee.name)}</strong>
+			</h6>
 		</div>
 	);
 }

@@ -1333,9 +1333,44 @@ select:focus {
 	width: 90%;
 	margin: 0 auto;
 }
+.ts-role {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
 .ts-role p {
 	margin-left: 0.2rem;
 	text-indent: 0.2rem;
+}
+.preview-card-container {
+	display: flex;
+	align-items: center;
+	width: 100%;
+	height: 3rem;
+	margin: 0.5rem 0;
+}
+.preview-delete-button {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-size: 1.5rem;
+	width: 2rem;
+	height: 2rem;
+	margin-left: 0.5rem;
+	color: var(--off-black);
+	background-color: transparent;
+}
+.preview-delete-icon {
+	opacity: 0.7;
+
+	transition: all 150ms;
+}
+.preview-delete-button:hover .preview-delete-icon {
+	opacity: 1;
+}
+.preview-delete-button:active .preview-delete-icon {
+	filter: brightness(1.5);
+	transform: scale(0.9);
 }
 @media screen and (max-width: 768px) {
 	main {

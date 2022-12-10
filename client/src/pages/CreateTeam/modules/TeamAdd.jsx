@@ -55,7 +55,7 @@ export default function TeamAdd(props) {
 			if (newEmpName && newEmpRole) {
 				const payload = {
 					name: newEmpName,
-					role_id: newEmpRole,
+					role: newEmpRole,
 				};
 
 				handleAddEmployee(payload);
@@ -95,7 +95,7 @@ export default function TeamAdd(props) {
 		if (newRoleName && newRoleSalary) {
 			if (newRoleSalary >= 0) {
 				const payload = {
-					name: newRoleName,
+					title: newRoleName,
 					salary: newRoleSalary,
 				};
 
@@ -202,7 +202,7 @@ export default function TeamAdd(props) {
 										Select role...
 									</option>
 									{roles.map((role) => (
-										<option key={uuidv4()} value={role.id}>
+										<option key={uuidv4()} value={role.title}>
 											{role.title}
 										</option>
 									))}

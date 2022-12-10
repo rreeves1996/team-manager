@@ -1,14 +1,21 @@
 import React from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { AiOutlineRight } from 'react-icons/ai';
-import { FaUsers } from 'react-icons/fa';
+import { FaUsers, FaTimes } from 'react-icons/fa';
 import { PreviewCard } from '../../../components/cards/EmpCard';
 
 export default function Preview({ roles, managers, employees }) {
 	const teamLead = managers.filter((manager) => manager.is_lead);
 	const teamManagers = managers.filter((manager) => manager.is_lead === false);
 
-	console.log(teamLead);
+	const getEmpCount = (role) => {
+		const employeesInRole = employees.filter(
+			(employee) => employee.role === role.title
+		);
+
+		return employeesInRole.length;
+	};
+
 	return (
 		<div className='team-preview'>
 			<h2>
@@ -41,18 +48,22 @@ export default function Preview({ roles, managers, employees }) {
 							<div className='ts-roles-container'>
 								{roles.map((role) => (
 									<div className='ts-role' key={uuidv4()}>
-										<h6>
-											<strong>{role.name}</strong>
-										</h6>
-
-										<p>
-											<AiOutlineRight className='right-caret' /> Salary: $
-											{role.salary}
-										</p>
-										<p>
-											<AiOutlineRight className='right-caret' /> Total
-											employees:{' '}
-										</p>
+										<div className='ts-role-body'>
+											<h6>
+												<strong>{role.title}</strong>
+											</h6>
+											<p>
+												<AiOutlineRight className='right-caret' /> Salary: $
+												{role.salary}
+											</p>
+											<p>
+												<AiOutlineRight className='right-caret' /> Total
+												employees: {getEmpCount(role)}
+											</p>
+										</div>
+										<button className='preview-delete-button'>
+											<FaTimes className='preview-delete-icon' />
+										</button>
 									</div>
 								))}
 							</div>
@@ -70,7 +81,12 @@ export default function Preview({ roles, managers, employees }) {
 							</h4>
 							<div className='ts-managers-container'>
 								{teamManagers.map((manager) => (
-									<PreviewCard employee={manager} />
+									<div className='preview-card-container'>
+										<PreviewCard key={uuidv4()} employee={manager} />
+										<button className='preview-delete-button'>
+											<FaTimes className='preview-delete-icon' />
+										</button>
+									</div>
 								))}
 							</div>
 						</div>
@@ -79,7 +95,16 @@ export default function Preview({ roles, managers, employees }) {
 							<h4 className='ts-header-text'>
 								<strong>Employees:</strong>
 							</h4>
-							<div className='ts-managers-container'></div>
+							<div className='ts-managers-container'>
+								{employees.map((employee) => (
+									<div className='preview-card-container'>
+										<PreviewCard key={uuidv4()} employee={employee} />
+										<button className='preview-delete-button'>
+											<FaTimes className='preview-delete-icon' />
+										</button>
+									</div>
+								))}
+							</div>
 						</div>
 					</div>
 				</div>

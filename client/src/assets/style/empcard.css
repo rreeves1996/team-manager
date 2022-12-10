@@ -8,6 +8,20 @@
 	margin: 8px;
 	filter: drop-shadow(1px 2px 2px rgba(0, 0, 0, 0.295));
 }
+.preview-card {
+	display: flex;
+	width: 100%;
+	height: 100%;
+	justify-content: center;
+	align-items: center;
+	border-radius: 6px;
+	background-color: var(--blue);
+	color: var(--off-white);
+	filter: drop-shadow(1px 2px 2px rgba(0, 0, 0, 0.295));
+}
+.preview-card .emp-name {
+	margin: 0;
+}
 .modal-content {
 	background-color: transparent !important;
 	border: none;

@@ -25,7 +25,9 @@ export default function useFormat() {
 	function abbreviateName(string) {
 		const splitName = string.split(' ');
 		const firstName = splitName[0].split('');
-		const formattedName = `${firstName[0]}. ${splitName[splitName.length - 1]}`;
+		const formattedName = `${firstName[0]}.${
+			splitName[1] ? ` ${splitName[splitName.length - 1]}` : ''
+		}`;
 
 		return formattedName;
 	}
