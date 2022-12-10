@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { FaUserPlus } from 'react-icons/fa';
+import useFormat from '../../../hooks/useFormat';
 
 export default function TeamAdd(props) {
-	const { handleAddEmployee, handleAddManager, handleAddRole } = props;
-	const { managers, employees, roles } = props;
+	const { uppercaseFirstChars } = useFormat();
 	const [addType, setAddType] = useState('employee');
 	const [formState, setFormState] = useState({
 		empname: '',
@@ -16,6 +16,8 @@ export default function TeamAdd(props) {
 		rolename: '',
 		rolesalary: 0,
 	});
+	const { handleAddEmployee, handleAddManager, handleAddRole } = props;
+	const { managers, employees, roles } = props;
 	const styles = {
 		style1: {
 			transform: 'translateX(-150%)',
@@ -90,7 +92,7 @@ export default function TeamAdd(props) {
 	const handleRoleSubmit = (event) => {
 		event.preventDefault();
 
-		const newRoleName = roleFormState.rolename.trim();
+		const newRoleName = uppercaseFirstChars(roleFormState.rolename.trim());
 		const newRoleSalary = roleFormState.rolesalary.trim();
 
 		if (newRoleName && newRoleSalary) {
@@ -101,16 +103,17 @@ export default function TeamAdd(props) {
 				};
 
 				handleAddRole(payload);
-				setRoleFormState({
-					rolename: '',
-					rolesalary: 0,
-				});
 			} else {
 				window.alert('Salary must be a positive number!');
 			}
 		} else {
 			window.alert('Invalid role name or salary!');
 		}
+
+		setRoleFormState({
+			rolename: '',
+			rolesalary: 0,
+		});
 	};
 
 	return (
@@ -196,7 +199,7 @@ export default function TeamAdd(props) {
 								<select
 									className='role-select'
 									name='emprole'
-									defaultValue='default'
+									value={formState.emprole}
 									onChange={handleChange}>
 									<option value='default' disabled>
 										Select role...
@@ -251,7 +254,6 @@ export default function TeamAdd(props) {
 								<select
 									className='role-select'
 									name='manlead'
-									defaultValue={'default'}
 									value={formState.manlead}
 									onChange={handleChange}>
 									<option value='default' disabled>

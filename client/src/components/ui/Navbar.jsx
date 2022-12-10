@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { HiBars3 } from 'react-icons/hi2';
-import { FaChalkboardTeacher, FaChevronDown } from 'react-icons/fa';
+import { FaChalkboardTeacher, FaChevronDown, FaBars } from 'react-icons/fa';
 import { useSelector } from 'react-redux';
 import AuthService from '../../utils/auth';
 import useToggle from '../../hooks/useToggle';
@@ -50,7 +49,7 @@ export default function Navbar() {
 				<div
 					className={!collapsed ? 'navbar-toggle' : 'navbar-toggle open'}
 					onClick={() => toggleCollapse()}>
-					<HiBars3 className='navbar-burger' />
+					<FaBars className='navbar-burger' />
 					<FaChevronDown className='navbar-chevron' />
 					<div
 						className={

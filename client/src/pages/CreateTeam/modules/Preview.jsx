@@ -1,4 +1,5 @@
 import React from 'react';
+import { v4 as uuidv4 } from 'uuid';
 import { FaUsers } from 'react-icons/fa';
 
 export default function Preview({ roles, managers, employees }) {
@@ -19,9 +20,11 @@ export default function Preview({ roles, managers, employees }) {
 						<div className='team-summary-header'>
 							<h6>
 								Once you're happy with your team, click the "Submit" button to
-								create your new team. Team name, managers, employees, and roles
-								can all be edited later, so don't worry about finalizing your
-								team here.
+								create your new team.
+							</h6>
+							<h6>
+								Team name, managers, employees, and roles can all be edited
+								later, so don't worry about finalizing your team here.
 							</h6>
 						</div>
 						<div className='divider'></div>
@@ -31,8 +34,10 @@ export default function Preview({ roles, managers, employees }) {
 							</h4>
 							<div className='ts-roles-container'>
 								{roles.map((role) => (
-									<div className='ts-role'>
-										<h6>{role.name}</h6>
+									<div className='ts-role' key={uuidv4()}>
+										<h6>
+											<strong>{role.name}</strong>
+										</h6>
 										<p>Salary: ${role.salary}</p>
 										<p>Total employees: </p>
 									</div>

@@ -9,9 +9,8 @@ export default function CreateTeam() {
 	const [name, setName] = useState('');
 	const [employees, setEmployees] = useState([]);
 	const [managers, setManagers] = useState([]);
-	// const roles = [];
 	const [roles, setRoles] = useState([]);
-	console.log(roles);
+
 	const handleSetName = (teamName) => {
 		setName((prevState) => teamName);
 		console.log(name);
@@ -28,7 +27,6 @@ export default function CreateTeam() {
 	};
 
 	const handleAddRole = (role) => {
-		// roles.push(role);
 		setRoles((prevState) => [...prevState, role]);
 		console.log(roles);
 	};
