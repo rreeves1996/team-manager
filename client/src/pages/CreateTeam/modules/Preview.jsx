@@ -42,8 +42,8 @@ export default function Preview(props) {
 								later, so don't worry about finalizing your team here.
 							</h6>
 							<h6>
-								Warning: Deleting a role will delete all of the employees
-								currently in the role!
+								<strong>Warning:</strong> Deleting a role will delete all of the
+								employees currently in the role!
 							</h6>
 						</div>
 						<div className='divider'></div>

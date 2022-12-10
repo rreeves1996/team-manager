@@ -34,7 +34,7 @@ export default function Login() {
 			} catch (err) {
 				window.alert(`Login failed! Error: ${err}`);
 			} finally {
-				navigate('/profile', { replace: true });
+				navigate(0);
 			}
 		} else {
 			window.alert('Invalid username or password!');
@@ -45,7 +45,7 @@ export default function Login() {
 			password: '',
 		});
 
-		navigate(0);
+		navigate('/');
 	};
 
 	return (

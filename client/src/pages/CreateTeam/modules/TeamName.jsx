@@ -1,10 +1,16 @@
 import React, { useEffect } from 'react';
 import { useState } from 'react';
 import { HiPencilAlt } from 'react-icons/hi';
+import useFormat from '../../../hooks/useFormat';
 
-export default function TeamName({ handleSetName }) {
+export default function TeamName({ handleSetName, handleAddRole }) {
+	const { uppercaseFirstChars } = useFormat();
 	const [formState, setFormState] = useState({
 		teamname: '',
+	});
+	const [roleFormState, setRoleFormState] = useState({
+		rolename: '',
+		rolesalary: 0,
 	});
 
 	const handleChange = (event) => {
@@ -14,11 +20,43 @@ export default function TeamName({ handleSetName }) {
 			...formState,
 			[name]: value,
 		});
+
+		setRoleFormState({
+			...roleFormState,
+			[name]: value,
+		});
 	};
 
 	useEffect(() => {
 		handleSetName(formState.teamname);
 	}, [formState]);
+
+	const handleRoleSubmit = (event) => {
+		event.preventDefault();
+
+		const newRoleName = uppercaseFirstChars(roleFormState.rolename.trim());
+		const newRoleSalary = roleFormState.rolesalary.trim();
+
+		if (newRoleName && newRoleSalary) {
+			if (newRoleSalary >= 0) {
+				const payload = {
+					title: newRoleName,
+					salary: newRoleSalary,
+				};
+
+				handleAddRole(payload);
+			} else {
+				window.alert('Salary must be a positive number!');
+			}
+		} else {
+			window.alert('Invalid role name or salary!');
+		}
+
+		setRoleFormState({
+			rolename: '',
+			rolesalary: 0,
+		});
+	};
 
 	return (
 		<div className='team-name-container'>
@@ -47,6 +85,58 @@ export default function TeamName({ handleSetName }) {
 						</div>
 					</div>
 				</form>
+
+				<span>
+					Fill in the forms below to add roles, managers, and employees to your
+					team.
+				</span>
+
+				<span>
+					Each team is only allotted one lead. Make sure to create roles before
+					trying to add employees!
+				</span>
+
+				<div className='divider'></div>
+
+				<div className='add-role-container'>
+					<form className='form-container' onSubmit={handleRoleSubmit}>
+						<div className='employee-input'>
+							<div className='field name-field'>
+								<label className='label role-name-label'>Role Name:</label>
+								<div className='control'>
+									<input
+										className='input'
+										type='text'
+										name='rolename'
+										placeholder='New role name'
+										value={roleFormState.rolename}
+										onChange={handleChange}
+									/>
+								</div>
+							</div>
+
+							<div className='field name-field'>
+								<label className='label role-salary-label'>Salary: $</label>
+								<div className='control'>
+									<input
+										className='input role-salary-input'
+										type='number'
+										name='rolesalary'
+										placeholder='New role salary'
+										value={roleFormState.rolesalary}
+										onChange={handleChange}
+									/>
+								</div>
+							</div>
+						</div>
+
+						<div className='button-container'>
+							<button className='form-button' type='submit'>
+								Add Role
+							</button>
+						</div>
+					</form>
+				</div>
 			</div>
 		</div>
 	);

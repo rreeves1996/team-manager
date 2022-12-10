@@ -2,11 +2,9 @@ import React, { useContext } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { DataContext } from '../../../Home';
 import { EmpCard, MngrCard } from '../../../../components/cards/EmpCard';
-import useFormat from '../../../../hooks/useFormat';
 
 export default function YourTeam() {
 	const teamData = useContext(DataContext);
-	const { abbreviateName } = useFormat();
 	const { employees, managers, roles } = teamData;
 
 	return (
@@ -19,13 +17,7 @@ export default function YourTeam() {
 					</h5>
 					<div className='card-container'>
 						{managers.map((manager) => (
-							<MngrCard
-								key={uuidv4()}
-								manager={{
-									...manager,
-									abbreviatedname: abbreviateName(manager.name),
-								}}
-							/>
+							<MngrCard key={uuidv4()} manager={manager} />
 						))}
 					</div>
 				</div>
@@ -37,10 +29,7 @@ export default function YourTeam() {
 						{employees.map((employee) => (
 							<EmpCard
 								key={uuidv4()}
-								employee={{
-									...employee,
-									abbreviatedname: abbreviateName(employee.name),
-								}}
+								employee={employee}
 								roles={roles}
 								managers={managers}
 							/>

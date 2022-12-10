@@ -26,6 +26,10 @@ Employee.init(
 			type: DataTypes.STRING,
 			allowNull: true,
 		},
+		salary: {
+			type: DataTypes.INTEGER,
+			allowNull: true,
+		},
 		role_id: {
 			type: DataTypes.INTEGER,
 			references: {

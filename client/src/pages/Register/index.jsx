@@ -6,7 +6,7 @@ import { FaChalkboardTeacher } from 'react-icons/fa';
 
 export default function Register() {
 	const navigate = useNavigate();
-	const { registerUser } = useAuth();
+	const { registerUser, loginUser } = useAuth();
 
 	const [formState, setFormState] = useState({
 		username: '',
@@ -43,14 +43,25 @@ export default function Register() {
 
 			if (payload) {
 				try {
-					const res = registerUser(payload);
+					registerUser(payload).then((res) => {
+						console.log(res);
+						const payload = {
+							email: res.email,
+							password,
+						};
 
-					AuthService.login(res);
+						loginUser(payload).then((res) => {
+							AuthService.login(res);
+						});
+					});
+
 					window.alert(`Registration succeeded! Logging you in...`);
 				} catch (err) {
 					window.alert(`Registration failed! Error: ${err}`);
+				} finally {
+					navigate('/profile', { replace: true });
 				}
-				navigate('/profile', { replace: true });
+				// navigate(0);
 			}
 		} else {
 			window.alert('Passwords do not match!');

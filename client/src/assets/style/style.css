@@ -431,6 +431,9 @@ p {
 	margin: 0.8rem auto 0;
 	text-align: center;
 }
+.team-add h6 strong {
+	margin: 0.5rem 0 1.2rem;
+}
 .team-preview h3 {
 	font-size: 4rem;
 	line-height: 0.5;
@@ -842,9 +845,6 @@ header .pencil-icon:active,
 	width: 100%;
 	min-width: calc(50%-16px);
 }
-.team-name-container {
-	max-height: 10rem;
-}
 .your-team,
 .team-preview {
 	width: 72%;
@@ -1001,11 +1001,14 @@ header .pencil-icon:active,
 	overflow: hidden;
 }
 .team-add .container-body {
-	height: 25.2rem;
+	padding-top: 0;
+	height: 16.5rem;
 }
 .team-name-container .container-body {
 	padding-top: 0;
 	padding-bottom: 0.7rem;
+	height: fit-content !important;
+	width: 85% !important;
 }
 .team-preview .container-body {
 	display: flex;
@@ -1014,17 +1017,22 @@ header .pencil-icon:active,
 	padding-bottom: 0;
 }
 .team-name-container .container-body,
-.team-name-container h6 {
+.team-name-container h6,
+.team-name-container span {
 	margin: 0 auto;
 	height: auto;
 	overflow: visible;
-	width: 80% !important;
+	width: 80%;
 }
-.team-name-container h6 {
+.team-name-container h6,
+.team-name-container span {
 	width: 100%;
 	text-align: center;
 	margin-top: 1rem;
 	margin-bottom: 0.2rem;
+}
+.team-name-container span {
+	margin-top: 0.5rem;
 }
 .team-name-container p {
 	font-size: 0.9rem !important;
@@ -1224,17 +1232,13 @@ select:focus {
 	transition: all 570ms;
 	width: 17rem;
 }
-.team-add .add-employee-container,
-.team-add .add-manager-container {
-	margin-top: 11.1rem;
-}
 .add-role-container {
 	margin-top: 0rem;
 	width: 17rem;
 }
 .add-role-container button {
 	margin-top: 0.3rem !important;
-	margin-bottom: 0rem;
+	margin-bottom: 0.3rem;
 }
 .add-role-container label {
 	width: 40% !important;
@@ -1250,17 +1254,25 @@ select:focus {
 .team-preview .divider {
 	margin: 0.8rem 0;
 }
-.team-summary .divider {
+.team-summary .divider,
+.team-name-container .divider {
 	margin: 1rem auto;
+}
+.team-name-container .control {
+	height: auto !important;
+}
+.team-name-container input {
+	margin: 0.3rem 0;
+}
+.team-name-container .label {
+	display: flex;
+	align-items: center;
 }
 .add-employee-container .form-container,
 .add-manager-container .form-container,
 .team-name-container .form-container,
 .add-role-container .form-container {
 	width: 100% !important;
-}
-.add-role-container .form-container {
-	margin-top: -0.3rem;
 }
 
 .quickadd-toggler {

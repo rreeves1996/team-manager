@@ -14,6 +14,16 @@ export default function useQuery() {
 		}
 	}
 
+	async function queryTeam(id) {
+		try {
+			const res = await axios.get(`${API_ROUTE}/teams/${id}`);
+
+			return res;
+		} catch (err) {
+			console.log(`User query failed! Error:\n${err}`);
+		}
+	}
+
 	async function queryTeamsByUser(id) {
 		try {
 			const res = await axios.get(`${API_ROUTE}/teams/user/${id}`);
@@ -181,6 +191,7 @@ export default function useQuery() {
 	return {
 		queryUser,
 		queryTeamsByUser,
+		queryTeam,
 		addEmployee,
 		addManager,
 		addRole,

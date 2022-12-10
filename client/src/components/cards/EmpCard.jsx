@@ -79,17 +79,10 @@ function EmpSalary(props) {
 }
 
 export function MngrCard(props) {
-	const {
-		id,
-		name,
-		abbreviatedname,
-		picture,
-		is_lead,
-		phone,
-		email,
-		timezone,
-		salary,
-	} = props.manager;
+	const { id, name, picture, is_lead, phone, email, timezone, salary } =
+		props.manager;
+	const { abbreviateName } = useFormat();
+	const abbreviatedname = abbreviateName(name);
 	const [show, setShow] = useState(false);
 	const [deleteConfirm, showDeleteConfirm] = useState(false);
 	const [editing, setEditing] = useState(false);
@@ -388,16 +381,10 @@ export function MngrCard(props) {
 }
 
 export function EmpCard(props) {
-	const {
-		id,
-		name,
-		abbreviatedname,
-		picture,
-		role_id,
-		phone,
-		email,
-		manager_id,
-	} = props.employee;
+	const { id, name, picture, role_id, phone, email, manager_id } =
+		props.employee;
+	const { abbreviateName } = useFormat();
+	const abbreviatedname = abbreviateName(name);
 	const [data, setData] = useState({});
 	const [show, setShow] = useState(false);
 	const [deleteConfirm, showDeleteConfirm] = useState(false);
@@ -440,43 +427,35 @@ export function EmpCard(props) {
 	const handleEditSubmit = async (event) => {
 		event.preventDefault();
 
-		const emailFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-		const { empRole, empSalary, empEmail, empManager } = formState.trim();
+		const { empRole, empSalary, empEmail, empManager } = formState;
 		const phonenumbers = [
 			formState.phone1.trim(),
 			formState.phone2.trim(),
 			formState.phone3.trim(),
 		];
 
-		if (empEmail.match(emailFormat)) {
-			if (
-				phonenumbers[0].length === 3 &&
-				phonenumbers[1].length === 3 &&
-				phonenumbers[2].length === 4
-			) {
-				await axios
-					.put(`/api/employees/${id}`, {
-						role: empRole,
-						salary: empSalary,
-						phone: phonenumbers[0] + phonenumbers[1] + phonenumbers[2],
-						email: empEmail,
-						manager: empManager,
-					})
-					.then((res) => {
-						console.log(`Employee updated: ${res}`);
-						setPhoneNumber({
-							groupOne: phonenumbers[0],
-							groupTwo: phonenumbers[1],
-							groupThree: phonenumbers[2],
-						});
-					})
-					.catch((err) => console.log(`Failed to update updated: ${err}`));
-			} else {
-				alert('Invalid phone number!');
-			}
-		} else {
-			alert('Invalid email!');
-		}
+		await axios
+			.put(`/api/employees/${id}`, {
+				role: empRole !== data.role.title ? empRole : role_id,
+				salary: empSalary !== data.role.salary ? empSalary : null,
+				phone:
+					phonenumbers[0].length === 3 &&
+					phonenumbers[1].length === 3 &&
+					phonenumbers[2].length === 4
+						? phonenumbers[0] + phonenumbers[1] + phonenumbers[2]
+						: null,
+				email: empEmail ? empEmail : null,
+				manager_id: empManager,
+			})
+			.then((res) => {
+				console.log(`Employee updated: ${res}`);
+				setPhoneNumber({
+					groupOne: phonenumbers[0],
+					groupTwo: phonenumbers[1],
+					groupThree: phonenumbers[2],
+				});
+			})
+			.catch((err) => console.log(`Failed to update updated: ${err}`));
 
 		setEditing(!editing);
 	};
@@ -501,10 +480,10 @@ export function EmpCard(props) {
 							manager: res[0].data,
 							role: res[1].data,
 						});
-						console.log(res);
+
 						setFormState((formState) => ({
 							...formState,
-							empRole: res[1].data.title,
+							empRole: res[1].data,
 							empSalary: JSON.stringify(res[1].data.salary),
 							empManager: res[0].data.name,
 						}));
@@ -582,9 +561,10 @@ export function EmpCard(props) {
 													className='card-role-select'
 													type='emprole'
 													name='empRole'
+													value={formState.empRole}
 													onChange={handleChange}>
 													{props.roles.map((role) => (
-														<option key={uuidv4()} value={formState.empRole}>
+														<option key={uuidv4()} value={role}>
 															{role.title}
 														</option>
 													))}
@@ -652,9 +632,10 @@ export function EmpCard(props) {
 													className='card-manager-select'
 													type='text'
 													name='empManager'
+													value={formState.empManager}
 													onChange={handleChange}>
 													{props.managers.map((manager) => (
-														<option key={uuidv4()} value={formState.empManager}>
+														<option key={uuidv4()} value={manager.id}>
 															{manager.name}
 														</option>
 													))}
@@ -676,7 +657,13 @@ export function EmpCard(props) {
 								) : (
 									<>
 										<EmpRole role={data.role.title} />
-										<EmpSalary salary={data.role.salary} />
+										<EmpSalary
+											salary={
+												props.employee.salary
+													? props.employee.salary
+													: data.role.salary
+											}
+										/>
 										<EmpPhoneNumber
 											number1={phoneNumber.groupOne}
 											number2={phoneNumber.groupTwo}

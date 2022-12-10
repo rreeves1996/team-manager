@@ -4,12 +4,13 @@ import axios from 'axios';
 import HomeTab from './HomeTab';
 import ManageTab from './ManageTab';
 import Header from './Header';
+import useQuery from '../../hooks/useQuery';
 
 export const DataContext = createContext();
 
 export default function Home(props) {
 	const navigate = useNavigate();
-
+	const { queryTeam } = useQuery();
 	const [loading, setLoading] = useState(true);
 	const [currentTab, setCurrentTab] = useState('Home');
 	const [teamData, setTeamData] = useState({});
@@ -29,24 +30,23 @@ export default function Home(props) {
 			const reqTeam = localStorage.getItem('teamID');
 
 			if (reqTeam) {
-				await axios
-					.get(`/api/teams/${reqTeam}`)
-					.then((res) => {
-						// Find team lead and add in isolation to the 'teamData' object for easier access/referencing later
-						const lead = res.data.managers.filter((manager) => manager.is_lead);
-						const newTeam = { ...res.data, lead: lead[0] };
-
-						setTeamData(newTeam);
-					})
-					.catch((err) => console.error(`Failed to get teams: ${err}`));
+				try {
+					const res = await queryTeam(reqTeam);
+					// Find team lead and add in isolation to the 'teamData' object for easier access/referencing later
+					const lead = res.data.managers.filter((manager) => manager.is_lead);
+					const newTeam = { ...res.data, lead: lead[0] };
+					setTeamData(newTeam);
+				} catch (err) {
+					window.alert(`Failed to get team! Error: ${err}`);
+				} finally {
+					setLoading(false);
+				}
 			} else {
 				navigate('/profile');
 			}
 		};
 
-		fetchData().then(() => {
-			setLoading(!loading);
-		});
+		fetchData();
 	}, []);
 
 	return (

@@ -19,8 +19,7 @@ export default function useAuth() {
 				password,
 			});
 
-			dispatch(login(res.data.user));
-			return res.data.token;
+			return res.data.user;
 		} catch (err) {
 			console.log(`Registration failed! Error:\n${err}`);
 		}
@@ -28,7 +27,7 @@ export default function useAuth() {
 
 	async function loginUser(payload) {
 		const { email, password } = payload;
-
+		console.log(payload);
 		try {
 			const res = await axios.post(API_ROUTE + '/login', {
 				email,

@@ -39,8 +39,11 @@ export default function App() {
 						path='/createteam'
 						element={isLogged ? <CreateTeam /> : <InitPrompt />}
 					/>
-					<Route path='/login' element={<Login />} />
-					<Route path='/register' element={<Register />} />
+					<Route path='/login' element={isLogged ? <Profile /> : <Login />} />
+					<Route
+						path='/register'
+						element={isLogged ? <Profile /> : <Register />}
+					/>
 					<Route path='/about' element={<About />} />
 				</Routes>
 			</main>

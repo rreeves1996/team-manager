@@ -14,10 +14,6 @@ export default function TeamAdd(props) {
 		manname: '',
 		manlead: 'default',
 	});
-	const [roleFormState, setRoleFormState] = useState({
-		rolename: '',
-		rolesalary: 0,
-	});
 	const teamLead = managers.filter((manager) => manager.is_lead);
 	const styles = {
 		style1: {
@@ -36,11 +32,6 @@ export default function TeamAdd(props) {
 
 		setFormState({
 			...formState,
-			[name]: value,
-		});
-
-		setRoleFormState({
-			...roleFormState,
 			[name]: value,
 		});
 	};
@@ -86,95 +77,20 @@ export default function TeamAdd(props) {
 		});
 	};
 
-	const handleRoleSubmit = (event) => {
-		event.preventDefault();
-
-		const newRoleName = uppercaseFirstChars(roleFormState.rolename.trim());
-		const newRoleSalary = roleFormState.rolesalary.trim();
-
-		if (newRoleName && newRoleSalary) {
-			if (newRoleSalary >= 0) {
-				const payload = {
-					title: newRoleName,
-					salary: newRoleSalary,
-				};
-
-				handleAddRole(payload);
-			} else {
-				window.alert('Salary must be a positive number!');
-			}
-		} else {
-			window.alert('Invalid role name or salary!');
-		}
-
-		setRoleFormState({
-			rolename: '',
-			rolesalary: 0,
-		});
-	};
-
 	return (
 		<div className='team-add'>
 			<h2>
 				<FaUserPlus className='card-icon' /> Add To Team
 			</h2>
-			<h6>
-				<span>
-					Fill in the form below to add roles, managers, and employees to your
-					team.
-				</span>
-				<span>
-					Each team is only allotted one lead. Make sure to create roles before
-					trying to add employees!
-				</span>
-			</h6>
 
 			<div className='container-body'>
-				<div className='add-role-container'>
-					<form className='form-container' onSubmit={handleRoleSubmit}>
-						<div className='employee-input'>
-							<div className='field name-field'>
-								<label className='label role-name-label'>Role Name:</label>
-								<div className='control'>
-									<input
-										className='input'
-										type='text'
-										name='rolename'
-										placeholder='New role name'
-										value={roleFormState.rolename}
-										onChange={handleChange}
-									/>
-								</div>
-							</div>
-
-							<div className='field name-field'>
-								<label className='label role-salary-label'>Salary: $</label>
-								<div className='control'>
-									<input
-										className='input role-salary-input'
-										type='number'
-										name='rolesalary'
-										placeholder='New role salary'
-										value={roleFormState.rolesalary}
-										onChange={handleChange}
-									/>
-								</div>
-							</div>
-						</div>
-
-						<div className='button-container'>
-							<button className='form-button' type='submit'>
-								Add Role
-							</button>
-						</div>
-					</form>
-				</div>
-
-				<div className='divider'></div>
-
 				<div
 					className='add-employee-container'
 					style={addType === 'employee' ? styles.style2 : styles.style1}>
+					<h6>
+						<strong>Enter employee information</strong>
+					</h6>
+
 					<form className='form-container' onSubmit={handleFormSubmit}>
 						<div className='employee-input'>
 							<div className='field name-field'>
@@ -230,6 +146,10 @@ export default function TeamAdd(props) {
 				<div
 					className='add-manager-container'
 					style={addType === 'employee' ? styles.style3 : styles.style2}>
+					<h6>
+						<strong>Enter manager information</strong>
+					</h6>
+
 					<form className='form-container' onSubmit={handleFormSubmit}>
 						<div className='employee-input'>
 							<div className='field name-field'>

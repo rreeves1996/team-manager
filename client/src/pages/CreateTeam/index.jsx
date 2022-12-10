@@ -95,14 +95,16 @@ export default function CreateTeam() {
 			</div>
 			<div className='create-team-container'>
 				<div className='col-team'>
-					<TeamName handleSetName={handleSetName} />
+					<TeamName
+						handleSetName={handleSetName}
+						handleAddRole={handleAddRole}
+					/>
 					<TeamAdd
 						employees={employees}
 						managers={managers}
 						roles={roles}
 						handleAddEmployee={handleAddEmployee}
 						handleAddManager={handleAddManager}
-						handleAddRole={handleAddRole}
 					/>
 				</div>
 				<Preview
