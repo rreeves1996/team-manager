@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { DataContext } from '../../../Home';
 import useQuery from '../../../../hooks/useQuery';
 
-export default function QuickAdd() {
+export default function QuickAdd({ handleChangeData }) {
 	const teamData = useContext(DataContext);
 	const { id, lead, roles } = teamData;
 	const { addEmployee, addManager } = useQuery();
@@ -35,7 +35,9 @@ export default function QuickAdd() {
 		});
 	};
 
-	const handleFormSubmit = () => {
+	const handleFormSubmit = (event) => {
+		event.preventDefault();
+
 		if (addType === 'employee') {
 			const newEmpName = formState.empname.trim();
 			const newEmpRole = formState.emprole.trim();
@@ -49,7 +51,7 @@ export default function QuickAdd() {
 				};
 
 				try {
-					addEmployee(payload);
+					addEmployee(payload).then((res) => handleChangeData(res.data));
 
 					window.alert('Successfully created employee!');
 				} catch (err) {
@@ -70,7 +72,7 @@ export default function QuickAdd() {
 				};
 
 				try {
-					addManager(payload);
+					addManager(payload).then((res) => handleChangeData(res.data));
 
 					window.alert('Successfully created manager!');
 				} catch (err) {

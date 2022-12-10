@@ -448,7 +448,8 @@ export function EmpCard(props) {
 				manager_id: empManager,
 			})
 			.then((res) => {
-				console.log(`Employee updated: ${res}`);
+				window.alert(`Employee updated: ${{ res }}`);
+
 				setPhoneNumber({
 					groupOne: phonenumbers[0],
 					groupTwo: phonenumbers[1],
@@ -494,7 +495,7 @@ export function EmpCard(props) {
 		};
 
 		fetchData().catch((err) => alert(err));
-	}, []);
+	}, [phoneNumber]);
 
 	return (
 		<>

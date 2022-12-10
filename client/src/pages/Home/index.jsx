@@ -17,13 +17,15 @@ export default function Home(props) {
 
 	const renderTab = () => {
 		if (currentTab === 'Home') {
-			return <HomeTab />;
+			return <HomeTab handleChangeData={handleChangeData} />;
 		} else if (currentTab === 'Manage') {
 			return <ManageTab />;
 		}
 	};
 
 	// const handleTabChange = (tab) => setCurrentTab(tab);
+	const handleChangeData = (data) =>
+		setTeamData((prevState) => ({ ...prevState, data }));
 
 	useEffect(() => {
 		const fetchData = async () => {

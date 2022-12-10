@@ -28,8 +28,6 @@ export default function TeamCard(props) {
 	const handleDeleteTeam = () => {
 		try {
 			deleteTeam(id);
-
-			window.alert('Team successfully deleted!');
 		} catch (err) {
 			window.alert(`Failed to delete team! Error: ${err}`);
 		} finally {
