@@ -28,16 +28,20 @@ export default function Home(props) {
 		const fetchData = async () => {
 			const reqTeam = localStorage.getItem('teamID');
 
-			await axios
-				.get(`/api/teams/${reqTeam}`)
-				.then((res) => {
-					// Find team lead and add in isolation to the 'teamData' object for easier access/referencing later
-					const lead = res.data.managers.filter((manager) => manager.is_lead);
-					const newTeam = { ...res.data, lead: lead[0] };
+			if (reqTeam) {
+				await axios
+					.get(`/api/teams/${reqTeam}`)
+					.then((res) => {
+						// Find team lead and add in isolation to the 'teamData' object for easier access/referencing later
+						const lead = res.data.managers.filter((manager) => manager.is_lead);
+						const newTeam = { ...res.data, lead: lead[0] };
 
-					setTeamData(newTeam);
-				})
-				.catch((err) => console.error(`Failed to get teams: ${err}`));
+						setTeamData(newTeam);
+					})
+					.catch((err) => console.error(`Failed to get teams: ${err}`));
+			} else {
+				navigate('/profile');
+			}
 		};
 
 		fetchData().then(() => {

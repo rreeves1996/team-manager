@@ -115,7 +115,6 @@ export default function QuickAdd() {
 								<select
 									className='role-select'
 									name='emprole'
-									defaultValue='default'
 									value={formState.emprole}
 									onChange={handleChange}>
 									<option value='default' disabled>
