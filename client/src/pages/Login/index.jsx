@@ -18,7 +18,7 @@ export default function Login() {
 		});
 	};
 
-	const handleFormSubmit = async (event) => {
+	const handleFormSubmit = (event) => {
 		event.preventDefault();
 
 		const payload = {
@@ -28,7 +28,7 @@ export default function Login() {
 
 		if (payload) {
 			try {
-				const res = await loginUser(payload);
+				const res = loginUser(payload);
 
 				AuthService.login(res);
 			} catch (err) {

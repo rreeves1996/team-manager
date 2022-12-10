@@ -50,6 +50,7 @@ export default function YourTeam() {
 							const employeeFirst = employeeNameSplit[0].split('');
 							const employeeNameAbbreviated = `${employeeFirst[0]}. ${employeeNameSplit[1]}`;
 
+							console.log(employee);
 							return (
 								<EmpCard
 									key={uuidv4()}

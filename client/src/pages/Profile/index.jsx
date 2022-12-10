@@ -5,8 +5,8 @@ import AuthService from '../../utils/auth';
 import useQuery from '../../hooks/useQuery';
 import useAuth from '../../hooks/useAuth';
 import { AiOutlineCaretDown } from 'react-icons/ai';
-import GeneralTab from './GeneralTab';
-import SettingsTab from './SettingsTab';
+// import GeneralTab from './GeneralTab';
+// import SettingsTab from './SettingsTab';
 import Teams from './tabs/general/Teams';
 import Info from './tabs/general/Info';
 

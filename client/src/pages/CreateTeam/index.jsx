@@ -1,11 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import Preview from './modules/Preview';
 import TeamAdd from './modules/TeamAdd';
 import TeamName from './modules/TeamName';
+import useQuery from '../../hooks/useQuery';
 
 export default function CreateTeam() {
 	const navigate = useNavigate();
+	const { createTeam, addRole, addManager, addEmployee } = useQuery();
+	const user_id = useSelector((state) => state.user.data.id);
+
 	const [name, setName] = useState('');
 	const [employees, setEmployees] = useState([]);
 	const [managers, setManagers] = useState([]);
@@ -13,26 +18,62 @@ export default function CreateTeam() {
 
 	const handleSetName = (teamName) => {
 		setName((prevState) => teamName);
-
-		console.log(name);
 	};
 
 	const handleAddEmployee = (employee) => {
-		setEmployees((prevState) => [...prevState, employee]);
-
-		console.log(employees);
+		setEmployees((prevState) => [employee, ...prevState]);
 	};
 
 	const handleAddManager = (manager) => {
-		setManagers((prevState) => [...prevState, manager]);
-
-		console.log(managers);
+		setManagers((prevState) => [manager, ...prevState]);
 	};
 
 	const handleAddRole = (role) => {
 		setRoles((prevState) => [role, ...prevState]);
+	};
 
-		console.log(roles);
+	const handleDeleteEmployee = (employee) => {
+		const newArray = employees.filter(
+			(element) => element.name !== employee.name
+		);
+
+		setEmployees((prevState) => newArray);
+	};
+
+	const handleDeleteManager = (manager) => {
+		const newArray = managers.filter(
+			(element) => element.name !== manager.name
+		);
+
+		setManagers((prevState) => newArray);
+	};
+
+	const handleDeleteRole = (role) => {
+		const newArray = roles.filter((element) => element.title !== role.title);
+		const newEmployeeArray = employees.filter(
+			(element) => element.role !== role.title
+		);
+
+		setRoles((prevState) => newArray);
+		setEmployees((prevState) => newEmployeeArray);
+	};
+
+	const handleSubmitTeam = (team) => {
+		const teamPayload = {
+			name,
+			user_id,
+			employees,
+			managers,
+			roles,
+		};
+
+		if (teamPayload) {
+			try {
+				createTeam(teamPayload);
+			} catch (err) {
+				window.alert(`Failed to create team! Error: ${err}`);
+			}
+		}
 	};
 
 	return (
@@ -48,7 +89,7 @@ export default function CreateTeam() {
 				<button className='tab-button' onClick={() => navigate('/profile')}>
 					Cancel
 				</button>
-				<button className='tab-button' onClick={() => {}}>
+				<button className='tab-button' onClick={() => handleSubmitTeam()}>
 					Submit
 				</button>
 			</div>
@@ -64,7 +105,15 @@ export default function CreateTeam() {
 						handleAddRole={handleAddRole}
 					/>
 				</div>
-				<Preview employees={employees} managers={managers} roles={roles} />
+				<Preview
+					teamName={name}
+					employees={employees}
+					managers={managers}
+					roles={roles}
+					handleDeleteEmployee={handleDeleteEmployee}
+					handleDeleteManager={handleDeleteManager}
+					handleDeleteRole={handleDeleteRole}
+				/>
 			</div>
 		</>
 	);

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useState } from 'react';
 import { HiPencilAlt } from 'react-icons/hi';
 
@@ -14,9 +14,11 @@ export default function TeamName({ handleSetName }) {
 			...formState,
 			[name]: value,
 		});
-
-		handleSetName(formState.teamname);
 	};
+
+	useEffect(() => {
+		handleSetName(formState.teamname);
+	}, [formState]);
 
 	return (
 		<div className='team-name-container'>

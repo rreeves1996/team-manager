@@ -1346,7 +1346,7 @@ select:focus {
 	display: flex;
 	align-items: center;
 	width: 100%;
-	height: 3rem;
+	height: 3.2rem;
 	margin: 0.5rem 0;
 }
 .preview-delete-button {

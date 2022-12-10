@@ -10,6 +10,7 @@
 }
 .preview-card {
 	display: flex;
+	flex-direction: column;
 	width: 100%;
 	height: 100%;
 	justify-content: center;
@@ -21,6 +22,11 @@
 }
 .preview-card .emp-name {
 	margin: 0;
+	font-size: 0.9rem;
+}
+.preview-card .emp-role {
+	margin: 0;
+	font-size: 0.7rem;
 }
 .modal-content {
 	background-color: transparent !important;

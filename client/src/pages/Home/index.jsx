@@ -36,7 +36,6 @@ export default function Home(props) {
 			await axios
 				.get(`/api/teams/${reqTeam}`)
 				.then((res) => {
-					console.log(res);
 					// Find team lead and add in isolation to the 'teamData' object for easier access/referencing later
 					const lead = res.data.managers.filter((manager) => manager.is_lead);
 					const newTeam = { ...res.data, lead: lead[0] };

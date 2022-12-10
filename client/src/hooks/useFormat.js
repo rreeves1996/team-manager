@@ -25,10 +25,11 @@ export default function useFormat() {
 	function abbreviateName(string) {
 		const splitName = string.split(' ');
 		const firstName = splitName[0].split('');
-		const formattedName = `${firstName[0]}.${
-			splitName[1] ? ` ${splitName[splitName.length - 1]}` : ''
+		const formattedName = `${
+			splitName[1]
+				? `${firstName[0]}. ${splitName[splitName.length - 1]}`
+				: `${splitName[0]}`
 		}`;
-
 		return formattedName;
 	}
 	return { uppercaseFirstChars, abbreviateName };

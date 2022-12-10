@@ -501,7 +501,7 @@ export function EmpCard(props) {
 							manager: res[0].data,
 							role: res[1].data,
 						});
-
+						console.log(res);
 						setFormState((formState) => ({
 							...formState,
 							empRole: res[1].data.title,
@@ -724,6 +724,7 @@ export function PreviewCard({ employee }) {
 			<h6 className='emp-name'>
 				<strong>{abbreviateName(employee.name)}</strong>
 			</h6>
+			<p className='emp-role'>{employee.role}</p>
 		</div>
 	);
 }

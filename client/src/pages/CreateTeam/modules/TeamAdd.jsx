@@ -5,6 +5,8 @@ import useFormat from '../../../hooks/useFormat';
 
 export default function TeamAdd(props) {
 	const { uppercaseFirstChars } = useFormat();
+	const { handleAddEmployee, handleAddManager, handleAddRole } = props;
+	const { managers, employees, roles } = props;
 	const [addType, setAddType] = useState('employee');
 	const [formState, setFormState] = useState({
 		empname: '',
@@ -16,8 +18,6 @@ export default function TeamAdd(props) {
 		rolename: '',
 		rolesalary: 0,
 	});
-	const { handleAddEmployee, handleAddManager, handleAddRole } = props;
-	const { managers, employees, roles } = props;
 	const teamLead = managers.filter((manager) => manager.is_lead);
 	const styles = {
 		style1: {

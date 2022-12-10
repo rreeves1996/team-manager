@@ -4,7 +4,9 @@ import { AiOutlineRight } from 'react-icons/ai';
 import { FaUsers, FaTimes } from 'react-icons/fa';
 import { PreviewCard } from '../../../components/cards/EmpCard';
 
-export default function Preview({ roles, managers, employees }) {
+export default function Preview(props) {
+	const { teamName, roles, managers, employees } = props;
+	const { handleDeleteEmployee, handleDeleteManager, handleDeleteRole } = props;
 	const teamLead = managers.filter((manager) => manager.is_lead);
 	const teamManagers = managers.filter((manager) => manager.is_lead === false);
 
@@ -26,7 +28,7 @@ export default function Preview({ roles, managers, employees }) {
 					<h6>
 						<strong>Your new team:</strong>
 					</h6>
-					<h3>Teamname</h3>
+					<h3>{teamName ? teamName : 'Team Name'}</h3>
 				</div>
 				<div className='team-preview-body'>
 					<div className='team-summary'>
@@ -38,6 +40,10 @@ export default function Preview({ roles, managers, employees }) {
 							<h6>
 								Team name, managers, employees, and roles can all be edited
 								later, so don't worry about finalizing your team here.
+							</h6>
+							<h6>
+								Warning: Deleting a role will delete all of the employees
+								currently in the role!
 							</h6>
 						</div>
 						<div className='divider'></div>
@@ -61,7 +67,9 @@ export default function Preview({ roles, managers, employees }) {
 												employees: {getEmpCount(role)}
 											</p>
 										</div>
-										<button className='preview-delete-button'>
+										<button
+											className='preview-delete-button'
+											onClick={() => handleDeleteRole(role)}>
 											<FaTimes className='preview-delete-icon' />
 										</button>
 									</div>
@@ -74,20 +82,36 @@ export default function Preview({ roles, managers, employees }) {
 							<h4 className='ts-header-text'>
 								<strong>Team Lead:</strong>
 							</h4>
-							{teamLead[0] && <PreviewCard employee={teamLead[0]} />}
-							<div className='ts-lead-container'></div>
-							<h4 className='ts-header-text'>
-								<strong>Managers:</strong>
-							</h4>
-							<div className='ts-managers-container'>
-								{teamManagers.map((manager) => (
-									<div className='preview-card-container'>
-										<PreviewCard key={uuidv4()} employee={manager} />
-										<button className='preview-delete-button'>
+
+							<div className='ts-lead-container'>
+								{teamLead[0] && (
+									<div className='preview-card-container' key={uuidv4()}>
+										<PreviewCard employee={teamLead[0]} />{' '}
+										<button
+											className='preview-delete-button'
+											onClick={() => handleDeleteManager(teamLead[0])}>
 											<FaTimes className='preview-delete-icon' />
 										</button>
 									</div>
-								))}
+								)}
+							</div>
+
+							<h4 className='ts-header-text'>
+								<strong>Managers:</strong>
+							</h4>
+
+							<div className='ts-managers-container'>
+								{teamManagers[0] &&
+									teamManagers.map((manager) => (
+										<div className='preview-card-container' key={uuidv4()}>
+											<PreviewCard employee={manager} />
+											<button
+												className='preview-delete-button'
+												onClick={() => handleDeleteManager(manager)}>
+												<FaTimes className='preview-delete-icon' />
+											</button>
+										</div>
+									))}
 							</div>
 						</div>
 
@@ -96,14 +120,17 @@ export default function Preview({ roles, managers, employees }) {
 								<strong>Employees:</strong>
 							</h4>
 							<div className='ts-managers-container'>
-								{employees.map((employee) => (
-									<div className='preview-card-container'>
-										<PreviewCard key={uuidv4()} employee={employee} />
-										<button className='preview-delete-button'>
-											<FaTimes className='preview-delete-icon' />
-										</button>
-									</div>
-								))}
+								{employees[0] &&
+									employees.map((employee) => (
+										<div className='preview-card-container' key={uuidv4()}>
+											<PreviewCard employee={employee} />
+											<button
+												className='preview-delete-button'
+												onClick={() => handleDeleteEmployee(employee)}>
+												<FaTimes className='preview-delete-icon' />
+											</button>
+										</div>
+									))}
 							</div>
 						</div>
 					</div>
