@@ -103,6 +103,7 @@ export default function TeamAdd(props) {
 				};
 
 				handleAddRole(payload);
+				console.log(payload);
 			} else {
 				window.alert('Salary must be a positive number!');
 			}

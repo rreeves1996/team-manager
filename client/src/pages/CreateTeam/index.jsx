@@ -27,7 +27,8 @@ export default function CreateTeam() {
 	};
 
 	const handleAddRole = (role) => {
-		setRoles((prevState) => [...prevState, role]);
+		setRoles((prevState) => [role, ...prevState]);
+
 		console.log(roles);
 	};
 

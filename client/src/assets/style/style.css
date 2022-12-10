@@ -445,6 +445,12 @@ p {
 .team-name-container h6 span {
 	margin: 0.35rem;
 }
+.ts-role p {
+	font-size: 0.9rem !important;
+	line-height: 0.8 !important;
+	display: flex;
+	align-items: center;
+}
 .team-add .button-container {
 	margin-top: 0;
 }
@@ -1320,13 +1326,16 @@ select:focus {
 	width: 90%;
 	margin: 1.3rem auto;
 }
-.ts-roles h4 {
-	margin: -0.1em 0 0.8rem;
-	margin-left: -2.5%;
-}
 .ts-roles {
-	width: 80%;
+	padding: 0 1rem;
+}
+.ts-roles-container {
+	width: 90%;
 	margin: 0 auto;
+}
+.ts-role p {
+	margin-left: 0.2rem;
+	text-indent: 0.2rem;
 }
 @media screen and (max-width: 768px) {
 	main {

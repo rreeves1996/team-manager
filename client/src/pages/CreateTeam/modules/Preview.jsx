@@ -1,5 +1,6 @@
 import React from 'react';
 import { v4 as uuidv4 } from 'uuid';
+import { AiOutlineRight } from 'react-icons/ai';
 import { FaUsers } from 'react-icons/fa';
 
 export default function Preview({ roles, managers, employees }) {
@@ -38,8 +39,15 @@ export default function Preview({ roles, managers, employees }) {
 										<h6>
 											<strong>{role.name}</strong>
 										</h6>
-										<p>Salary: ${role.salary}</p>
-										<p>Total employees: </p>
+
+										<p>
+											<AiOutlineRight className='right-caret' /> Salary: $
+											{role.salary}
+										</p>
+										<p>
+											<AiOutlineRight className='right-caret' /> Total
+											employees:{' '}
+										</p>
 									</div>
 								))}
 							</div>
