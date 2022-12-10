@@ -7,6 +7,7 @@ import { v4 as uuidv4 } from 'uuid';
 import Modal from 'react-bootstrap/Modal';
 import axios from 'axios';
 import '../../assets/style/empcard.css';
+import useFormat from '../../hooks/useFormat';
 
 function EmpPhoneNumber(props) {
 	return (
@@ -712,5 +713,21 @@ export function EmpCard(props) {
 				</>
 			)}
 		</>
+	);
+}
+
+export function PreviewCard({ employee }) {
+	const { abbreviateName } = useFormat();
+
+	return (
+		<div className='emp-card'>
+			<div className='emp-card-header'>
+				<div className='emp-info-header'>
+					<h6 className='emp-name'>
+						<strong>{abbreviateName(employee.name)}</strong>
+					</h6>
+				</div>
+			</div>
+		</div>
 	);
 }

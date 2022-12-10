@@ -22,5 +22,12 @@ export default function useFormat() {
 		return formattedString;
 	}
 
-	return { uppercaseFirstChars };
+	function abbreviateName(string) {
+		const splitName = string.split(' ');
+		const firstName = splitName[0].split('');
+		const formattedName = `${firstName[0]}. ${splitName[splitName.length - 1]}`;
+
+		return formattedName;
+	}
+	return { uppercaseFirstChars, abbreviateName };
 }

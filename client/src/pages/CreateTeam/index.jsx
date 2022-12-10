@@ -13,16 +13,19 @@ export default function CreateTeam() {
 
 	const handleSetName = (teamName) => {
 		setName((prevState) => teamName);
+
 		console.log(name);
 	};
 
 	const handleAddEmployee = (employee) => {
 		setEmployees((prevState) => [...prevState, employee]);
+
 		console.log(employees);
 	};
 
 	const handleAddManager = (manager) => {
 		setManagers((prevState) => [...prevState, manager]);
+
 		console.log(managers);
 	};
 

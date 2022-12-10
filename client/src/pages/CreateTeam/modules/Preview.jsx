@@ -2,8 +2,13 @@ import React from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { AiOutlineRight } from 'react-icons/ai';
 import { FaUsers } from 'react-icons/fa';
+import { PreviewCard } from '../../../components/cards/EmpCard';
 
 export default function Preview({ roles, managers, employees }) {
+	const teamLead = managers.filter((manager) => manager.is_lead);
+	const teamManagers = managers.filter((manager) => manager.is_lead === false);
+
+	console.log(teamLead);
 	return (
 		<div className='team-preview'>
 			<h2>
@@ -56,13 +61,18 @@ export default function Preview({ roles, managers, employees }) {
 					<div className='preview-row'>
 						<div className='managers-preview'>
 							<h4 className='ts-header-text'>
-								<strong>Lead:</strong>
+								<strong>Team Lead:</strong>
 							</h4>
+							{teamLead[0] && <PreviewCard employee={teamLead[0]} />}
 							<div className='ts-lead-container'></div>
 							<h4 className='ts-header-text'>
 								<strong>Managers:</strong>
 							</h4>
-							<div className='ts-managers-container'></div>
+							<div className='ts-managers-container'>
+								{teamManagers.map((manager) => (
+									<PreviewCard employee={manager} />
+								))}
+							</div>
 						</div>
 
 						<div className='employees-preview'>

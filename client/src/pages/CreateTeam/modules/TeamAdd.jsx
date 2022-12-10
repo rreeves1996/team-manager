@@ -18,6 +18,7 @@ export default function TeamAdd(props) {
 	});
 	const { handleAddEmployee, handleAddManager, handleAddRole } = props;
 	const { managers, employees, roles } = props;
+	const teamLead = managers.filter((manager) => manager.is_lead);
 	const styles = {
 		style1: {
 			transform: 'translateX(-150%)',
@@ -48,7 +49,7 @@ export default function TeamAdd(props) {
 		event.preventDefault();
 
 		if (addType === 'employee') {
-			const newEmpName = formState.empname.trim();
+			const newEmpName = uppercaseFirstChars(formState.empname.trim());
 			const newEmpRole = formState.emprole.trim();
 
 			if (newEmpName && newEmpRole) {
@@ -62,7 +63,7 @@ export default function TeamAdd(props) {
 				window.alert('Invalid employee name or role!');
 			}
 		} else if (addType === 'manager') {
-			const newManName = formState.manname.trim();
+			const newManName = uppercaseFirstChars(formState.manname.trim());
 			const newManLead = formState.manlead.trim();
 
 			if (newManName && newManLead) {
@@ -71,11 +72,7 @@ export default function TeamAdd(props) {
 					is_lead: newManLead === 'Team Lead' ? true : false,
 				};
 
-				try {
-					handleAddManager(payload);
-				} catch (err) {
-					window.alert(`Failed to create new manager! Error: ${err}`);
-				}
+				handleAddManager(payload);
 			} else {
 				window.alert('Invalid manager name or role!');
 			}
@@ -103,7 +100,6 @@ export default function TeamAdd(props) {
 				};
 
 				handleAddRole(payload);
-				console.log(payload);
 			} else {
 				window.alert('Salary must be a positive number!');
 			}
@@ -264,9 +260,11 @@ export default function TeamAdd(props) {
 									<option key={uuidv4()} value={'Manager'}>
 										Manager
 									</option>
-									<option key={uuidv4()} value={'Team Lead'}>
-										Team Lead
-									</option>
+									{!teamLead[0] && (
+										<option key={uuidv4()} value={'Team Lead'}>
+											Team Lead
+										</option>
+									)}
 								</select>
 							</div>
 						</div>
