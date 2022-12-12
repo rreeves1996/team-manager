@@ -60,7 +60,7 @@ export default function Register() {
 		} else {
 			window.alert('Passwords do not match!');
 		}
-		navigate('/profile');
+		// navigate('/profile');
 	};
 
 	return (
