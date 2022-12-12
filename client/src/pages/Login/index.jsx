@@ -30,6 +30,7 @@ export default function Login() {
 			try {
 				const res = loginUser(payload);
 
+				console.log(res);
 				AuthService.login(res);
 			} catch (err) {
 				window.alert(`Login failed! Error: ${err}`);

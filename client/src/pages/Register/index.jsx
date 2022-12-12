@@ -44,6 +44,7 @@ export default function Register() {
 			if (payload) {
 				try {
 					registerUser(payload).then((res) => {
+						console.log(res);
 						const payload = {
 							email: res.email,
 							password,
