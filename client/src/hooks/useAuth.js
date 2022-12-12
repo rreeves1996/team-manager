@@ -27,7 +27,7 @@ export default function useAuth() {
 
 	async function loginUser(payload) {
 		const { email, password } = payload;
-		console.log(payload);
+
 		try {
 			const res = await axios.post(API_ROUTE + '/login', {
 				email,

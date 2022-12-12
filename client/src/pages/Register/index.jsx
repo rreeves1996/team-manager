@@ -44,28 +44,23 @@ export default function Register() {
 			if (payload) {
 				try {
 					registerUser(payload).then((res) => {
-						console.log(res);
 						const payload = {
 							email: res.email,
 							password,
 						};
 
-						loginUser(payload).then((res) => {
-							AuthService.login(res);
-						});
+						loginUser(payload).then((res) => AuthService.login(res));
 					});
 
 					window.alert(`Registration succeeded! Logging you in...`);
 				} catch (err) {
 					window.alert(`Registration failed! Error: ${err}`);
-				} finally {
-					navigate('/profile', { replace: true });
 				}
-				// navigate(0);
 			}
 		} else {
 			window.alert('Passwords do not match!');
 		}
+		navigate('/profile');
 	};
 
 	return (
