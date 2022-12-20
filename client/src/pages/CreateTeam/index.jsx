@@ -70,6 +70,8 @@ export default function CreateTeam() {
 		if (teamPayload) {
 			try {
 				createTeam(teamPayload);
+
+				navigate('/profile');
 			} catch (err) {
 				window.alert(`Failed to create team! Error: ${err}`);
 			}
