@@ -44,7 +44,6 @@ export default function Register() {
 			if (payload) {
 				try {
 					registerUser(payload).then((res) => {
-						console.log(res);
 						const payload = {
 							email: res.email,
 							password,
@@ -61,7 +60,7 @@ export default function Register() {
 		} else {
 			window.alert('Passwords do not match!');
 		}
-		// navigate('/profile');
+		navigate('/profile');
 	};
 
 	return (

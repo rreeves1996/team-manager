@@ -1,3 +1,3 @@
-DROP DATABASE IF EXISTS team_db;
+DROP DATABASE IF EXISTS s6cefto2eqffgltd;
 
-CREATE DATABASE team_db;
+CREATE DATABASE s6cefto2eqffgltd;

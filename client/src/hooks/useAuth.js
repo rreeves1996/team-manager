@@ -10,7 +10,7 @@ export default function useAuth() {
 
 	async function registerUser(payload) {
 		const { username, name, email, password } = payload;
-		console.log(payload);
+
 		try {
 			const res = await axios.post(API_ROUTE + '/create', {
 				username,
@@ -19,7 +19,6 @@ export default function useAuth() {
 				password,
 			});
 
-			console.log(res);
 			return res.data.user;
 		} catch (err) {
 			console.log(`Registration failed! Error:\n${err}`);
