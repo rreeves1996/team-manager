@@ -29,7 +29,7 @@
 <h3 align="center">Team Management System</h3>
 
   <p align="center">
-    <a href="https://github.com/github_username/repo_name"><strong>Explore the docs »</strong></a>
+    <a href="teamez.herokuapp.com/"><strong>Heroku Deployment »</strong></a>
     <br />
     <a href="https://github.com/github_username/repo_name">View Demo</a>
     ·
@@ -71,14 +71,19 @@
 
 <img src="assets/images/screenshot.png" alt="Logo">
 
-TeamEZ is a MERN app (MySQL database) that functions as a team management app. I was interested in creating a full-stack app after bootcamp that used different technologies and frameworks than the ones we had used in class, so I came up with a simple concept and polished it from there. I was also interested in creating my own UI because I had already visualized the layout, and I didn't feel like to the styling would be too intensive.
+TeamEZ is a MERN app (MySQL database) that functions as a team management app. I was interested in creating a full-stack app after bootcamp that used different technologies and frameworks than the ones we had used in class, so I came up with a simple concept and polished it from there. I was also interested in creating my own UI because I had already visualized the layout, and I didn't feel like to the styling would be too intensive. (I was wrong..._shrug_)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ### Built With
 
 - [![React][react.js]][react-url]
-- [![Bootstrap][bootstrap.com]][bootstrap-url]
+- ![Redux](https://img.shields.io/badge/redux-%23593d88.svg?style=for-the-badge&logo=redux&logoColor=white)
+- ![SASS](https://img.shields.io/badge/SASS-hotpink.svg?style=for-the-badge&logo=SASS&logoColor=white)
+- ![NodeJS](https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white)
+- ![Express.js](https://img.shields.io/badge/express.js-%23404d59.svg?style=for-the-badge&logo=express&logoColor=%2361DAFB)
+- ![MySQL](https://img.shields.io/badge/mysql-%2300f.svg?style=for-the-badge&logo=mysql&logoColor=white)
+- ![JWT](https://img.shields.io/badge/JWT-black?style=for-the-badge&logo=JSON%20web%20tokens)
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- GETTING STARTED -->
@@ -90,15 +95,15 @@ To use the app, simple visit the [Heroku Deployment](teamez.herokuapp.com/) and 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- ROADMAP -->
-<!--
+
 ## Roadmap
 
-- [ ] Feature 1
-- [ ] Feature 2
-- [ ] Feature 3
-  - [ ] Nested Feature
-
-See the [open issues](https://github.com/github_username/repo_name/issues) for a full list of proposed features (and known issues).
+- [ ] Error throw system for login/general app useage
+- [ ] CSS overhaul
+  - [ ] SASS integration
+  - [ ] General refactor/reorganization
+  - [ ] CSS transitions
+- [ ] Quality mobile layout
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -108,7 +113,7 @@ See the [open issues](https://github.com/github_username/repo_name/issues) for a
 
 Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
 
-If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
+If you have a suggestion that would make the app better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
 Don't forget to give the project a star! Thanks again!
 
 1. Fork the Project
@@ -117,7 +122,7 @@ Don't forget to give the project a star! Thanks again!
 4. Push to the Branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p> -->
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- LICENSE -->
 
@@ -141,7 +146,7 @@ Project Link: [https://github.com/rreeves1996/team-manager](https://github.com/r
 
 ## Acknowledgments
 
-- [Isaac LaFlamme](https://github.com/EyesackEl) - General assistance with backend, original model structure
+- [Isaac LaFlamme](https://github.com/EyesackEl) - Original model structure, seeds
 <!-- - []()
 - []() -->
 
