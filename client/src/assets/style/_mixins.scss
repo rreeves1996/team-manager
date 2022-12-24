@@ -1,0 +1,94 @@
+@mixin noSelect {
+	pointer-events: none;
+	user-select: none;
+}
+
+@mixin flexCenter {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+@mixin flexRowJustify($justify) {
+	display: flex;
+	justify-content: $justify;
+}
+@mixin flexRowAlign($align) {
+	display: flex;
+	align-items: $align;
+}
+@mixin flexColumnAlign($align) {
+	display: flex;
+	align-items: $align;
+	flex-direction: column;
+}
+@mixin flexColumnJustify($justify) {
+	display: flex;
+	justify-content: $justify;
+	flex-direction: column;
+}
+@mixin flexJustifyAlign($justify, $align) {
+	display: flex;
+	justify-content: $justify;
+	align-items: $align;
+}
+
+@mixin layoutPadding($padding, $width) {
+	padding: $padding calc((100vw - $width) / 2);
+}
+
+@mixin buttonPrimary {
+	background: $blueDark;
+	border: none;
+	border-radius: $radiusButton;
+
+	font-family: $textAccent;
+	color: $offWhite;
+	font-weight: 900;
+	letter-spacing: 1px;
+
+	cursor: pointer;
+	user-select: none;
+
+	text-shadow: 1px 2px 1px rgba(0, 0, 0, 0.568);
+	transition: filter 200ms;
+
+	&:hover {
+		filter: brightness(1.2);
+	}
+	&:active {
+		filter: brightness(1.4);
+	}
+	&:focus {
+		outline: none;
+	}
+}
+@mixin buttonDisabled {
+	@extend buttonPrimary;
+	@include transitionEase(570ms);
+	text-decoration: line-through;
+	background-color: #16223175;
+	padding: 0;
+	color: $greyDark;
+	width: 100% !important;
+	height: 3rem;
+}
+@mixin inputPrimary {
+	width: 100%;
+	height: $heightInput;
+	margin-bottom: 0.7rem;
+
+	font-size: 90%;
+	text-indent: 6px;
+
+	border-radius: $radiusInput;
+	border: 1px solid rgb(168, 166, 166);
+
+	&:focus {
+		outline: none !important;
+		box-shadow: 0px 0px 1px 2px #7693b8cb !important;
+	}
+}
+
+@mixin transitionEase($time) {
+	transition: all 200ms ease;
+}
