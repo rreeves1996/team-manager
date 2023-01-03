@@ -29,7 +29,7 @@
 <h3 align="center">Team Management System</h3>
 
   <p align="center">
-    <a href="teamez.herokuapp.com/"><strong>Heroku Deployment »</strong></a>
+    <a href="https://teamez.herokuapp.com/"><strong>Heroku Deployment »</strong></a>
     <br />
     <a href="https://github.com/github_username/repo_name">View Demo</a>
     ·
