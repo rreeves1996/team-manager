@@ -10,13 +10,18 @@ import { AiOutlineCaretDown } from 'react-icons/ai';
 import Teams from './tabs/general/Teams';
 import Info from './tabs/general/Info';
 
+interface Data {
+	userData?: UserData | null;
+	teamData?: Array<TeamData> | null;
+}
+
 export default function Profile() {
 	const navigate = useNavigate();
-	const userData = useSelector((state) => state.user.data);
+	const userData = useSelector((state: any) => state.user.data);
 	const { logoutUser } = useAuth();
 	const { queryUser, queryTeamsByUser } = useQuery();
 	const [loading, setLoading] = useState(true);
-	const [data, setData] = useState({});
+	const [data, setData] = useState<Data>({ userData: null, teamData: null });
 
 	const handleUserLogout = () => {
 		try {
@@ -35,12 +40,12 @@ export default function Profile() {
 		const fetchTeamData = () => {
 			queryUser(userData.id)
 				.then((res) =>
-					setData((prevState) => ({ ...prevState, userData: res.data }))
+					setData((prevState) => ({ ...prevState, userData: res!.data }))
 				)
 				.finally(() =>
 					queryTeamsByUser(userData.id)
 						.then((res) =>
-							setData((prevState) => ({ ...prevState, teamData: res.data }))
+							setData((prevState) => ({ ...prevState, teamData: res!.data }))
 						)
 						.finally(() => setLoading(false))
 				);
@@ -76,10 +81,10 @@ export default function Profile() {
 				</div>
 				<div className='profile-container'>
 					<div className='col-profile-sm'>
-						<Info userData={data.userData} />
+						<Info userData={data!.userData} />
 					</div>
 					<div className='col-profile-lg'>
-						<Teams teamData={data.teamData} />
+						<Teams teamData={data!.teamData} />
 					</div>
 				</div>
 			</>

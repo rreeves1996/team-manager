@@ -1,16 +1,16 @@
 import React from 'react';
 
 export default function useFormat() {
-	function uppercaseFirstChars(string) {
+	function uppercaseFirstChars(string: string) {
 		const splitString = string.split(' ');
-		const newString = [];
+		const newString: Array<string> = [];
 
 		splitString.forEach((word) => {
 			const splitWord = word.split('');
 			const firstChar = splitWord.shift();
-			const firstCharUppercase = firstChar.toUpperCase();
+			const firstCharUppercase = firstChar?.toUpperCase();
 
-			splitWord.unshift(firstCharUppercase);
+			splitWord.unshift(firstCharUppercase!);
 
 			const newWord = splitWord.join('');
 
@@ -22,7 +22,7 @@ export default function useFormat() {
 		return formattedString;
 	}
 
-	function abbreviateName(string) {
+	function abbreviateName(string: string) {
 		const splitName = string.split(' ');
 		const firstName = splitName[0].split('');
 		const formattedName = `${

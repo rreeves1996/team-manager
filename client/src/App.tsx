@@ -14,7 +14,7 @@ import CreateTeam from './pages/CreateTeam';
 import './assets/style/style.css';
 
 export default function App() {
-	const isLogged = useSelector((state) => state.user.isLogged);
+	const isLogged = useSelector((state: any) => state.user.isLogged);
 
 	return (
 		<>

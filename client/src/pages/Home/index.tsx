@@ -6,9 +6,21 @@ import ManageTab from './ManageTab';
 import Header from './Header';
 import useQuery from '../../hooks/useQuery';
 
-export const DataContext = createContext();
+interface TeamDataContext {
+	employees?: Array<any>;
+	managers?: Array<Manager>;
+	roles?: Array<any>;
+	lead?: {
+		name: string;
+		id: number;
+	};
+	name?: {};
+	id?: number;
+}
 
-export default function Home(props) {
+export const DataContext = createContext({} as TeamDataContext);
+
+export default function Home() {
 	const navigate = useNavigate();
 	const { queryTeam } = useQuery();
 	const [loading, setLoading] = useState(true);
@@ -24,19 +36,21 @@ export default function Home(props) {
 	};
 
 	// const handleTabChange = (tab) => setCurrentTab(tab);
-	const handleChangeData = (data) =>
+	const handleChangeData = (data: TeamDataContext) =>
 		setTeamData((prevState) => ({ ...prevState, data }));
 
 	useEffect(() => {
 		const fetchData = async () => {
-			const reqTeam = localStorage.getItem('teamID');
+			const reqTeam = parseInt(localStorage.getItem('teamID')!);
 
 			if (reqTeam) {
 				try {
 					const res = await queryTeam(reqTeam);
 					// Find team lead and add in isolation to the 'teamData' object for easier access/referencing later
-					const lead = res.data.managers.filter((manager) => manager.is_lead);
-					const newTeam = { ...res.data, lead: lead[0] };
+					const lead = res!.data.managers.filter(
+						(manager: any) => manager.is_lead
+					);
+					const newTeam = { ...res!.data, lead: lead[0] };
 					setTeamData(newTeam);
 				} catch (err) {
 					window.alert(`Failed to get team! Error: ${err}`);

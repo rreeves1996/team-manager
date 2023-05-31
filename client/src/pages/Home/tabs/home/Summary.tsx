@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 // import { AiOutlineCaretDown } from 'react-icons/ai';
 import { HiPencilSquare, HiExclamationCircle } from 'react-icons/hi2';
 import dayjs from 'dayjs';
-import { DataContext } from '../../../Home';
+import { DataContext } from '../..';
 
 export default function Summary() {
 	const teamData = useContext(DataContext);
@@ -21,8 +21,8 @@ export default function Summary() {
 			<div className='divider'></div>
 			<div className='card-body'>
 				<p>
-					Your team has <strong>{managers.length}</strong> managers and{' '}
-					<strong>{employees.length}</strong> employees{' '}
+					Your team has <strong>{managers!.length}</strong> managers and{' '}
+					<strong>{employees!.length}</strong> employees{' '}
 				</p>
 				{/* <span
 					className='more-stats-toggler'

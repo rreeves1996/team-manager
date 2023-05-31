@@ -7,27 +7,27 @@ import { v4 as uuidv4 } from 'uuid';
 import useQuery from '../../hooks/useQuery';
 import '../../assets/style/teamcard.css';
 
-export default function TeamCard(props) {
+type TeamCardProps = {
+	team: Team;
+};
+
+export default function TeamCard(props: TeamCardProps) {
 	const navigate = useNavigate();
 	const { deleteTeam } = useQuery();
 	const [deleteConfirm, setDeleteConfirm] = useState(false);
-	const filteredList = props.team.managers.filter((manager) => manager.is_lead);
+	const filteredList = props.team.managers!.filter(
+		(manager) => manager.is_lead
+	);
 	const { id, name, managers, employees } = props.team;
 	const lead = filteredList[0];
-	const styles = {
-		style1: {
-			opacity: '0',
-			pointerEvents: 'none',
-		},
-		style2: {
-			opacity: '1',
-			pointerEvents: 'all',
-		},
+	const style: React.CSSProperties = {
+		opacity: deleteConfirm ? '0' : '1',
+		pointerEvents: deleteConfirm ? 'all' : 'none',
 	};
 
 	const handleDeleteTeam = () => {
 		try {
-			deleteTeam(id);
+			deleteTeam(id!);
 		} catch (err) {
 			window.alert(`Failed to delete team! Error: ${err}`);
 		} finally {
@@ -36,7 +36,7 @@ export default function TeamCard(props) {
 	};
 
 	const handleSelectTeam = () => {
-		localStorage.setItem('teamID', id);
+		localStorage.setItem('teamID', id!);
 		navigate('/');
 	};
 
@@ -56,9 +56,9 @@ export default function TeamCard(props) {
 					</div>
 				</div>
 				<div className='tc-managers' onClick={() => handleSelectTeam()}>
-					<div className='tc-count manager-count'>{managers.length}</div>
+					<div className='tc-count manager-count'>{managers!.length}</div>
 					<div className='tc-icon-container '>
-						{managers.map((manager) => (
+						{managers!.map((manager: Manager) => (
 							<>
 								<FaUserAlt key={uuidv4()} className='tc-manager-icon' />
 							</>
@@ -66,9 +66,9 @@ export default function TeamCard(props) {
 					</div>
 				</div>
 				<div className='tc-employees' onClick={() => handleSelectTeam()}>
-					<div className='tc-count'>{props.team.employees.length}</div>
+					<div className='tc-count'>{props.team.employees!.length}</div>
 					<div className='tc-icon-container'>
-						{employees.map((employee) => (
+						{employees!.map((employee: Employee) => (
 							<>
 								<FaUserAlt key={uuidv4()} className='tc-employee-icon' />
 							</>
@@ -78,13 +78,11 @@ export default function TeamCard(props) {
 				<div className={deleteConfirm ? 'tc-delete no-hover' : 'tc-delete'}>
 					<div
 						onClick={() => setDeleteConfirm(true)}
-						style={deleteConfirm ? styles.style1 : styles.style2}
+						style={style}
 						className='tc-delete-icon-container'>
 						<TiDelete className='tc-delete-icon' />
 					</div>
-					<div
-						style={deleteConfirm ? styles.style2 : styles.style1}
-						className='tc-delete-confirm-container'>
+					<div style={style} className='tc-delete-confirm-container'>
 						<span className='tc-delete-confirm'>Are you sure?</span>
 						<div className='tc-delete-button-container'>
 							<FaCheck

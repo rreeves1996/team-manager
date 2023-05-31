@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import { DataContext } from '../../../Home';
+import { DataContext } from '../..';
 import { EmpCard, MngrCard } from '../../../../components/cards/EmpCard';
 
 export default function YourTeam() {
@@ -16,7 +16,7 @@ export default function YourTeam() {
 						<strong>Managers</strong>
 					</h5>
 					<div className='card-container'>
-						{managers.map((manager) => (
+						{managers!.map((manager) => (
 							<MngrCard key={uuidv4()} manager={manager} />
 						))}
 					</div>
@@ -26,7 +26,7 @@ export default function YourTeam() {
 						<strong>Employees</strong>
 					</h5>
 					<div className='card-container'>
-						{employees.map((employee) => (
+						{employees!.map((employee) => (
 							<EmpCard
 								key={uuidv4()}
 								employee={employee}

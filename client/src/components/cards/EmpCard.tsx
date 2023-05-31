@@ -9,7 +9,17 @@ import axios from 'axios';
 import '../../assets/style/empcard.css';
 import useFormat from '../../hooks/useFormat';
 
-function EmpPhoneNumber(props) {
+type EmpCardData = {
+	manager: Manager;
+	role: Role;
+};
+
+function EmpPhoneNumber(props: {
+	header?: boolean;
+	number1: string;
+	number2: string;
+	number3: string;
+}) {
 	return (
 		<p>
 			{props.header ? (
@@ -36,7 +46,7 @@ function EmpPhoneNumber(props) {
 	);
 }
 
-function EmpEmail(props) {
+function EmpEmail(props: { email?: string }) {
 	return (
 		<p>
 			<strong>Email:</strong> {props.email ? props.email : 'No email found'}
@@ -44,7 +54,7 @@ function EmpEmail(props) {
 	);
 }
 
-function EmpTimeZone(props) {
+function EmpTimeZone(props: { timezone?: string }) {
 	return (
 		<p>
 			<strong>Time:</strong> UTC -{props.timezone ? props.timezone : '0'}:00
@@ -52,7 +62,7 @@ function EmpTimeZone(props) {
 	);
 }
 
-function EmpRole(props) {
+function EmpRole(props: { role?: string }) {
 	return (
 		<p>
 			<strong>Role:</strong> {props.role ? props.role : 'No role found'}
@@ -60,7 +70,7 @@ function EmpRole(props) {
 	);
 }
 
-function EmpMngr(props) {
+function EmpMngr(props: { manager: string }) {
 	return (
 		<p>
 			<strong>Manager:</strong>{' '}
@@ -69,7 +79,7 @@ function EmpMngr(props) {
 	);
 }
 
-function EmpSalary(props) {
+function EmpSalary(props: { salary?: number }) {
 	return (
 		<p>
 			<strong>Salary:</strong> $
@@ -78,7 +88,7 @@ function EmpSalary(props) {
 	);
 }
 
-export function MngrCard(props) {
+export function MngrCard(props: { manager: Manager }) {
 	const { id, name, picture, is_lead, phone, email, timezone, salary } =
 		props.manager;
 	const { abbreviateName } = useFormat();
@@ -100,8 +110,9 @@ export function MngrCard(props) {
 		mngrEmail: email ? email : '',
 		mngrTimezone: timezone ? timezone : '',
 	});
+
 	// Create an Array.range fucntion which takes in a custom start and end point and returns an array of numbers from start to end
-	Array.range = (start, end) =>
+	Array.range = (start: any, end: any) =>
 		Array.from({ length: end - start }, (v, k) => k + start);
 	// Create timezones array for listing timezones
 	const timezones = Array.range(-12, 13);
@@ -115,7 +126,7 @@ export function MngrCard(props) {
 	};
 	const handleShow = () => setShow(true);
 
-	const handleChange = (event) => {
+	const handleChange = (event: any) => {
 		const { name, value, maxLength } = event.target;
 
 		setFormState({
@@ -130,7 +141,7 @@ export function MngrCard(props) {
 		}
 	};
 
-	const handleEditSubmit = async (event) => {
+	const handleEditSubmit = async (event: any) => {
 		event.preventDefault();
 
 		const emailFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
@@ -174,10 +185,10 @@ export function MngrCard(props) {
 		setEditing(!editing);
 	};
 
-	const deleteEmployee = (employee) => {
+	const deleteEmployee = (employee: any) => {
 		if (employee.role === 'manager') {
 			let index = employee.id - 1;
-			delete props.managers[index];
+			// delete props.manager[index];
 		}
 	};
 
@@ -310,7 +321,6 @@ export function MngrCard(props) {
 											<p>
 												<strong>Time:</strong>
 												<select
-													type='timezone'
 													className='card-input timezone-input'
 													name='mngrTimezone'
 													defaultValue={'default'}
@@ -363,7 +373,7 @@ export function MngrCard(props) {
 												}
 												onClick={
 													deleteConfirm
-														? deleteEmployee(props)
+														? () => deleteEmployee(props)
 														: () => showDeleteConfirm(true)
 												}>
 												{deleteConfirm ? 'Are you sure?' : 'Delete'}
@@ -380,12 +390,16 @@ export function MngrCard(props) {
 	);
 }
 
-export function EmpCard(props) {
+export function EmpCard(props: {
+	employee: Employee;
+	managers?: Manager[];
+	roles?: Role[];
+}) {
 	const { id, name, picture, role_id, phone, email, manager_id } =
 		props.employee;
 	const { abbreviateName } = useFormat();
 	const abbreviatedname = abbreviateName(name);
-	const [data, setData] = useState({});
+	const [data, setData] = useState<EmpCardData>();
 	const [show, setShow] = useState(false);
 	const [deleteConfirm, showDeleteConfirm] = useState(false);
 	const [editing, setEditing] = useState(false);
@@ -400,6 +414,9 @@ export function EmpCard(props) {
 		phone2: phoneNumber.groupTwo,
 		phone3: phoneNumber.groupThree,
 		empEmail: email ? email : '',
+		empRole: '',
+		empSalary: '',
+		empManager: '',
 	});
 
 	const handleClose = () => {
@@ -409,7 +426,7 @@ export function EmpCard(props) {
 	};
 	const handleShow = () => setShow(true);
 
-	const handleChange = (event) => {
+	const handleChange = (event: any) => {
 		const { name, value, maxLength } = event.target;
 
 		setFormState({
@@ -424,7 +441,7 @@ export function EmpCard(props) {
 		}
 	};
 
-	const handleEditSubmit = async (event) => {
+	const handleEditSubmit = async (event: any) => {
 		event.preventDefault();
 
 		const { empRole, empSalary, empEmail, empManager } = formState;
@@ -436,8 +453,8 @@ export function EmpCard(props) {
 
 		await axios
 			.put(`/api/employees/${id}`, {
-				role: empRole !== data.role.title ? empRole : role_id,
-				salary: empSalary !== data.role.salary ? empSalary : null,
+				role: empRole !== data!.role.title ? empRole : role_id,
+				salary: parseInt(empSalary) !== data!.role.salary ? empSalary : null,
 				phone:
 					phonenumbers[0].length === 3 &&
 					phonenumbers[1].length === 3 &&
@@ -461,10 +478,10 @@ export function EmpCard(props) {
 		setEditing(!editing);
 	};
 
-	const deleteEmployee = (employee) => {
-		if (employee.role === 'manager') {
-			let index = employee.id - 1;
-			delete props.managers[index];
+	const deleteEmployee = (employee: Employee) => {
+		if (employee.role!.title === 'manager') {
+			let index = parseInt(employee.id!) - 1;
+			// delete props.managers[index];
 		}
 	};
 
@@ -518,7 +535,7 @@ export function EmpCard(props) {
 									<strong>{abbreviatedname}</strong>
 								</h6>
 
-								<h6 className='emp-role'>{data.role.title}</h6>
+								<h6 className='emp-role'>{data!.role.title}</h6>
 							</div>
 						</div>
 					</div>
@@ -560,12 +577,11 @@ export function EmpCard(props) {
 												<strong>Role:</strong>
 												<select
 													className='card-role-select'
-													type='emprole'
 													name='empRole'
 													value={formState.empRole}
 													onChange={handleChange}>
-													{props.roles.map((role) => (
-														<option key={uuidv4()} value={role}>
+													{props.roles!.map((role) => (
+														<option key={uuidv4()} value={role.id}>
 															{role.title}
 														</option>
 													))}
@@ -631,11 +647,10 @@ export function EmpCard(props) {
 												<strong>Manager:</strong>
 												<select
 													className='card-manager-select'
-													type='text'
 													name='empManager'
 													value={formState.empManager}
 													onChange={handleChange}>
-													{props.managers.map((manager) => (
+													{props.managers!.map((manager) => (
 														<option key={uuidv4()} value={manager.id}>
 															{manager.name}
 														</option>
@@ -657,12 +672,12 @@ export function EmpCard(props) {
 									</>
 								) : (
 									<>
-										<EmpRole role={data.role.title} />
+										<EmpRole role={data!.role.title} />
 										<EmpSalary
 											salary={
 												props.employee.salary
 													? props.employee.salary
-													: data.role.salary
+													: data!.role.salary
 											}
 										/>
 										<EmpPhoneNumber
@@ -670,8 +685,8 @@ export function EmpCard(props) {
 											number2={phoneNumber.groupTwo}
 											number3={phoneNumber.groupThree}
 										/>
-										<EmpEmail email={email} />
-										<EmpMngr manager={data.manager.name} />
+										<EmpEmail email={email!} />
+										<EmpMngr manager={data!.manager.name} />
 										<div className='emp-card-button-container'>
 											<button
 												className='edit-button'
@@ -687,7 +702,7 @@ export function EmpCard(props) {
 												}
 												onClick={
 													deleteConfirm
-														? deleteEmployee(props)
+														? () => deleteEmployee(props.employee)
 														: () => showDeleteConfirm(true)
 												}>
 												{deleteConfirm ? 'Are you sure?' : 'Delete'}
@@ -704,7 +719,7 @@ export function EmpCard(props) {
 	);
 }
 
-export function PreviewCard({ employee }) {
+export function PreviewCard({ employee }: { employee: Employee | Manager }) {
 	const { abbreviateName } = useFormat();
 
 	return (
@@ -712,7 +727,7 @@ export function PreviewCard({ employee }) {
 			<h6 className='emp-name'>
 				<strong>{abbreviateName(employee.name)}</strong>
 			</h6>
-			<p className='emp-role'>{employee.role}</p>
+			<p className='emp-role'>{employee.role_title}</p>
 		</div>
 	);
 }

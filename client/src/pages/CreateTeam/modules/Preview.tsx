@@ -4,15 +4,33 @@ import { AiOutlineRight } from 'react-icons/ai';
 import { FaUsers, FaTimes } from 'react-icons/fa';
 import { PreviewCard } from '../../../components/cards/EmpCard';
 
-export default function Preview(props) {
-	const { teamName, roles, managers, employees } = props;
-	const { handleDeleteEmployee, handleDeleteManager, handleDeleteRole } = props;
-	const teamLead = managers.filter((manager) => manager.is_lead);
-	const teamManagers = managers.filter((manager) => manager.is_lead === false);
+type PreviewProps = {
+	teamName: string;
+	roles: Role[];
+	managers: Manager[];
+	employees: Employee[];
+	handleDeleteEmployee: (arg: Employee) => void;
+	handleDeleteManager: (arg: Manager) => void;
+	handleDeleteRole: (arg: Role) => void;
+};
 
-	const getEmpCount = (role) => {
+export default function Preview({
+	teamName,
+	roles,
+	managers,
+	employees,
+	handleDeleteEmployee,
+	handleDeleteManager,
+	handleDeleteRole,
+}: PreviewProps) {
+	const teamLead = managers.filter((manager: Manager) => manager.is_lead);
+	const teamManagers = managers.filter(
+		(manager: Manager) => manager.is_lead === false
+	);
+
+	const getEmpCount = (role: Role) => {
 		const employeesInRole = employees.filter(
-			(employee) => employee.role === role.title
+			(employee: Employee) => employee.role === role.title
 		);
 
 		return employeesInRole.length;
