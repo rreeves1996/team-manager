@@ -5,10 +5,17 @@ import axios from 'axios';
 
 const API_ROUTE = '/api/users';
 
+type Payload = {
+	username?: string;
+	name?: string;
+	email: string;
+	password: string;
+};
+
 export default function useAuth() {
 	const dispatch = useDispatch();
 
-	async function registerUser(payload) {
+	async function registerUser(payload: Payload) {
 		const { username, name, email, password } = payload;
 
 		try {
@@ -25,7 +32,7 @@ export default function useAuth() {
 		}
 	}
 
-	async function loginUser(payload) {
+	async function loginUser(payload: Payload) {
 		const { email, password } = payload;
 
 		try {

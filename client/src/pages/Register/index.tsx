@@ -17,7 +17,7 @@ export default function Register() {
 		passconfirm: '',
 	});
 
-	const handleChange = (event) => {
+	const handleChange = (event: any) => {
 		const { name, value } = event.target;
 
 		setFormState({
@@ -26,7 +26,7 @@ export default function Register() {
 		});
 	};
 
-	const handleFormSubmit = (event) => {
+	const handleFormSubmit = (event: any) => {
 		event.preventDefault();
 
 		let password = formState.password.trim();

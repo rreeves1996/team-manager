@@ -8,7 +8,7 @@ export default function InitPrompt() {
 
 	const [formState, setFormState] = useState({ teamname: '', leadname: '' });
 
-	const handleChange = (event) => {
+	const handleChange = (event: any) => {
 		const { name, value } = event.target;
 
 		setFormState({
@@ -17,7 +17,7 @@ export default function InitPrompt() {
 		});
 	};
 
-	const handleFormSubmit = async (event) => {
+	const handleFormSubmit = async (event: any) => {
 		event.preventDefault();
 
 		let teamName = formState.teamname.trim();

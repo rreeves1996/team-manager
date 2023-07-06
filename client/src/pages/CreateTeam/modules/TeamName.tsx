@@ -3,7 +3,15 @@ import { useState } from 'react';
 import { HiPencilAlt } from 'react-icons/hi';
 import useFormat from '../../../hooks/useFormat';
 
-export default function TeamName({ handleSetName, handleAddRole }) {
+type TeamNameProps = {
+	handleSetName: (arg: string) => void;
+	handleAddRole: (arg: Role) => void;
+};
+
+export default function TeamName({
+	handleSetName,
+	handleAddRole,
+}: TeamNameProps) {
 	const { uppercaseFirstChars } = useFormat();
 	const [formState, setFormState] = useState({
 		teamname: '',
@@ -13,7 +21,7 @@ export default function TeamName({ handleSetName, handleAddRole }) {
 		rolesalary: 0,
 	});
 
-	const handleChange = (event) => {
+	const handleChange = (event: any) => {
 		const { name, value } = event.target;
 
 		setFormState({
@@ -31,11 +39,11 @@ export default function TeamName({ handleSetName, handleAddRole }) {
 		handleSetName(formState.teamname);
 	}, [formState]);
 
-	const handleRoleSubmit = (event) => {
+	const handleRoleSubmit = (event: any) => {
 		event.preventDefault();
 
 		const newRoleName = uppercaseFirstChars(roleFormState.rolename.trim());
-		const newRoleSalary = roleFormState.rolesalary.trim();
+		const newRoleSalary = roleFormState.rolesalary;
 
 		if (newRoleName && newRoleSalary) {
 			if (newRoleSalary >= 0) {
@@ -96,7 +104,7 @@ export default function TeamName({ handleSetName, handleAddRole }) {
 					trying to add employees!
 				</span>
 
-				<div className='divider'></div>
+				<div className='divider' />
 
 				<div className='add-role-container'>
 					<form className='form-container' onSubmit={handleRoleSubmit}>

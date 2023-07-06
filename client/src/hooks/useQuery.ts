@@ -4,7 +4,7 @@ import axios from 'axios';
 const API_ROUTE = '/api';
 
 export default function useQuery() {
-	async function queryUser(id) {
+	async function queryUser(id: number) {
 		try {
 			const res = await axios.get(`${API_ROUTE}/users/${id}`);
 
@@ -14,7 +14,7 @@ export default function useQuery() {
 		}
 	}
 
-	async function queryTeam(id) {
+	async function queryTeam(id: number) {
 		try {
 			const res = await axios.get(`${API_ROUTE}/teams/${id}`);
 
@@ -24,7 +24,7 @@ export default function useQuery() {
 		}
 	}
 
-	async function queryManager(id) {
+	async function queryManager(id: number) {
 		try {
 			const res = await axios.get(`${API_ROUTE}/managers/${id}`);
 
@@ -33,7 +33,8 @@ export default function useQuery() {
 			console.log(`User query failed! Error:\n${err}`);
 		}
 	}
-	async function queryTeamsByUser(id) {
+
+	async function queryTeamsByUser(id: number) {
 		try {
 			const res = await axios.get(`${API_ROUTE}/teams/user/${id}`);
 
@@ -43,7 +44,7 @@ export default function useQuery() {
 		}
 	}
 
-	async function addEmployee(payload) {
+	async function addEmployee(payload: Employee) {
 		const { name, role_id, manager_id, team_id } = payload;
 
 		try {
@@ -60,7 +61,7 @@ export default function useQuery() {
 		}
 	}
 
-	async function addManager(payload) {
+	async function addManager(payload: Manager) {
 		const { name, is_lead, team_id } = payload;
 
 		try {
@@ -76,7 +77,7 @@ export default function useQuery() {
 		}
 	}
 
-	async function addRole(payload) {
+	async function addRole(payload: Role) {
 		const { title, salary, team_id } = payload;
 
 		try {
@@ -92,7 +93,7 @@ export default function useQuery() {
 		}
 	}
 
-	async function editTeamName(payload) {
+	async function editTeamName(payload: Team) {
 		const { name, id } = payload;
 
 		try {
@@ -106,7 +107,7 @@ export default function useQuery() {
 		}
 	}
 
-	async function editTeamLead(payload) {
+	async function editTeamLead(payload: Team) {
 		const { lead_id, manager_id } = payload;
 
 		try {
@@ -124,7 +125,7 @@ export default function useQuery() {
 		}
 	}
 
-	async function deleteTeam(id) {
+	async function deleteTeam(id: string) {
 		try {
 			const res = await axios.delete(`${API_ROUTE}/teams/${id}`);
 
@@ -134,10 +135,10 @@ export default function useQuery() {
 		}
 	}
 
-	async function createTeam(payload) {
+	async function createTeam(payload: CreateTeamPayload) {
 		const { name, user_id, employees, managers, roles } = payload;
-		let team_id;
-		let teamLead;
+		let team_id: string;
+		let teamLead: Manager;
 
 		try {
 			await axios
@@ -158,8 +159,8 @@ export default function useQuery() {
 						};
 
 						addManager(managerPayload).then((res) => {
-							if (res.data.is_lead) {
-								teamLead = res.data;
+							if (res!.data.is_lead) {
+								teamLead = res!.data;
 							}
 						});
 					});
@@ -177,7 +178,7 @@ export default function useQuery() {
 
 						addRole(rolePayload).then((res) => {
 							console.log(res);
-							const role_id = res.data.id;
+							const role_id = res!.data.id;
 
 							employeesInRole.forEach((employee) => {
 								const employeePayload = {

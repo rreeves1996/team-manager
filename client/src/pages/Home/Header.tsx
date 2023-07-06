@@ -14,14 +14,14 @@ export default function Header() {
 	const [deleteConfirm, setDeleteConfirm] = useState(false);
 	const [editing, setEditing] = useState('none');
 	const [formState, setFormState] = useState({
-		teamname: teamData.name,
+		teamname: teamData.name as string,
 		leadname: 'default',
 	});
-	const teamManagers = teamData.managers.filter(
-		(manager) => manager.is_lead === false
+	const teamManagers: Manager[] = teamData.managers!.filter(
+		(manager: any) => manager.is_lead === false
 	);
 
-	const handleChange = (event) => {
+	const handleChange = (event: any) => {
 		const { name, value } = event.target;
 
 		setFormState({
@@ -33,7 +33,7 @@ export default function Header() {
 	const handleCancelEditing = () => {
 		setEditing('none');
 		setFormState({
-			teamname: teamData.name,
+			teamname: JSON.stringify(teamData.name),
 			leadname: 'default',
 		});
 	};
@@ -45,7 +45,7 @@ export default function Header() {
 		if (newTeamName !== teamData.name) {
 			const payload = {
 				name: newTeamName,
-				id: teamData.id,
+				id: teamData.id!.toString(),
 			};
 
 			try {
@@ -59,9 +59,9 @@ export default function Header() {
 			}
 		}
 
-		if (newLeadName !== teamData.lead.name) {
+		if (newLeadName !== teamData.lead!.name) {
 			const payload = {
-				lead_id: teamData.lead.id,
+				lead_id: teamData.lead!.id.toString(),
 				manager_id: newLeadName,
 			};
 
@@ -85,7 +85,7 @@ export default function Header() {
 
 	const handleDeleteTeam = () => {
 		try {
-			deleteTeam(teamData.id);
+			deleteTeam(teamData.id!.toString());
 
 			window.alert('Team successfully deleted!');
 		} catch (err) {
@@ -134,7 +134,6 @@ export default function Header() {
 							<>
 								<select
 									className='input'
-									type='text'
 									name='leadname'
 									value={formState.leadname}
 									onChange={handleChange}
@@ -162,7 +161,7 @@ export default function Header() {
 								</div>
 							</>
 						) : (
-							<strong>{teamData.lead.name}</strong>
+							<strong>{teamData.lead!.name}</strong>
 						)}
 					</h4>
 				</div>

@@ -1,12 +1,24 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import { DataContext } from '../../../Home';
-import useQuery from '../../../../hooks/useQuery';
+import { FaUserPlus } from 'react-icons/fa';
+import useFormat from '../../../hooks/useFormat';
 
-export default function QuickAdd({ handleChangeData }) {
-	const teamData = useContext(DataContext);
-	const { id, lead, roles } = teamData;
-	const { addEmployee, addManager } = useQuery();
+type TeamAddProps = {
+	managers: Manager[];
+	employees: Employee[];
+	roles: Role[];
+	handleAddEmployee: (arg: Employee) => void;
+	handleAddManager: (arg: Manager) => void;
+};
+
+export default function TeamAdd({
+	managers,
+	employees,
+	roles,
+	handleAddEmployee,
+	handleAddManager,
+}: TeamAddProps) {
+	const { uppercaseFirstChars } = useFormat();
 	const [addType, setAddType] = useState('employee');
 	const [formState, setFormState] = useState({
 		empname: '',
@@ -14,6 +26,7 @@ export default function QuickAdd({ handleChangeData }) {
 		manname: '',
 		manlead: 'default',
 	});
+	const teamLead = managers.filter((manager) => manager.is_lead);
 	const styles = {
 		style1: {
 			transform: 'translateX(-150%)',
@@ -26,7 +39,9 @@ export default function QuickAdd({ handleChangeData }) {
 		},
 	};
 
-	const handleChange = (event) => {
+	console.log(roles);
+
+	const handleChange = (event: any) => {
 		const { name, value } = event.target;
 
 		setFormState({
@@ -35,67 +50,63 @@ export default function QuickAdd({ handleChangeData }) {
 		});
 	};
 
-	const handleFormSubmit = (event) => {
+	const handleFormSubmit = (event: any) => {
 		event.preventDefault();
 
 		if (addType === 'employee') {
-			const newEmpName = formState.empname.trim();
+			const newEmpName = uppercaseFirstChars(formState.empname.trim());
 			const newEmpRole = formState.emprole.trim();
 
 			if (newEmpName && newEmpRole) {
 				const payload = {
 					name: newEmpName,
-					role_id: newEmpRole,
-					manager_id: lead.id,
-					team_id: id,
+					role_title: newEmpRole,
 				};
 
-				try {
-					addEmployee(payload).then((res) => handleChangeData(res.data));
+				handleAddEmployee(payload);
 
-					window.alert('Successfully created employee!');
-				} catch (err) {
-					window.alert(`Failed to create new employee! Error: ${err}`);
-				}
+				console.log(payload);
 			} else {
 				window.alert('Invalid employee name or role!');
 			}
 		} else if (addType === 'manager') {
-			const newManName = formState.manname.trim();
+			const newManName = uppercaseFirstChars(formState.manname.trim());
 			const newManLead = formState.manlead.trim();
 
 			if (newManName && newManLead) {
 				const payload = {
 					name: newManName,
 					is_lead: newManLead === 'Team Lead' ? true : false,
-					team_id: id,
 				};
 
-				try {
-					addManager(payload).then((res) => handleChangeData(res.data));
-
-					window.alert('Successfully created manager!');
-				} catch (err) {
-					window.alert(`Failed to create new manager! Error: ${err}`);
-				}
+				handleAddManager(payload);
 			} else {
 				window.alert('Invalid manager name or role!');
 			}
 		}
 
 		setFormState({
-			teamname: '',
-			leadname: '',
+			empname: '',
+			emprole: 'default',
+			manname: '',
+			manlead: 'default',
 		});
 	};
 
 	return (
-		<div className='quick-add'>
-			<h2>Quick-Add</h2>
+		<div className='team-add'>
+			<h2>
+				<FaUserPlus className='card-icon' /> Add To Team
+			</h2>
+
 			<div className='container-body'>
 				<div
 					className='add-employee-container'
 					style={addType === 'employee' ? styles.style2 : styles.style1}>
+					<h6>
+						<strong>Enter employee information</strong>
+					</h6>
+
 					<form className='form-container' onSubmit={handleFormSubmit}>
 						<div className='employee-input'>
 							<div className='field name-field'>
@@ -123,7 +134,7 @@ export default function QuickAdd({ handleChangeData }) {
 										Select role...
 									</option>
 									{roles.map((role) => (
-										<option key={uuidv4()} value={role.id}>
+										<option key={uuidv4()} value={role.title}>
 											{role.title}
 										</option>
 									))}
@@ -137,7 +148,7 @@ export default function QuickAdd({ handleChangeData }) {
 							</button>
 						</div>
 					</form>
-					<div className='divider'></div>
+
 					<div className='sub-container d-flex flex-column align-items-center mb-4'>
 						<p className='mt-1 mb-1'>Create a manager instead?</p>
 						<span
@@ -147,9 +158,14 @@ export default function QuickAdd({ handleChangeData }) {
 						</span>
 					</div>
 				</div>
+
 				<div
 					className='add-manager-container'
 					style={addType === 'employee' ? styles.style3 : styles.style2}>
+					<h6>
+						<strong>Enter manager information</strong>
+					</h6>
+
 					<form className='form-container' onSubmit={handleFormSubmit}>
 						<div className='employee-input'>
 							<div className='field name-field'>
@@ -171,7 +187,6 @@ export default function QuickAdd({ handleChangeData }) {
 								<select
 									className='role-select'
 									name='manlead'
-									defaultValue={'default'}
 									value={formState.manlead}
 									onChange={handleChange}>
 									<option value='default' disabled>
@@ -181,9 +196,11 @@ export default function QuickAdd({ handleChangeData }) {
 									<option key={uuidv4()} value={'Manager'}>
 										Manager
 									</option>
-									<option key={uuidv4()} value={'Team Lead'}>
-										Team Lead
-									</option>
+									{!teamLead[0] && (
+										<option key={uuidv4()} value={'Team Lead'}>
+											Team Lead
+										</option>
+									)}
 								</select>
 							</div>
 						</div>
@@ -194,8 +211,6 @@ export default function QuickAdd({ handleChangeData }) {
 							</button>
 						</div>
 					</form>
-
-					<div className='divider'></div>
 
 					<div className='sub-container d-flex flex-column align-items-center mb-4'>
 						<p className='mt-1 mb-1'>Create an employee instead?</p>

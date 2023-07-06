@@ -1,7 +1,11 @@
 import React from 'react';
 import { FaUser } from 'react-icons/fa';
 
-export default function Info({ userData }) {
+interface InfoProps {
+	userData?: UserData | null;
+}
+
+export default function Info({ userData }: InfoProps) {
 	const allowedTeams = 5;
 
 	return (
@@ -14,27 +18,28 @@ export default function Info({ userData }) {
 				<div className='card-body account-info'>
 					{' '}
 					<div className='account-picture'>
-						{userData.picture ? (
-							<img src={userData.picture} alt='profile' />
+						{userData!.picture ? (
+							<img src={userData!.picture} alt='profile' />
 						) : (
 							<FaUser className='account-picture-icon' />
 						)}
 					</div>
 					<div className='col'>
 						<div>
-							<strong>Username:</strong> <span>{userData.username}</span>
+							<strong>Username:</strong> <span>{userData!.username}</span>
 						</div>
 
 						<div>
-							<strong>Name:</strong> <span>{userData.name}</span>
+							<strong>Name:</strong> <span>{userData!.name}</span>
 						</div>
 
 						<div>
-							<strong>Email:</strong> <span>{userData.email}</span>
+							<strong>Email:</strong> <span>{userData!.email}</span>
 						</div>
 
 						<div>
-							<strong>Total Teams:</strong> <span>{userData.teams.length}</span>
+							<strong>Total Teams:</strong>{' '}
+							<span>{userData!.teams.length}</span>
 						</div>
 					</div>{' '}
 				</div>
@@ -43,7 +48,7 @@ export default function Info({ userData }) {
 
 				<p className='allowed-teams'>
 					You can currently create up to{' '}
-					<strong>{allowedTeams - userData.teams.length}</strong> more teams.
+					<strong>{allowedTeams - userData!.teams.length}</strong> more teams.
 					(Limit: {allowedTeams})
 				</p>
 			</div>

@@ -1,20 +1,25 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import { FaUserPlus } from 'react-icons/fa';
-import useFormat from '../../../hooks/useFormat';
+import { DataContext } from '../..';
+import useQuery from '../../../../hooks/useQuery';
 
-export default function TeamAdd(props) {
-	const { uppercaseFirstChars } = useFormat();
-	const { handleAddEmployee, handleAddManager, handleAddRole } = props;
-	const { managers, employees, roles } = props;
+type QuickAddProps = {
+	handleChangeData: (arg?: any) => void;
+};
+
+export default function QuickAdd({ handleChangeData }: QuickAddProps) {
+	const teamData = useContext(DataContext);
+	const { id, lead, roles } = teamData;
+	const { addEmployee, addManager } = useQuery();
 	const [addType, setAddType] = useState('employee');
 	const [formState, setFormState] = useState({
+		teamname: '',
+		leadname: '',
 		empname: '',
 		emprole: 'default',
 		manname: '',
 		manlead: 'default',
 	});
-	const teamLead = managers.filter((manager) => manager.is_lead);
 	const styles = {
 		style1: {
 			transform: 'translateX(-150%)',
@@ -27,7 +32,7 @@ export default function TeamAdd(props) {
 		},
 	};
 
-	const handleChange = (event) => {
+	const handleChange = (event: any) => {
 		const { name, value } = event.target;
 
 		setFormState({
@@ -36,40 +41,57 @@ export default function TeamAdd(props) {
 		});
 	};
 
-	const handleFormSubmit = (event) => {
+	const handleFormSubmit = (event: any) => {
 		event.preventDefault();
 
 		if (addType === 'employee') {
-			const newEmpName = uppercaseFirstChars(formState.empname.trim());
+			const newEmpName = formState.empname.trim();
 			const newEmpRole = formState.emprole.trim();
 
 			if (newEmpName && newEmpRole) {
 				const payload = {
 					name: newEmpName,
-					role: newEmpRole,
+					role_id: newEmpRole,
+					manager_id: lead!.id.toString(),
+					team_id: id!.toString(),
 				};
 
-				handleAddEmployee(payload);
+				try {
+					addEmployee(payload).then((res) => handleChangeData(res!.data));
+
+					window.alert('Successfully created employee!');
+				} catch (err) {
+					window.alert(`Failed to create new employee! Error: ${err}`);
+				}
 			} else {
 				window.alert('Invalid employee name or role!');
 			}
 		} else if (addType === 'manager') {
-			const newManName = uppercaseFirstChars(formState.manname.trim());
+			const newManName = formState.manname.trim();
 			const newManLead = formState.manlead.trim();
 
 			if (newManName && newManLead) {
 				const payload = {
 					name: newManName,
 					is_lead: newManLead === 'Team Lead' ? true : false,
+					team_id: id!.toString(),
 				};
 
-				handleAddManager(payload);
+				try {
+					addManager(payload).then((res) => handleChangeData(res!.data));
+
+					window.alert('Successfully created manager!');
+				} catch (err) {
+					window.alert(`Failed to create new manager! Error: ${err}`);
+				}
 			} else {
 				window.alert('Invalid manager name or role!');
 			}
 		}
 
 		setFormState({
+			teamname: '',
+			leadname: '',
 			empname: '',
 			emprole: 'default',
 			manname: '',
@@ -78,19 +100,12 @@ export default function TeamAdd(props) {
 	};
 
 	return (
-		<div className='team-add'>
-			<h2>
-				<FaUserPlus className='card-icon' /> Add To Team
-			</h2>
-
+		<div className='quick-add'>
+			<h2>Quick-Add</h2>
 			<div className='container-body'>
 				<div
 					className='add-employee-container'
 					style={addType === 'employee' ? styles.style2 : styles.style1}>
-					<h6>
-						<strong>Enter employee information</strong>
-					</h6>
-
 					<form className='form-container' onSubmit={handleFormSubmit}>
 						<div className='employee-input'>
 							<div className='field name-field'>
@@ -117,8 +132,8 @@ export default function TeamAdd(props) {
 									<option value='default' disabled>
 										Select role...
 									</option>
-									{roles.map((role) => (
-										<option key={uuidv4()} value={role.title}>
+									{roles!.map((role) => (
+										<option key={uuidv4()} value={role.id}>
 											{role.title}
 										</option>
 									))}
@@ -132,7 +147,7 @@ export default function TeamAdd(props) {
 							</button>
 						</div>
 					</form>
-
+					<div className='divider'></div>
 					<div className='sub-container d-flex flex-column align-items-center mb-4'>
 						<p className='mt-1 mb-1'>Create a manager instead?</p>
 						<span
@@ -142,14 +157,9 @@ export default function TeamAdd(props) {
 						</span>
 					</div>
 				</div>
-
 				<div
 					className='add-manager-container'
 					style={addType === 'employee' ? styles.style3 : styles.style2}>
-					<h6>
-						<strong>Enter manager information</strong>
-					</h6>
-
 					<form className='form-container' onSubmit={handleFormSubmit}>
 						<div className='employee-input'>
 							<div className='field name-field'>
@@ -171,6 +181,7 @@ export default function TeamAdd(props) {
 								<select
 									className='role-select'
 									name='manlead'
+									defaultValue={'default'}
 									value={formState.manlead}
 									onChange={handleChange}>
 									<option value='default' disabled>
@@ -180,11 +191,9 @@ export default function TeamAdd(props) {
 									<option key={uuidv4()} value={'Manager'}>
 										Manager
 									</option>
-									{!teamLead[0] && (
-										<option key={uuidv4()} value={'Team Lead'}>
-											Team Lead
-										</option>
-									)}
+									<option key={uuidv4()} value={'Team Lead'}>
+										Team Lead
+									</option>
 								</select>
 							</div>
 						</div>
@@ -195,6 +204,8 @@ export default function TeamAdd(props) {
 							</button>
 						</div>
 					</form>
+
+					<div className='divider'></div>
 
 					<div className='sub-container d-flex flex-column align-items-center mb-4'>
 						<p className='mt-1 mb-1'>Create an employee instead?</p>

@@ -9,7 +9,7 @@ export default function Login() {
 	const { loginUser } = useAuth();
 	const [formState, setFormState] = useState({ email: '', password: '' });
 
-	const handleChange = (event) => {
+	const handleChange = (event: any) => {
 		const { name, value } = event.target;
 
 		setFormState({
@@ -18,7 +18,7 @@ export default function Login() {
 		});
 	};
 
-	const handleFormSubmit = (event) => {
+	const handleFormSubmit = (event: any) => {
 		event.preventDefault();
 
 		const payload = {

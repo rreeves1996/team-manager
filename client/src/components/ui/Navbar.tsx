@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { FaChalkboardTeacher, FaChevronDown, FaBars } from 'react-icons/fa';
 import { useSelector } from 'react-redux';
@@ -8,8 +8,8 @@ import useAuth from '../../hooks/useAuth';
 
 export default function Navbar() {
 	const navigate = useNavigate();
-	const [collapsed, toggleCollapse] = useToggle();
-	const isLogged = useSelector((state) => state.user.isLogged);
+	const [collapsed, toggleCollapse] = useState<boolean>();
+	const isLogged = useSelector((state: any) => state.user.isLogged);
 	const { logoutUser } = useAuth();
 
 	const handleUserLogout = () => {
@@ -48,7 +48,7 @@ export default function Navbar() {
 				)}
 				<div
 					className={!collapsed ? 'navbar-toggle' : 'navbar-toggle open'}
-					onClick={() => toggleCollapse()}>
+					onClick={() => toggleCollapse(!collapsed)}>
 					<FaBars className='navbar-burger' />
 					<FaChevronDown className='navbar-chevron' />
 					<div
@@ -62,7 +62,7 @@ export default function Navbar() {
 							<div className='contact-link link'>Contact</div>
 						</Link>
 						{isLogged ? (
-							<Link className='nav-button' id='login-button'>
+							<Link to='' className='nav-button' id='login-button'>
 								<div
 									className='login-link link'
 									onClick={() => handleUserLogout()}>
