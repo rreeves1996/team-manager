@@ -69,8 +69,12 @@ export default function CreateTeam() {
 
 		if (teamPayload) {
 			try {
+<<<<<<< Updated upstream:client/src/pages/CreateTeam/index.jsx
 				createTeam(teamPayload);
 
+=======
+				createTeam(payload);
+>>>>>>> Stashed changes:client/src/pages/CreateTeam/index.tsx
 				navigate('/profile');
 			} catch (err) {
 				window.alert(`Failed to create team! Error: ${err}`);

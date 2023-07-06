@@ -74,7 +74,7 @@ export default function InitPrompt() {
 
 					localStorage.setItem('teamID', teamId);
 				})
-				.finally(() => navigate('/'))
+				.finally(() => navigate(0))
 				.catch((err) => console.log(`Failed to create team/manager: ${err}`));
 		}
 
@@ -125,9 +125,14 @@ export default function InitPrompt() {
 							<button className='form-button' type='submit'>
 								Generate Team
 							</button>
-							<div className='divider form-divider'></div>
+
+							<h6>(leave form empty to generate sample team!)</h6>
+
+							<div className='divider form-divider' />
+
 							<div className='sub-container d-flex flex-column align-items-center mb-5'>
 								<p className='mt-1 mb-1'>Create an account to save team</p>
+
 								<a href='/register'>Register</a>
 							</div>
 						</div>
