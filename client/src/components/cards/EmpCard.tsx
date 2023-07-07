@@ -6,7 +6,6 @@ import { HiXMark } from 'react-icons/hi2';
 import { v4 as uuidv4 } from 'uuid';
 import Modal from 'react-bootstrap/Modal';
 import axios from 'axios';
-import '../../assets/style/empcard.css';
 import useFormat from '../../hooks/useFormat';
 
 type EmpCardData = {

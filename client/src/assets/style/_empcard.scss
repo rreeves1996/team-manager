@@ -16,8 +16,8 @@
 	justify-content: center;
 	align-items: center;
 	border-radius: 6px;
-	background-color: var(--blue);
-	color: var(--off-white);
+	background-color: $blue;
+	color: $offWhite;
 	filter: drop-shadow(1px 2px 2px rgba(0, 0, 0, 0.295));
 }
 .preview-card .emp-name {
@@ -92,7 +92,7 @@
 	width: 100%;
 	align-items: center;
 	text-align: center;
-	background-color: var(--blue);
+	background-color: $blue;
 	color: white;
 	border-radius: 6px;
 	height: 100%;
@@ -131,9 +131,9 @@
 	align-items: center;
 	width: 80px;
 	height: 80px;
-	border: 1px solid var(--off-white);
+	border: 1px solid $offWhite;
 	border-radius: 4px;
-	background-color: var(--blue-light);
+	background-color: $blueLight;
 	margin-right: 13px;
 }
 .emp-picture-icon {
@@ -167,7 +167,7 @@
 	min-width: 210px;
 	margin: auto;
 	padding: 8px 0 13px 8%;
-	color: var(--off-black);
+	color: $offBlack;
 	font-size: 0.85em;
 }
 .emp-contact-info p {
@@ -199,10 +199,10 @@
 .timezone-button,
 .submit-button {
 	background-color: transparent;
-	border: 2px solid var(--blue);
+	border: 2px solid $blue;
 	text-transform: uppercase;
 	font-size: 0.75em;
-	color: var(--blue);
+	color: $blue;
 	text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.089);
 	padding: 7px 10px;
 	margin: 0px 3px 0px 5px;
@@ -212,8 +212,8 @@
 .delete-button:hover,
 .submit-button:hover {
 	filter: none;
-	color: var(--off-white);
-	background-color: var(--blue);
+	color: $offWhite;
+	background-color: $blue;
 }
 .confirm {
 	color: rgb(209, 45, 45);

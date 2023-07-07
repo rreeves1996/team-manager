@@ -1,17 +1,7 @@
 @import './variables';
 @import './mixins';
-
-:root {
-	--off-black: #1b1b1b;
-	--off-white: #fcfbfd;
-	--grey: #e7e3e3;
-	--grey-dark: #5a5858;
-	--blue: #324e70;
-	--blue-light: #91b0d4;
-	--accent: #cfc6d1;
-	--sub-box-bg: #e4dfdf;
-	--sub-box-border: #cfcfcf;
-}
+@import './empcard';
+@import './teamcard';
 
 /* CSS RESETS */
 

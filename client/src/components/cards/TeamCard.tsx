@@ -5,7 +5,6 @@ import { TiDelete } from 'react-icons/ti';
 import { useNavigate } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import useQuery from '../../hooks/useQuery';
-import '../../assets/style/teamcard.css';
 
 type TeamCardProps = {
 	team: Team;
