@@ -102,6 +102,7 @@ export default function QuickAdd({ handleChangeData }: QuickAddProps) {
 	return (
 		<div className='quick-add'>
 			<h2>Quick-Add</h2>
+
 			<div className='container-body'>
 				<div
 					className='add-employee-container'
@@ -110,6 +111,7 @@ export default function QuickAdd({ handleChangeData }: QuickAddProps) {
 						<div className='employee-input'>
 							<div className='field name-field'>
 								<label className='label'>Name:</label>
+
 								<div className='control'>
 									<input
 										className='input'
@@ -124,6 +126,7 @@ export default function QuickAdd({ handleChangeData }: QuickAddProps) {
 
 							<div className='field role-field'>
 								<label className='label'>Role:</label>
+
 								<select
 									className='role-select'
 									name='emprole'
@@ -132,6 +135,7 @@ export default function QuickAdd({ handleChangeData }: QuickAddProps) {
 									<option value='default' disabled>
 										Select role...
 									</option>
+
 									{roles!.map((role) => (
 										<option key={uuidv4()} value={role.id}>
 											{role.title}

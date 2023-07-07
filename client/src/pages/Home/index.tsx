@@ -35,7 +35,8 @@ export default function Home() {
 		}
 	};
 
-	// const handleTabChange = (tab) => setCurrentTab(tab);
+	const handleTabChange = (tab: string) => setCurrentTab(tab);
+
 	const handleChangeData = (data: TeamDataContext) =>
 		setTeamData((prevState) => ({ ...prevState, data }));
 
@@ -75,7 +76,7 @@ export default function Home() {
 				<>
 					<DataContext.Provider value={teamData}>
 						<Header />
-						{/* <div className='tab-container'>
+						<div className='tab-container'>
 							<button
 								className='tab-button'
 								onClick={() => {
@@ -90,7 +91,7 @@ export default function Home() {
 								}}>
 								Manage
 							</button>
-						</div> */}
+						</div>
 						<div className='home-container'>{renderTab()}</div>
 					</DataContext.Provider>
 				</>
