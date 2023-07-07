@@ -46,11 +46,13 @@ export default function Navbar() {
 						<div className='additional-link'>Create Account</div>
 					</Link>
 				)}
+
 				<div
 					className={!collapsed ? 'navbar-toggle' : 'navbar-toggle open'}
 					onClick={() => toggleCollapse(!collapsed)}>
 					<FaBars className='navbar-burger' />
 					<FaChevronDown className='navbar-chevron' />
+
 					<div
 						className={
 							collapsed ? 'nav-link-container' : 'nav-link-container collapse'

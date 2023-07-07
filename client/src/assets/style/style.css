@@ -19,6 +19,10 @@ nav .navbar-brand .index-button {
   justify-content: center;
   align-items: center;
 }
+nav .navbar-brand .index-button:hover {
+  text-decoration: none;
+  filter: brightness(0.75);
+}
 nav .navbar-brand .index-button .brand-logo {
   display: flex;
   justify-content: center;
@@ -27,18 +31,17 @@ nav .navbar-brand .index-button .brand-logo {
   color: #fcfbfd;
   margin-top: 12px;
 }
-
-.navbar-brand .ez,
-.navbar-brand-icon {
+nav .navbar-brand .index-button .brand-logo .ez,
+nav .navbar-brand .index-button .brand-logo .navbar-brand-icon {
   color: #91b0d4;
 }
-
-.navbar-brand .index-button:hover {
-  text-decoration: none;
-  filter: brightness(0.75);
+nav .navbar-links {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 13rem;
 }
-
-.additional-link {
+nav .navbar-links .additional-link {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -48,15 +51,7 @@ nav .navbar-brand .index-button .brand-logo {
   border-radius: 5px;
   color: #fcfbfd !important;
 }
-
-.navbar-links {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 13rem;
-}
-
-.navbar-toggle {
+nav .navbar-links .navbar-toggle {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -64,41 +59,32 @@ nav .navbar-brand .index-button .brand-logo {
   margin: 0 0 0 12px;
   transition: all 200ms ease;
 }
-
-.navbar-burger {
-  font-size: 2.5rem;
-  transition: all 200ms ease;
-}
-
-.navbar-burger:hover {
-  cursor: pointer;
-}
-
-.navbar-toggle:hover .navbar-burger {
+nav .navbar-links .navbar-toggle:hover .navbar-burger {
   transform: scale(1.1);
 }
-
-.navbar-toggle:active .navbar-burger,
-.navbar-toggle.open:active .navbar-burger {
-  transform: scale(0.95) !important;
-  transition: transform 100ms;
-}
-
-.navbar-toggle:not(.open):hover .navbar-chevron {
-  transform: translateY(1.7rem);
-  opacity: 1;
-}
-
-.navbar-toggle.open .navbar-chevron {
+nav .navbar-links .navbar-toggle.open .navbar-chevron {
   transform: rotate(180deg) translateY(-1.7rem);
   opacity: 1;
 }
-
-.navbar-toggle.open:hover .navbar-chevron {
+nav .navbar-links .navbar-toggle.open:hover .navbar-chevron {
   transform: rotate(180deg) translateY(-1.5rem);
 }
-
-.navbar-chevron {
+nav .navbar-links .navbar-toggle:active .navbar-burger, nav .navbar-links .navbar-toggle.open:active .navbar-burger {
+  transform: scale(0.95) !important;
+  transition: transform 100ms;
+}
+nav .navbar-links .navbar-toggle:not(.open):hover .navbar-chevron {
+  transform: translateY(1.7rem);
+  opacity: 1;
+}
+nav .navbar-links .navbar-toggle .navbar-burger {
+  font-size: 2.5rem;
+  transition: all 200ms ease;
+}
+nav .navbar-links .navbar-toggle .navbar-burger:hover {
+  cursor: pointer;
+}
+nav .navbar-links .navbar-toggle .navbar-chevron {
   position: absolute;
   pointer-events: none;
   opacity: 0;
@@ -106,35 +92,19 @@ nav .navbar-brand .index-button .brand-logo {
   font-size: 1.2rem;
   transition: all 270ms ease;
 }
-
-.nav-link-container {
+nav .navbar-links .navbar-toggle .collapse {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(70%);
+}
+nav .navbar-links .navbar-toggle .nav-link-container:not(.collapse) {
   transform: translateY(85%);
   opacity: 1;
   width: 110px;
   align-items: center;
   transition: all 270ms;
 }
-
-.help-button:hover .help-container {
-  transform: translateY(0%), translateX(0%);
-  pointer-events: all;
-  opacity: 1;
-}
-
-.help-container button {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-decoration: line-through;
-  background-color: rgba(22, 34, 49, 0.4588235294);
-  padding: 0;
-  color: #5a5858;
-  width: 100% !important;
-  height: 3rem;
-  transition: all 570ms;
-}
-
-.nav-button {
+nav .navbar-links .navbar-toggle .nav-link-container .nav-button {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -142,30 +112,17 @@ nav .navbar-brand .index-button .brand-logo {
   color: #fcfbfd;
   font-size: 1.3rem;
 }
-.nav-button:hover {
+nav .navbar-links .navbar-toggle .nav-link-container .nav-button:hover {
   color: white;
   text-decoration: none;
 }
-
-.nav-button #login-button {
+nav .navbar-links .navbar-toggle .nav-link-container #login-button {
   border-top: 1px solid #fcfbfd;
   border-radius: 0px 0px 6px 6px;
 }
-
-#about-button {
+nav .navbar-links .navbar-toggle .nav-link-container #about-button {
   border-bottom: 1px solid #fcfbfd;
   border-radius: 6px 6px 0px 0px;
-}
-
-.navbar-links a:hover {
-  color: white !important;
-  text-decoration: none !important;
-}
-
-.collapse {
-  opacity: 0;
-  pointer-events: none;
-  transform: translateY(70%);
 }
 
 .emp-card {
