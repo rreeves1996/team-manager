@@ -76,7 +76,7 @@ export default function Home() {
 				<>
 					<DataContext.Provider value={teamData}>
 						<Header />
-						<div className='tab-container'>
+						{/* <div className='tab-container'>
 							<button
 								className='tab-button'
 								onClick={() => {
@@ -91,7 +91,7 @@ export default function Home() {
 								}}>
 								Manage
 							</button>
-						</div>
+						</div> */}
 						<div className='home-container'>{renderTab()}</div>
 					</DataContext.Provider>
 				</>

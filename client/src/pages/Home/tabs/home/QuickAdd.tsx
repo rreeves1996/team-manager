@@ -13,8 +13,6 @@ export default function QuickAdd({ handleChangeData }: QuickAddProps) {
 	const { addEmployee, addManager } = useQuery();
 	const [addType, setAddType] = useState('employee');
 	const [formState, setFormState] = useState({
-		teamname: '',
-		leadname: '',
 		empname: '',
 		emprole: 'default',
 		manname: '',
@@ -90,8 +88,6 @@ export default function QuickAdd({ handleChangeData }: QuickAddProps) {
 		}
 
 		setFormState({
-			teamname: '',
-			leadname: '',
 			empname: '',
 			emprole: 'default',
 			manname: '',
@@ -101,7 +97,7 @@ export default function QuickAdd({ handleChangeData }: QuickAddProps) {
 
 	return (
 		<div className='quick-add'>
-			<h2>Quick-Add</h2>
+			<h2>Employees</h2>
 
 			<div className='container-body'>
 				<div

@@ -57,17 +57,7 @@ body {
 }
 
 /* MAIN STYLING */
-nav {
-	height: 80px;
-	width: 100vw;
-	display: flex;
-	justify-content: space-between;
-	padding: 0.5rem calc((100vw - 1150px) / 2);
-	align-items: center;
-	filter: drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.705));
-	background-color: rgb(22, 22, 22);
-	z-index: 99999 !important;
-}
+
 main {
 	display: flex;
 	align-items: center;
@@ -149,153 +139,6 @@ p {
 }
 .mobile-background {
 	display: none;
-}
-nav {
-	.navbar-brand {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-
-		.index-button {
-			display: flex;
-			justify-content: center;
-			align-items: center;
-
-			.brand-logo {
-				display: flex;
-				justify-content: center;
-				align-items: center;
-
-				font-weight: 900;
-				color: $offWhite;
-				margin-top: 12px;
-			}
-		}
-	}
-}
-
-.navbar-brand .ez,
-.navbar-brand-icon {
-	color: $blueLight;
-}
-.navbar-brand .index-button:hover {
-	text-decoration: none;
-	filter: brightness(0.75);
-}
-.additional-link {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	width: 100%;
-	height: 100%;
-	padding: 12px !important;
-
-	border-radius: 5px;
-	color: $offWhite !important;
-}
-.navbar-links {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	width: 13rem;
-}
-.navbar-toggle {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	font-size: 2.5rem;
-	margin: 0 0 0 12px;
-	transition: all 200ms ease;
-}
-.navbar-burger {
-	font-size: 2.5rem;
-	transition: all 200ms ease;
-}
-.navbar-burger:hover {
-	cursor: pointer;
-}
-.navbar-toggle:hover .navbar-burger {
-	transform: scale(1.1);
-}
-.navbar-toggle:active .navbar-burger,
-.navbar-toggle.open:active .navbar-burger {
-	transform: scale(0.95) !important;
-	transition: transform 100ms;
-}
-.navbar-toggle:not(.open):hover .navbar-chevron {
-	transform: translateY(1.7rem);
-	opacity: 1;
-}
-.navbar-toggle.open .navbar-chevron {
-	transform: rotate(180deg) translateY(-1.7rem);
-	opacity: 1;
-}
-.navbar-toggle.open:hover .navbar-chevron {
-	transform: rotate(180deg) translateY(-1.5rem);
-}
-
-.navbar-chevron {
-	position: absolute;
-	pointer-events: none;
-	opacity: 0;
-	transform: translateY(1rem);
-	font-size: 1.2rem;
-	transition: all 270ms ease;
-}
-
-.nav-link-container {
-	transform: translateY(85%);
-	opacity: 1;
-	width: 110px;
-	align-items: center;
-	transition: all 270ms;
-}
-.help-button:hover .help-container {
-	transform: translateY(0%), translateX(0%);
-	pointer-events: all;
-	opacity: 1;
-}
-.help-container button {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	text-decoration: line-through;
-	background-color: #16223175;
-	padding: 0;
-	color: $greyDark;
-	width: 100% !important;
-	height: 3rem;
-	transition: all 570ms;
-}
-.nav-button {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	width: 100%;
-	color: $offWhite;
-	font-size: 1.3rem;
-
-	&:hover {
-		color: white;
-		text-decoration: none;
-	}
-}
-.nav-button #login-button {
-	border-top: 1px solid $offWhite;
-	border-radius: 0px 0px 6px 6px;
-}
-#about-button {
-	border-bottom: 1px solid $offWhite;
-	border-radius: 6px 6px 0px 0px;
-}
-.navbar-links a:hover {
-	color: white !important;
-	text-decoration: none !important;
-}
-.collapse {
-	opacity: 0;
-	pointer-events: none;
-	transform: translateY(70%);
 }
 
 .team-menu li,
@@ -779,6 +622,7 @@ header .pencil-icon:active,
 	font-size: 2rem;
 	margin-right: 5px;
 }
+.role-add,
 .quick-add,
 .your-team,
 .summary,
@@ -824,7 +668,8 @@ header .pencil-icon:active,
 	width: 66%;
 }
 .summary,
-.team-name-container {
+.team-name-container,
+.role-add {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -866,14 +711,18 @@ header .pencil-icon:active,
 	height: 100%;
 	width: 100%;
 }
-.quick-add h2,
-.your-team h2,
-.summary h2,
-.profile-info h2,
-.profile-teams h2,
-.team-add h2,
-.team-name-container h2,
-.team-preview h2 {
+:is(
+		.role-add,
+		.quick-add,
+		.your-team,
+		.summary,
+		.profile-info,
+		.profile-teams,
+		.team-add,
+		.team-name-container,
+		.team-preview
+	)
+	h2 {
 	text-align: center;
 	text-transform: uppercase;
 	font-weight: 900;
@@ -887,11 +736,14 @@ header .pencil-icon:active,
 	letter-spacing: 1px;
 	width: 100%;
 }
-.profile-info h2,
-.profile-teams h2,
-.team-add h2,
-.team-name-container h2,
-.team-preview h2 {
+:is(
+		.profile-info,
+		.profile-teams,
+		.team-add,
+		.team-name-container,
+		.team-preview
+	)
+	h2 {
 	display: flex;
 	align-items: center;
 	text-align: left;
@@ -982,9 +834,7 @@ header .pencil-icon:active,
 	align-items: center;
 	margin: 0 auto;
 }
-.quick-add .container-body,
-.team-add .container-body,
-.team-name-container .container-body {
+:is(.role-add, .quick-add, .team-add, .team-name-container) .container-body {
 	position: relative;
 	padding: 18px 0;
 	width: 80%;
@@ -993,6 +843,9 @@ header .pencil-icon:active,
 	margin: 0 auto;
 	height: 16.6rem;
 	overflow: hidden;
+}
+.role-add .container-body {
+	height: min-content;
 }
 .team-add .container-body {
 	padding-top: 0;
