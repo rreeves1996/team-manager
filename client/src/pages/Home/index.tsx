@@ -24,18 +24,18 @@ export default function Home() {
 	const navigate = useNavigate();
 	const { queryTeam } = useQuery();
 	const [loading, setLoading] = useState(true);
-	const [currentTab, setCurrentTab] = useState('Home');
+	// const [currentTab, setCurrentTab] = useState('Home');
 	const [teamData, setTeamData] = useState({});
 
-	const renderTab = () => {
-		if (currentTab === 'Home') {
-			return <HomeTab handleChangeData={handleChangeData} />;
-		} else if (currentTab === 'Manage') {
-			return <ManageTab />;
-		}
-	};
+	// const renderTab = () => {
+	// 	if (currentTab === 'Home') {
+	// 		return <HomeTab handleChangeData={handleChangeData} />;
+	// 	} else if (currentTab === 'Manage') {
+	// 		return <ManageTab />;
+	// 	}
+	// };
 
-	const handleTabChange = (tab: string) => setCurrentTab(tab);
+	// const handleTabChange = (tab: string) => setCurrentTab(tab);
 
 	const handleChangeData = (data: TeamDataContext) =>
 		setTeamData((prevState) => ({ ...prevState, data }));
@@ -52,6 +52,7 @@ export default function Home() {
 						(manager: any) => manager.is_lead
 					);
 					const newTeam = { ...res!.data, lead: lead[0] };
+
 					setTeamData(newTeam);
 				} catch (err) {
 					window.alert(`Failed to get team! Error: ${err}`);
@@ -92,7 +93,9 @@ export default function Home() {
 								Manage
 							</button>
 						</div> */}
-						<div className='home-container'>{renderTab()}</div>
+						<div className='home-container'>
+							<HomeTab handleChangeData={handleChangeData} />
+						</div>
 					</DataContext.Provider>
 				</>
 			)}

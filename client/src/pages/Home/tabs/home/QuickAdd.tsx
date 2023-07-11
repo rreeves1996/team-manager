@@ -2,12 +2,14 @@ import React, { useState, useContext } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { DataContext } from '../..';
 import useQuery from '../../../../hooks/useQuery';
+import { useNavigate } from 'react-router-dom';
 
 type QuickAddProps = {
 	handleChangeData: (arg?: any) => void;
 };
 
 export default function QuickAdd({ handleChangeData }: QuickAddProps) {
+	const navigate = useNavigate();
 	const teamData = useContext(DataContext);
 	const { id, lead, roles } = teamData;
 	const { addEmployee, addManager } = useQuery();
@@ -55,7 +57,9 @@ export default function QuickAdd({ handleChangeData }: QuickAddProps) {
 				};
 
 				try {
-					addEmployee(payload).then((res) => handleChangeData(res!.data));
+					addEmployee(payload)
+						.then((res) => handleChangeData(res!.data))
+						.finally(() => navigate(0));
 
 					window.alert('Successfully created employee!');
 				} catch (err) {
