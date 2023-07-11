@@ -80,7 +80,9 @@ export default function QuickAdd({ handleChangeData }: QuickAddProps) {
 				};
 
 				try {
-					addManager(payload).then((res) => handleChangeData(res!.data));
+					addManager(payload)
+						.then((res) => handleChangeData(res!.data))
+						.finally(() => navigate(0));
 
 					window.alert('Successfully created manager!');
 				} catch (err) {
