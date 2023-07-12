@@ -153,9 +153,12 @@ export default function QuickAdd({ handleChangeData }: QuickAddProps) {
 							</button>
 						</div>
 					</form>
-					<div className='divider'></div>
+
+					<div className='divider' />
+
 					<div className='sub-container d-flex flex-column align-items-center mb-4'>
 						<p className='mt-1 mb-1'>Create a manager instead?</p>
+
 						<span
 							className='quickadd-toggler'
 							onClick={() => setAddType('manager')}>
@@ -163,6 +166,7 @@ export default function QuickAdd({ handleChangeData }: QuickAddProps) {
 						</span>
 					</div>
 				</div>
+
 				<div
 					className='add-manager-container'
 					style={addType === 'employee' ? styles.style3 : styles.style2}>
@@ -170,6 +174,7 @@ export default function QuickAdd({ handleChangeData }: QuickAddProps) {
 						<div className='employee-input'>
 							<div className='field name-field'>
 								<label className='label'>Name:</label>
+
 								<div className='control'>
 									<input
 										className='input'
@@ -184,6 +189,7 @@ export default function QuickAdd({ handleChangeData }: QuickAddProps) {
 
 							<div className='field role-field'>
 								<label className='label'>Role:</label>
+
 								<select
 									className='role-select'
 									name='manlead'
@@ -197,6 +203,7 @@ export default function QuickAdd({ handleChangeData }: QuickAddProps) {
 									<option key={uuidv4()} value={'Manager'}>
 										Manager
 									</option>
+
 									<option key={uuidv4()} value={'Team Lead'}>
 										Team Lead
 									</option>
@@ -211,10 +218,11 @@ export default function QuickAdd({ handleChangeData }: QuickAddProps) {
 						</div>
 					</form>
 
-					<div className='divider'></div>
+					<div className='divider' />
 
 					<div className='sub-container d-flex flex-column align-items-center mb-4'>
 						<p className='mt-1 mb-1'>Create an employee instead?</p>
+
 						<span
 							className='quickadd-toggler'
 							onClick={() => setAddType('employee')}>

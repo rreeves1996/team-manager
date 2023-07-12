@@ -1,5 +1,4 @@
 import React, { useState, useContext } from 'react';
-import { v4 as uuidv4 } from 'uuid';
 import { DataContext } from '../..';
 import useQuery from '../../../../hooks/useQuery';
 import useFormat from '../../../../hooks/useFormat';
@@ -71,6 +70,7 @@ export default function RoleAdd({ handleChangeData }: RoleAddProps) {
 						<div className='employee-input'>
 							<div className='field name-field'>
 								<label className='label role-name-label'>Role Name:</label>
+
 								<div className='control'>
 									<input
 										className='input'
@@ -85,6 +85,7 @@ export default function RoleAdd({ handleChangeData }: RoleAddProps) {
 
 							<div className='field name-field'>
 								<label className='label role-salary-label'>Salary: $</label>
+
 								<div className='control'>
 									<input
 										className='input role-salary-input'

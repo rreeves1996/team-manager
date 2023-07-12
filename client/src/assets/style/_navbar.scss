@@ -1,23 +1,18 @@
 nav {
+	@include flexJustifyAlign(space-between, center);
+
 	height: 80px;
 	width: 100vw;
-	display: flex;
-	justify-content: space-between;
 	padding: 0.5rem calc((100vw - 1150px) / 2);
-	align-items: center;
 	filter: drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.705));
 	background-color: rgb(22, 22, 22);
 	z-index: 99999 !important;
 
 	.navbar-brand {
-		display: flex;
-		justify-content: center;
-		align-items: center;
+		@include flexCenter();
 
 		.index-button {
-			display: flex;
-			justify-content: center;
-			align-items: center;
+			@include flexCenter();
 
 			&:hover {
 				text-decoration: none;
@@ -25,9 +20,7 @@ nav {
 			}
 
 			.brand-logo {
-				display: flex;
-				justify-content: center;
-				align-items: center;
+				@include flexCenter();
 
 				font-weight: 900;
 				color: $offWhite;
@@ -42,27 +35,26 @@ nav {
 	}
 
 	.navbar-links {
-		display: flex;
-		justify-content: center;
-		align-items: center;
+		@include flexCenter();
 		width: 13rem;
 
+		a {
+			&:hover {
+				text-decoration: none !important;
+			}
+		}
+
 		.additional-link {
-			display: flex;
-			justify-content: center;
-			align-items: center;
+			@include flexCenter();
 			width: 100%;
 			height: 100%;
 			padding: 12px !important;
-
 			border-radius: 5px;
 			color: $offWhite !important;
 		}
 
 		.navbar-toggle {
-			display: flex;
-			justify-content: center;
-			align-items: center;
+			@include flexCenter();
 			font-size: 2.5rem;
 			margin: 0 0 0 12px;
 			transition: all 200ms ease;
@@ -101,8 +93,8 @@ nav {
 			}
 
 			.navbar-chevron {
+				@include noSelect();
 				position: absolute;
-				pointer-events: none;
 				opacity: 0;
 				transform: translateY(1rem);
 				font-size: 1.2rem;
@@ -125,9 +117,7 @@ nav {
 				}
 
 				.nav-button {
-					display: flex;
-					justify-content: center;
-					align-items: center;
+					@include flexCenter();
 					width: 100%;
 					color: $offWhite;
 					font-size: 1.3rem;
@@ -151,21 +141,3 @@ nav {
 		}
 	}
 }
-
-// .help-button:hover .help-container {
-// 	transform: translateY(0%), translateX(0%);
-// 	pointer-events: all;
-// 	opacity: 1;
-// }
-// .help-container button {
-// 	display: flex;
-// 	justify-content: center;
-// 	align-items: center;
-// 	text-decoration: line-through;
-// 	background-color: #16223175;
-// 	padding: 0;
-// 	color: $greyDark;
-// 	width: 100% !important;
-// 	height: 3rem;
-// 	transition: all 570ms;
-// }
