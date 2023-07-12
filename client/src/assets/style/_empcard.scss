@@ -1,186 +1,205 @@
 .emp-card {
-	display: flex;
-	justify-content: center;
-	align-items: center;
+	@include flexCenter();
 	cursor: pointer;
-
 	width: 250px;
 	margin: 8px;
 	filter: drop-shadow(1px 2px 2px rgba(0, 0, 0, 0.295));
+
+	h6 {
+		margin: 0;
+		margin-top: 4px;
+		font-size: 0.8em;
+	}
+
+	.emp-card-header {
+		&:hover {
+			transform: translateY(-2px);
+			background-color: #4d6b8d;
+		}
+
+		&::before {
+			@include flexCenter();
+			position: absolute;
+			width: 100%;
+			height: 100%;
+			content: url('../magnifying-glass-3-64.png');
+			opacity: 0%;
+			left: 0;
+			transition: opacity 300ms;
+		}
+
+		&:hover::before {
+			opacity: 75%;
+			transition: opacity 300ms;
+		}
+
+		.emp-picture {
+			@include flexCenter();
+			width: 80px;
+			height: 80px;
+			border: 1px solid $offWhite;
+			border-radius: 4px;
+			background-color: $blueLight;
+			margin-right: 13px;
+		}
+
+		.emp-info-header {
+			margin: 0 auto;
+
+			strong {
+				font-family: 'Alumni Sans Pinstripe';
+				font-size: 2.5em;
+				text-transform: uppercase;
+				letter-spacing: 0px;
+				line-height: 1;
+				text-decoration: underline;
+				text-decoration-thickness: 1px;
+				text-underline-offset: 3px;
+			}
+
+			p {
+				margin-top: 4px !important;
+				font-size: 0.75em !important;
+				opacity: 75%;
+			}
+		}
+	}
 }
+
+.modal-content {
+	@include flexCenter();
+	background-color: transparent !important;
+	border: none;
+
+	.emp-card-modal-container {
+		min-width: 229px;
+		background-color: white;
+		border-radius: 12px 12px 6px 6px;
+		filter: drop-shadow(2px 3px 5px rgba(0, 0, 0, 0.404));
+
+		.emp-card-header-modal {
+			border-radius: 6px 6px 0px;
+
+			.emp-info-header {
+				padding: 0 8px;
+			}
+			.emp-picture-icon {
+				margin: 0 auto;
+				font-size: 3em;
+			}
+		}
+
+		.emp-contact-info {
+			min-width: 210px;
+			margin: auto;
+			padding: 8px 0 13px 8%;
+			color: $offBlack;
+			font-size: 0.85em;
+
+			p {
+				@include flexRowAlign(center);
+				width: 100%;
+				height: 18px;
+				line-height: 1 !important;
+				margin: 8px 5px !important;
+
+				strong {
+					margin-right: 0.25rem;
+				}
+			}
+
+			.card-edit {
+				p {
+					width: 100%;
+
+					.card-input {
+						height: 17px !important;
+						width: 50%;
+						margin: 0 3px;
+						text-indent: 3px !important;
+					}
+
+					.number-input {
+						text-indent: -1px !important;
+						text-align: center;
+						text-indent: 0;
+					}
+
+					#number-input1,
+					#number-input2 {
+						width: 31px;
+					}
+
+					#number-input3 {
+						width: 38px;
+					}
+
+					.email-input {
+						display: flex;
+						width: 141px;
+						height: 18px !important;
+						line-height: 2 !important;
+					}
+
+					.salary-input {
+						width: 131px;
+					}
+
+					.timezone-input {
+						height: 100% !important;
+						width: 146px;
+						border: 1px solid rgb(168, 166, 166);
+						border-radius: 3px;
+					}
+				}
+			}
+
+			.confirm {
+				color: rgb(209, 45, 45);
+				border: 2px solid rgb(209, 45, 45);
+
+				&:hover {
+					background-color: rgb(209, 45, 45);
+				}
+			}
+		}
+	}
+}
+
 .preview-card {
-	display: flex;
+	@include flexJustifyAlign(center, center);
 	flex-direction: column;
 	width: 100%;
 	height: 100%;
-	justify-content: center;
-	align-items: center;
 	border-radius: 6px;
 	background-color: $blue;
 	color: $offWhite;
 	filter: drop-shadow(1px 2px 2px rgba(0, 0, 0, 0.295));
-}
-.preview-card .emp-name {
-	margin: 0;
-	font-size: 0.9rem;
-}
-.preview-card .emp-role {
-	margin: 0;
-	font-size: 0.7rem;
-}
-.modal-content {
-	background-color: transparent !important;
-	border: none;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-}
-.card-edit p {
-	width: 100%;
-}
-.card-input {
-	height: 17px !important;
-	width: 50%;
-	margin: 0 3px;
-	text-indent: 3px !important;
-}
 
-#number-input1,
-#number-input2,
-#number-input3 {
-	text-align: center;
-	text-indent: 0;
-}
-#number-input1,
-#number-input2 {
-	width: 31px;
-}
-#number-input3 {
-	width: 38px;
-}
-.number-input {
-	text-indent: -1px !important;
-}
-.email-input {
-	display: flex;
-	width: 141px;
-	height: 18px !important;
-	line-height: 2 !important;
-}
-.salary-input {
-	width: 131px;
-}
-.timezone-input {
-	height: 100% !important;
-	width: 146px;
-	border: 1px solid rgb(168, 166, 166);
-	border-radius: 3px;
-}
-.emp-card-modal-container {
-	min-width: 229px;
-	background-color: white;
-	border-radius: 6px;
-	border-top-left-radius: 12px;
-	border-top-right-radius: 12px;
-	filter: drop-shadow(2px 3px 5px rgba(0, 0, 0, 0.404));
+	.emp-name {
+		margin: 0;
+		font-size: 0.9rem;
+	}
+
+	.emp-role {
+		margin: 0;
+		font-size: 0.7rem;
+	}
 }
 
 .emp-card-header,
 .emp-card-header-modal {
-	display: flex;
-	padding: 13px;
-	width: 100%;
-	align-items: center;
+	@include flexRowAlign();
 	text-align: center;
+	width: 100%;
+	height: 100%;
+	padding: 13px;
 	background-color: $blue;
 	color: white;
 	border-radius: 6px;
-	height: 100%;
 	transition: transform 0.2s, background-color 0.2s;
 }
-.emp-card-header-modal {
-	border-radius: 0px;
-	border-top-left-radius: 6px;
-	border-top-right-radius: 6px;
-}
-.emp-card-header:hover {
-	transform: translateY(-2px);
-	background-color: #4d6b8d;
-}
-.emp-card-header::before {
-	position: absolute;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	content: url('../magnifying-glass-3-64.png');
-	opacity: 0%;
 
-	width: 100%;
-	height: 100%;
-	left: 0;
-	transition: opacity 300ms;
-}
-.emp-card-header:hover::before {
-	opacity: 75%;
-
-	transition: opacity 300ms;
-}
-.emp-picture {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	width: 80px;
-	height: 80px;
-	border: 1px solid $offWhite;
-	border-radius: 4px;
-	background-color: $blueLight;
-	margin-right: 13px;
-}
-.emp-picture-icon {
-	margin: 0 auto;
-	font-size: 3em;
-}
-.emp-info-header {
-	margin: 0 auto;
-}
-.emp-info-header strong {
-	font-family: 'Alumni Sans Pinstripe';
-	font-size: 2.5em;
-	text-transform: uppercase;
-	letter-spacing: 0px;
-	line-height: 1;
-	text-decoration: underline;
-	text-decoration-thickness: 1px;
-	text-underline-offset: 3px;
-}
-.emp-info-header p {
-	margin-top: 4px !important;
-	font-size: 0.75em !important;
-	opacity: 75%;
-}
-.emp-card h6 {
-	margin: 0;
-	margin-top: 4px;
-	font-size: 0.8em;
-}
-.emp-contact-info {
-	min-width: 210px;
-	margin: auto;
-	padding: 8px 0 13px 8%;
-	color: $offBlack;
-	font-size: 0.85em;
-}
-.emp-contact-info p {
-	height: 18px;
-	display: flex;
-	align-items: center;
-	width: 100%;
-	line-height: 1 !important;
-	margin: 8px 5px !important;
-}
-.emp-contact-info p strong {
-	margin-right: 0.25rem;
-}
 .emp-card-button-container {
 	padding: 5px 0;
 }
@@ -208,20 +227,8 @@
 	margin: 0px 3px 0px 5px;
 	transition: all 0.2s;
 }
-.edit-button:hover,
-.delete-button:hover,
-.submit-button:hover {
+:is(.edit-button, .delete-button, .submit-button) :hover {
 	filter: none;
 	color: $offWhite;
 	background-color: $blue;
-}
-.confirm {
-	color: rgb(209, 45, 45);
-	border: 2px solid rgb(209, 45, 45);
-}
-.confirm:hover {
-	background-color: rgb(209, 45, 45);
-}
-.emp-card-header-modal .emp-info-header {
-	padding: 0 8px;
 }

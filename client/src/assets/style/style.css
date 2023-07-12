@@ -140,6 +140,11 @@ nav .navbar-links .navbar-toggle .nav-link-container #about-button {
   margin: 8px;
   filter: drop-shadow(1px 2px 2px rgba(0, 0, 0, 0.295));
 }
+.emp-card h6 {
+  margin: 0;
+  margin-top: 4px;
+  font-size: 0.8em;
+}
 
 .preview-card {
   display: flex;
@@ -309,12 +314,6 @@ nav .navbar-links .navbar-toggle .nav-link-container #about-button {
   margin-top: 4px !important;
   font-size: 0.75em !important;
   opacity: 75%;
-}
-
-.emp-card h6 {
-  margin: 0;
-  margin-top: 4px;
-  font-size: 0.8em;
 }
 
 .emp-contact-info {

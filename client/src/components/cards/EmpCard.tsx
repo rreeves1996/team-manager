@@ -259,6 +259,7 @@ export function MngrCard(props: { manager: Manager }) {
 									</h6>
 								</div>
 							</div>
+
 							<div className='emp-contact-info'>
 								{editing ? (
 									<>
@@ -423,6 +424,7 @@ export function EmpCard(props: {
 		showDeleteConfirm(false);
 		setEditing(false);
 	};
+
 	const handleShow = () => setShow(true);
 
 	const handleChange = (event: any) => {
@@ -480,7 +482,7 @@ export function EmpCard(props: {
 	const deleteEmployee = (employee: Employee) => {
 		if (employee.role!.title === 'manager') {
 			let index = parseInt(employee.id!) - 1;
-			// delete props.managers[index];
+			delete props.managers![index];
 		}
 	};
 
@@ -568,6 +570,7 @@ export function EmpCard(props: {
 									</h6>
 								</div>
 							</div>
+
 							<div className='emp-contact-info'>
 								{editing ? (
 									<>
