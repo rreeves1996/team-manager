@@ -3,18 +3,18 @@ import { v4 as uuidv4 } from 'uuid';
 import { DataContext } from '../..';
 import useQuery from '../../../../hooks/useQuery';
 import useFormat from '../../../../hooks/useFormat';
+import { useNavigate } from 'react-router-dom';
 
 type RoleAddProps = {
 	handleChangeData: (arg?: any) => void;
 };
 
 export default function RoleAdd({ handleChangeData }: RoleAddProps) {
+	const navigate = useNavigate();
 	const teamData = useContext(DataContext);
 	const { id } = teamData;
 	const { addRole } = useQuery();
 	const { uppercaseFirstChars } = useFormat();
-
-	const [addType, setAddType] = useState('employee');
 	const [formState, setFormState] = useState({
 		rolename: '',
 		rolesalary: 0,
@@ -43,7 +43,9 @@ export default function RoleAdd({ handleChangeData }: RoleAddProps) {
 					team_id: id?.toString(),
 				};
 
-				addRole(payload).then((res) => handleChangeData(res!.data));
+				addRole(payload)
+					.then((res) => handleChangeData(res!.data))
+					.finally(() => navigate(0));
 
 				window.alert('Successfully created role!');
 			} else {
