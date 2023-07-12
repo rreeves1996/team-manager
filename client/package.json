@@ -1,6 +1,7 @@
 {
 	"name": "team-manager",
 	"version": "0.1.0",
+	"proxy": "http://localhost:3001",
 	"private": true,
 	"dependencies": {
 		"@reduxjs/toolkit": "^1.9.1",
