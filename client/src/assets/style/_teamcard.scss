@@ -5,158 +5,171 @@
 	margin-bottom: 13px;
 	border-radius: 5px 5px 5px 3px !important;
 	transition: all 200ms;
-}
-.team-card-container:hover {
-	cursor: pointer;
-	transform: translateY(-2px);
-}
-.team-card-header {
-	width: 56%;
-	border-right: 1px solid rgba(192, 192, 192, 0.486);
-}
-.team-header-text {
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	padding-left: 0.5rem;
-}
-.team-card-header h6 {
-	display: flex;
-	align-items: center;
-	text-transform: uppercase;
-	padding: 2px 0;
-	text-indent: 4px;
-	background-color: $blue;
-	color: $offWhite;
-	text-shadow: 1px 1px 2px black;
-	border-top-left-radius: 3px;
-	font-size: 0.6rem;
-	letter-spacing: 1px;
-	width: 100%;
-	margin: 0;
-}
-.team-card-header h3 {
-	line-height: 1;
-	margin: 0;
-	font-size: 4rem;
-}
-.right-caret {
-	font-size: 0.5rem;
-	margin-right: 2px;
-}
-.tc-header-manager {
-	font-size: 0.75rem;
-	text-indent: 2px;
-	margin-top: -2px;
-}
-.tc-managers,
-.tc-employees {
-	width: 15.5%;
-	border-right: 1px solid rgba(192, 192, 192, 0.486);
-	border-left: 1px solid rgb(255, 255, 255);
-}
-.tc-delete {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	width: 13%;
-	border-left: 1px solid rgb(240, 167, 167);
-	border-radius: 0px 3px 3px 0px;
-	background-color: rgb(221, 88, 95);
-	transition: all 100ms;
-	z-index: 99999;
-}
-.tc-count {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	width: 100%;
-	height: 45%;
-	font-size: 1.25rem;
-	font-weight: 900;
-}
-.manager-count {
-	margin-bottom: -0.75rem;
-}
-.tc-icon-container {
-	display: flex;
-	justify-content: center;
-	width: 100%;
-	padding: 3px 20%;
-	flex-wrap: wrap;
-}
-.tc-managers .tc-icon-container {
-	display: flex;
-	align-items: center;
-	height: 65%;
-}
-.tc-manager-icon,
-.tc-employee-icon {
-	margin: 3px;
-	color: rgb(105, 106, 114);
-}
-.tc-manager-icon {
-	font-size: 1.4rem;
-}
-.tc-employee-icon {
-	font-size: 0.8rem;
-}
-.tc-delete-icon-container {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	width: 100%;
-	height: 100%;
-}
-.tc-delete-icon {
-	font-size: 2.5rem;
-	color: $offWhite;
-}
-.tc-delete:hover {
-	background-color: rgb(250, 131, 137);
-}
-.no-hover:hover {
-	background-color: rgb(221, 88, 95) !important;
-}
-.tc-delete-icon,
-.tc-delete-confirm {
-	transition: all 270ms;
-}
-.tc-delete-confirm,
-.tc-delete-button-container {
-	position: absolute;
-	margin: auto;
-	color: $offWhite;
-	width: 5rem;
-	font-family: 'Alumni Sans Pinstripe';
-	font-weight: 700;
-}
-.tc-delete-confirm {
-	text-align: center;
-	font-size: 1.5rem;
-	text-transform: uppercase;
-	transform: translateY(-30%);
-}
-.tc-delete-button-container {
-	display: flex;
-	justify-content: space-around;
-	transform: translateY(170%);
-	z-index: 999999;
-}
-.tc-delete-confirm-container {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	position: absolute;
-	width: 5rem;
-	height: 5rem;
-}
-.tc-delete-confirm-button {
-	font-size: 1.5rem;
-	margin-top: -0.4rem;
-	transition: all 270ms;
-}
-.tc-delete-confirm-button:hover {
-	filter: drop-shadow(0px 0px 3px white);
-	color: white;
+
+	&:hover {
+		cursor: pointer;
+		transform: translateY(-2px);
+	}
+
+	.team-card-header {
+		width: 56%;
+		border-right: 1px solid rgba(192, 192, 192, 0.486);
+
+		h6 {
+			@include flexRowAlign(center);
+			text-transform: uppercase;
+			padding: 2px 0;
+			text-indent: 4px;
+			background-color: $blue;
+			color: $offWhite;
+			text-shadow: 1px 1px 2px black;
+			border-top-left-radius: 3px;
+			font-size: 0.6rem;
+			letter-spacing: 1px;
+			width: 100%;
+			margin: 0;
+		}
+
+		h3 {
+			line-height: 1;
+			margin: 0;
+			font-size: 4rem;
+		}
+
+		.team-header-text {
+			@include flexColumnJustify(center);
+			padding-left: 0.5rem;
+
+			.tc-header-manager {
+				font-size: 0.75rem;
+				text-indent: 2px;
+				margin-top: -2px;
+
+				.right-caret {
+					font-size: 0.5rem;
+					margin-right: 2px;
+				}
+			}
+		}
+	}
+
+	.tc-managers,
+	.tc-employees {
+		width: 15.5%;
+		border-right: 1px solid rgba(192, 192, 192, 0.486);
+		border-left: 1px solid rgb(255, 255, 255);
+
+		.tc-count {
+			@include flexJustifyAlign(center, center);
+			width: 100%;
+			height: 45%;
+			font-size: 1.25rem;
+			font-weight: 900;
+		}
+
+		.manager-count {
+			margin-bottom: -0.75rem;
+		}
+
+		.tc-icon-container {
+			@include flexRowJustify(center);
+			width: 100%;
+			padding: 3px 20%;
+			flex-wrap: wrap;
+
+			.tc-manager-icon,
+			.tc-employee-icon {
+				margin: 3px;
+				color: rgb(105, 106, 114);
+			}
+
+			.tc-manager-icon {
+				font-size: 1.4rem;
+			}
+			.tc-employee-icon {
+				font-size: 0.8rem;
+			}
+		}
+	}
+
+	.tc-managers {
+		.tc-icon-container {
+			@include flexRowAlign(center);
+			height: 65%;
+		}
+	}
+
+	.tc-delete {
+		@include flexCenter();
+		width: 13%;
+		border-left: 1px solid rgb(240, 167, 167);
+		border-radius: 0px 3px 3px 0px;
+		background-color: rgb(221, 88, 95);
+		transition: all 100ms;
+		z-index: 99999;
+
+		&:hover {
+			background-color: rgb(250, 131, 137);
+		}
+
+		& .no-hover {
+			&:hover {
+				background-color: rgb(221, 88, 95) !important;
+			}
+		}
+
+		.tc-delete-icon-container {
+			@include flexCenter();
+			width: 100%;
+			height: 100%;
+
+			.tc-delete-icon {
+				font-size: 2.5rem;
+				color: $offWhite;
+				transition: all 270ms;
+			}
+		}
+
+		.tc-delete-confirm-container {
+			@include flexCenter();
+			position: absolute;
+			width: 5rem;
+			height: 5rem;
+
+			.tc-delete-confirm {
+				text-align: center;
+				font-size: 1.5rem;
+				text-transform: uppercase;
+				transform: translateY(-30%);
+				transition: all 270ms;
+			}
+
+			.tc-delete-confirm,
+			.tc-delete-button-container {
+				position: absolute;
+				margin: auto;
+				color: $offWhite;
+				width: 5rem;
+				font-family: 'Alumni Sans Pinstripe';
+				font-weight: 700;
+			}
+
+			.tc-delete-button-container {
+				@include flexRowJustify(space-around);
+				transform: translateY(170%);
+				z-index: 999999;
+
+				.tc-delete-confirm-button {
+					font-size: 1.5rem;
+					margin-top: -0.4rem;
+					transition: all 270ms;
+
+					&:hover {
+						filter: drop-shadow(0px 0px 3px white);
+						color: white;
+					}
+				}
+			}
+		}
+	}
 }

@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { AiOutlineCaretDown } from 'react-icons/ai';
 import { BsExclamationLg } from 'react-icons/bs';
 import { FaUser } from 'react-icons/fa';
 import { HiXMark } from 'react-icons/hi2';
@@ -274,6 +273,7 @@ export function MngrCard(props: { manager: Manager }) {
 													onChange={handleChange}
 												/>
 											</p>
+
 											<p>
 												<strong>Phone:</strong>
 												<input
@@ -335,12 +335,14 @@ export function MngrCard(props: { manager: Manager }) {
 													))}
 												</select>
 											</p>
+
 											<div className='emp-card-button-container'>
 												<button
 													className='edit-button'
 													onClick={() => setEditing(!editing)}>
 													Cancel
 												</button>
+
 												<button className='submit-button' type='submit'>
 													Submit
 												</button>

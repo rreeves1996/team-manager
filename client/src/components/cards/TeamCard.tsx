@@ -44,18 +44,22 @@ export default function TeamCard(props: TeamCardProps) {
 			<div className='team-card-container'>
 				<div className='team-card-header' onClick={() => handleSelectTeam()}>
 					<h6>Team ID: {id}</h6>
+
 					<div className='team-header-text'>
 						<h3 className='tc-header-name'>
 							<strong>{name}</strong>
 						</h3>
+
 						<p className='tc-header-manager'>
 							<AiOutlineRight className='right-caret' />
 							Team led by <strong>{lead.name}</strong>
 						</p>
 					</div>
 				</div>
+
 				<div className='tc-managers' onClick={() => handleSelectTeam()}>
 					<div className='tc-count manager-count'>{managers!.length}</div>
+
 					<div className='tc-icon-container '>
 						{managers!.map((manager: Manager) => (
 							<>
@@ -64,16 +68,19 @@ export default function TeamCard(props: TeamCardProps) {
 						))}
 					</div>
 				</div>
+
 				<div className='tc-employees' onClick={() => handleSelectTeam()}>
 					<div className='tc-count'>{props.team.employees!.length}</div>
+
 					<div className='tc-icon-container'>
-						{employees!.map((employee: Employee) => (
+						{employees!.map(() => (
 							<>
 								<FaUserAlt key={uuidv4()} className='tc-employee-icon' />
 							</>
 						))}
 					</div>
 				</div>
+
 				<div className={deleteConfirm ? 'tc-delete no-hover' : 'tc-delete'}>
 					<div
 						onClick={() => setDeleteConfirm(true)}
@@ -81,13 +88,16 @@ export default function TeamCard(props: TeamCardProps) {
 						className='tc-delete-icon-container'>
 						<TiDelete className='tc-delete-icon' />
 					</div>
+
 					<div style={style} className='tc-delete-confirm-container'>
 						<span className='tc-delete-confirm'>Are you sure?</span>
+
 						<div className='tc-delete-button-container'>
 							<FaCheck
 								className='tc-delete-confirm-button'
 								onClick={() => handleDeleteTeam()}
 							/>
+
 							<FaTimes
 								className='tc-delete-confirm-button'
 								onClick={() => setDeleteConfirm(false)}
