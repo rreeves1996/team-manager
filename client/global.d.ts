@@ -17,14 +17,23 @@ type Manager = {
 };
 
 type Employee = Manager & {
+	name: string;
+	id?: string;
+	team_id?: string;
+	salary?: number;
+	phone?: string;
+	email?: string;
+	timezone?: string;
+	role?: Role;
+	picture?: any;
 	role_id?: string;
 	manager_id?: string;
 };
 
 type Role = {
 	id?: string;
-	title?: string;
-	salary?: number;
+	title: string;
+	salary: number;
 	team_id?: string;
 };
 
@@ -39,9 +48,9 @@ type Team = {
 
 type CreateTeamPayload = Team & {
 	user_id: string;
-	employees: Array<Employee>;
-	managers: Array<Manager>;
-	roles: Array<Role>;
+	employees: Employee[];
+	managers: Manager[];
+	roles: Role[];
 };
 
 type UserData = {
@@ -53,3 +62,19 @@ type UserData = {
 };
 
 type TeamData = {};
+
+type CurrentEmpData = {
+	role: Role;
+	salary: number;
+	phone?: string;
+	email?: string;
+	manager: Manager;
+};
+
+type EmpCardEditPayload = {
+	role_id?: string;
+	salary?: number;
+	phone?: string;
+	email?: string;
+	manager_id?: string;
+};

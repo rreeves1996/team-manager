@@ -7,11 +7,6 @@ import Modal from 'react-bootstrap/Modal';
 import axios from 'axios';
 import useFormat from '../../hooks/useFormat';
 
-type EmpCardData = {
-	manager: Manager;
-	role: Role;
-};
-
 function EmpPhoneNumber(props: {
 	header?: boolean;
 	number1: string;
@@ -401,16 +396,16 @@ export function EmpCard(props: {
 		props.employee;
 	const { abbreviateName } = useFormat();
 	const abbreviatedname = abbreviateName(name);
-	const [data, setData] = useState<EmpCardData>();
-	const [show, setShow] = useState(false);
-	const [deleteConfirm, showDeleteConfirm] = useState(false);
-	const [editing, setEditing] = useState(false);
-	const [loading, setLoading] = useState(true);
+	const [show, setShow] = useState<boolean>(false);
+	const [deleteConfirm, showDeleteConfirm] = useState<boolean>(false);
+	const [editing, setEditing] = useState<boolean>(false);
+	const [loading, setLoading] = useState<boolean>(true);
 	const [phoneNumber, setPhoneNumber] = useState({
 		groupOne: phone ? phone.slice(0, 3) : '',
 		groupTwo: phone ? phone.slice(3, 6) : '',
 		groupThree: phone ? phone.slice(6, 10) : '',
 	});
+	const [currentEmpData, setCurrentEmpData] = useState<CurrentEmpData | null>();
 	const [formState, setFormState] = useState({
 		phone1: phoneNumber.groupOne,
 		phone2: phoneNumber.groupTwo,
@@ -427,7 +422,9 @@ export function EmpCard(props: {
 		setEditing(false);
 	};
 
-	const handleShow = () => setShow(true);
+	const handleShow = () => {
+		setShow(true);
+	};
 
 	const handleChange = (event: any) => {
 		const { name, value, maxLength } = event.target;
@@ -446,29 +443,88 @@ export function EmpCard(props: {
 
 	const handleEditSubmit = async (event: any) => {
 		event.preventDefault();
-
-		const { empRole, empSalary, empEmail, empManager } = formState;
-		const phonenumbers = [
-			formState.phone1.trim(),
-			formState.phone2.trim(),
-			formState.phone3.trim(),
+		let payload: EmpCardEditPayload = {
+			role_id: currentEmpData?.role.id,
+			salary: currentEmpData?.salary
+				? currentEmpData.salary
+				: currentEmpData?.role.salary,
+			phone: currentEmpData?.phone,
+			email: currentEmpData?.email,
+			manager_id: currentEmpData?.manager.id,
+		};
+		let phonenumbers = [
+			formState.phone1.trim().toString(),
+			formState.phone2.trim().toString(),
+			formState.phone3.trim().toString(),
 		];
 
+		// Check if role has changed
+		if (formState.empRole !== currentEmpData?.role.title) {
+			// Find new role's ID and assign it to payload
+			let newEmpRole = props.roles?.filter(
+				(role) => role.title === formState.empRole
+			);
+
+			payload!.role_id = newEmpRole![0].id;
+		}
+
+		// Check if salary has changed and is not the same as employee's role salary, and if so, assign salary to payload
+		if (
+			parseInt(formState.empSalary) !== currentEmpData?.role.salary ||
+			parseInt(formState.empSalary) !== currentEmpData?.salary
+		) {
+			payload!.salary = parseInt(formState.empSalary);
+		}
+
+		// Check if phone number has changed
+		if (
+			`${phonenumbers[0]}${phonenumbers[1]}${phonenumbers[2]}` !==
+			currentEmpData?.phone
+		) {
+			// Check to make sure phone number length is valid
+			if (
+				phonenumbers[0].length === 3 &&
+				phonenumbers[1].length === 3 &&
+				phonenumbers[2].length === 4
+			) {
+				payload!.phone = `${phonenumbers[0]}${phonenumbers[1]}${phonenumbers[2]}`;
+			} else {
+				window.alert('Invalid phone number!');
+			}
+		}
+
+		// Check if email has changed
+		if (formState.empEmail && formState.empEmail !== currentEmpData?.email) {
+			let emailFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+
+			// Ensure email is formatted correctly
+			if (formState.empEmail.match(emailFormat)) {
+				payload!.email = formState.empEmail;
+			} else {
+				window.alert('Invalid email!');
+			}
+		}
+
+		// Check if manager has changed
+		if (formState.empManager !== currentEmpData?.manager.name) {
+			// Find new manager's ID and assign it to payload
+			let newManagerID = props.managers!.filter(
+				(manager) => manager.name === formState.empManager
+			);
+
+			payload!.manager_id = newManagerID[0].id;
+		}
+
 		await axios
-			.put(`/api/employees/${id}`, {
-				role: empRole !== data!.role.title ? empRole : role_id,
-				salary: parseInt(empSalary) !== data!.role.salary ? empSalary : null,
-				phone:
-					phonenumbers[0].length === 3 &&
-					phonenumbers[1].length === 3 &&
-					phonenumbers[2].length === 4
-						? phonenumbers[0] + phonenumbers[1] + phonenumbers[2]
-						: null,
-				email: empEmail ? empEmail : null,
-				manager_id: empManager,
+			.put(`/api/employees/${props.employee.id}`, {
+				role_id: payload.role_id,
+				salary: payload.salary,
+				phone: payload.phone,
+				email: payload.email,
+				manager_id: payload.manager_id,
 			})
 			.then((res) => {
-				window.alert(`Employee updated: ${{ res }}`);
+				window.alert(`Employee successfully updated!`);
 
 				setPhoneNumber({
 					groupOne: phonenumbers[0],
@@ -489,236 +545,232 @@ export function EmpCard(props: {
 	};
 
 	useEffect(() => {
-		const fetchData = async () => {
-			const mngrReq = axios.get(`/api/managers/${manager_id}`);
-			const roleReq = axios.get(`/api/roles/${role_id}`);
+		const handleSetCurrentData = () => {
+			if (props.roles) {
+				const roleData = props.roles.filter(
+					(role) => role.id === props.employee.role_id
+				);
+				const managerData = props.managers!.filter(
+					(manager) => manager.id === props.employee.manager_id
+				);
 
-			await axios
-				.all([mngrReq, roleReq])
-				.then(
-					axios.spread((...res) => {
-						setData({
-							manager: res[0].data,
-							role: res[1].data,
-						});
+				setCurrentEmpData({
+					role: roleData[0],
+					salary: props.employee.salary
+						? props.employee.salary
+						: roleData[0].salary,
+					phone: props.employee.phone ? props.employee.phone : undefined,
+					email: props.employee.email ? props.employee.email : undefined,
+					manager: managerData[0],
+				});
 
-						setFormState((formState) => ({
-							...formState,
-							empRole: res[1].data,
-							empSalary: JSON.stringify(res[1].data.salary),
-							empManager: res[0].data.name,
-						}));
-					})
-				)
-				.finally(() => setLoading(!loading))
-				.catch((err) => alert(err));
+				setFormState({
+					...formState,
+					empRole: roleData[0].title,
+					empSalary: props.employee.salary
+						? props.employee.salary.toString()
+						: roleData[0].salary.toString(),
+					empManager: managerData[0].name,
+				});
+			}
+
+			setLoading(!loading);
 		};
 
-		fetchData().catch((err) => alert(err));
-	}, [phoneNumber]);
+		handleSetCurrentData();
+	}, []);
+
+	console.log(currentEmpData);
+	if (loading) return <></>;
 
 	return (
 		<>
-			{loading ? (
-				<></>
-			) : (
-				<>
-					<div className='emp-card' onClick={handleShow}>
-						<div className='emp-card-header'>
-							<div className='emp-picture'>
-								{picture ? (
-									<img src={picture} alt='' />
-								) : (
-									<FaUser className='emp-picture-icon' />
-								)}
-							</div>
+			<div className='emp-card' onClick={handleShow}>
+				<div className='emp-card-header'>
+					<div className='emp-picture'>
+						{picture ? (
+							<img src={picture} alt='' />
+						) : (
+							<FaUser className='emp-picture-icon' />
+						)}
+					</div>
 
-							<div className='emp-info-header'>
-								<h6 className='emp-name'>
-									<strong>{abbreviatedname}</strong>
-								</h6>
+					<div className='emp-info-header'>
+						<h6 className='emp-name'>
+							<strong>{abbreviatedname}</strong>
+						</h6>
 
-								<h6 className='emp-role'>{data!.role.title}</h6>
-							</div>
+						<h6 className='emp-role'>{currentEmpData!.role.title}</h6>
+					</div>
+				</div>
+			</div>
+
+			<Modal
+				aria-labelledby='contained-modal-title-vcenter'
+				centered
+				show={show}
+				onHide={() => {
+					handleClose();
+					setTimeout(() => {
+						showDeleteConfirm(false);
+						setEditing(false);
+					}, 300);
+				}}>
+				<div className='emp-card-modal-container'>
+					<HiXMark className='exit-button' onClick={() => handleClose()} />
+
+					<div className='emp-card-header-modal'>
+						<div className='emp-picture'>
+							{picture ? (
+								<img src={picture} alt='' />
+							) : (
+								<FaUser className='emp-picture-icon' />
+							)}
+						</div>
+
+						<div className='emp-info-header'>
+							<h6 className='emp-name'>
+								<strong>{name}</strong>
+							</h6>
 						</div>
 					</div>
 
-					<Modal
-						aria-labelledby='contained-modal-title-vcenter'
-						centered
-						show={show}
-						onHide={() => {
-							handleClose();
-							setTimeout(() => {
-								showDeleteConfirm(false);
-								setEditing(false);
-							}, 300);
-						}}>
-						<div className='emp-card-modal-container'>
-							<HiXMark className='exit-button' onClick={() => handleClose()} />
+					<div className='emp-contact-info'>
+						{editing ? (
+							<>
+								<form className='card-edit' onSubmit={handleEditSubmit}>
+									<p>
+										<strong>Role:</strong>
+										<select
+											className='card-role-select'
+											name='empRole'
+											value={formState.empRole}
+											onChange={handleChange}>
+											{props.roles!.map((role) => (
+												<option key={uuidv4()} value={role.id}>
+													{role.title}
+												</option>
+											))}
+										</select>
+									</p>
 
-							<div className='emp-card-header-modal'>
-								<div className='emp-picture'>
-									{picture ? (
-										<img src={picture} alt='' />
-									) : (
-										<FaUser className='emp-picture-icon' />
-									)}
-								</div>
-
-								<div className='emp-info-header'>
-									<h6 className='emp-name'>
-										<strong>{name}</strong>
-									</h6>
-								</div>
-							</div>
-
-							<div className='emp-contact-info'>
-								{editing ? (
-									<>
-										<form className='card-edit' onSubmit={handleEditSubmit}>
-											<p>
-												<strong>Role:</strong>
-												<select
-													className='card-role-select'
-													name='empRole'
-													value={formState.empRole}
-													onChange={handleChange}>
-													{props.roles!.map((role) => (
-														<option key={uuidv4()} value={role.id}>
-															{role.title}
-														</option>
-													))}
-												</select>
-											</p>
-
-											<p>
-												<strong>Salary:</strong> $
-												<input
-													className='card-input'
-													type='text'
-													name='empSalary'
-													value={formState.empSalary}
-													onChange={handleChange}
-												/>
-											</p>
-
-											<p>
-												<strong>Phone:</strong>
-												<input
-													className='card-input number-input'
-													type='text'
-													id='number-input1'
-													name='phone1'
-													maxLength={3}
-													value={formState.phone1}
-													onChange={handleChange}
-												/>
-												-
-												<input
-													className='card-input number-input'
-													type='text'
-													id='number-input2'
-													name='phone2'
-													maxLength={3}
-													value={formState.phone2}
-													onChange={handleChange}
-												/>
-												-
-												<input
-													className='card-input number-input'
-													type='text'
-													id='number-input3'
-													name='phone3'
-													maxLength={4}
-													value={formState.phone3}
-													onChange={handleChange}
-												/>
-											</p>
-
-											<p>
-												<strong>Email:</strong>
-												<input
-													className='card-input'
-													type='text'
-													name='empEmail'
-													value={formState.empEmail}
-													onChange={handleChange}
-												/>
-											</p>
-
-											<p>
-												<strong>Manager:</strong>
-												<select
-													className='card-manager-select'
-													name='empManager'
-													value={formState.empManager}
-													onChange={handleChange}>
-													{props.managers!.map((manager) => (
-														<option key={uuidv4()} value={manager.id}>
-															{manager.name}
-														</option>
-													))}
-												</select>
-											</p>
-
-											<div className='emp-card-button-container'>
-												<button
-													className='edit-button'
-													onClick={() => setEditing(!editing)}>
-													Cancel
-												</button>
-												<button className='submit-button' type='submit'>
-													Submit
-												</button>
-											</div>
-										</form>
-									</>
-								) : (
-									<>
-										<EmpRole role={data!.role.title} />
-										<EmpSalary
-											salary={
-												props.employee.salary
-													? props.employee.salary
-													: data!.role.salary
-											}
+									<p>
+										<strong>Salary:</strong> $
+										<input
+											className='card-input'
+											type='text'
+											name='empSalary'
+											value={formState.empSalary}
+											onChange={handleChange}
 										/>
-										<EmpPhoneNumber
-											number1={phoneNumber.groupOne}
-											number2={phoneNumber.groupTwo}
-											number3={phoneNumber.groupThree}
-										/>
-										<EmpEmail email={email!} />
-										<EmpMngr manager={data!.manager.name} />
-										<div className='emp-card-button-container'>
-											<button
-												className='edit-button'
-												onClick={() => setEditing(!editing)}>
-												Edit
-											</button>
+									</p>
 
-											<button
-												className={
-													deleteConfirm
-														? 'delete-button confirm'
-														: 'delete-button'
-												}
-												onClick={
-													deleteConfirm
-														? () => deleteEmployee(props.employee)
-														: () => showDeleteConfirm(true)
-												}>
-												{deleteConfirm ? 'Are you sure?' : 'Delete'}
-											</button>
-										</div>
-									</>
-								)}
-							</div>
-						</div>
-					</Modal>
-				</>
-			)}
+									<p>
+										<strong>Phone:</strong>
+										<input
+											className='card-input number-input'
+											type='text'
+											id='number-input1'
+											name='phone1'
+											maxLength={3}
+											value={formState.phone1}
+											onChange={handleChange}
+										/>
+										-
+										<input
+											className='card-input number-input'
+											type='text'
+											id='number-input2'
+											name='phone2'
+											maxLength={3}
+											value={formState.phone2}
+											onChange={handleChange}
+										/>
+										-
+										<input
+											className='card-input number-input'
+											type='text'
+											id='number-input3'
+											name='phone3'
+											maxLength={4}
+											value={formState.phone3}
+											onChange={handleChange}
+										/>
+									</p>
+
+									<p>
+										<strong>Email:</strong>
+										<input
+											className='card-input'
+											type='text'
+											name='empEmail'
+											value={formState.empEmail}
+											onChange={handleChange}
+										/>
+									</p>
+
+									<p>
+										<strong>Manager:</strong>
+										<select
+											className='card-manager-select'
+											name='empManager'
+											value={formState.empManager}
+											onChange={handleChange}>
+											{props.managers!.map((manager) => (
+												<option key={uuidv4()} value={manager.id}>
+													{manager.name}
+												</option>
+											))}
+										</select>
+									</p>
+
+									<div className='emp-card-button-container'>
+										<button
+											className='edit-button'
+											onClick={() => setEditing(!editing)}>
+											Cancel
+										</button>
+										<button className='submit-button' type='submit'>
+											Submit
+										</button>
+									</div>
+								</form>
+							</>
+						) : (
+							<>
+								<EmpRole role={currentEmpData!.role.title} />
+								<EmpSalary salary={currentEmpData!.salary} />
+								<EmpPhoneNumber
+									number1={phoneNumber.groupOne}
+									number2={phoneNumber.groupTwo}
+									number3={phoneNumber.groupThree}
+								/>
+								<EmpEmail email={currentEmpData!.email} />
+								<EmpMngr manager={currentEmpData!.manager.name} />
+								<div className='emp-card-button-container'>
+									<button
+										className='edit-button'
+										onClick={() => setEditing(!editing)}>
+										Edit
+									</button>
+
+									<button
+										className={
+											deleteConfirm ? 'delete-button confirm' : 'delete-button'
+										}
+										onClick={
+											deleteConfirm
+												? () => deleteEmployee(props.employee)
+												: () => showDeleteConfirm(true)
+										}>
+										{deleteConfirm ? 'Are you sure?' : 'Delete'}
+									</button>
+								</div>
+							</>
+						)}
+					</div>
+				</div>
+			</Modal>
 		</>
 	);
 }

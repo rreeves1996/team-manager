@@ -30,7 +30,7 @@ export default function Preview({
 
 	const getEmpCount = (role: Role) => {
 		const employeesInRole = employees.filter(
-			(employee: Employee) => employee.role === role.title
+			(employee: Employee) => employee.role!.title === role.title
 		);
 
 		return employeesInRole.length;

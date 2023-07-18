@@ -173,7 +173,7 @@ export default function useQuery() {
 							team_id,
 						};
 						const employeesInRole = employees.filter(
-							(employee) => employee.role === role.title
+							(employee) => employee.role!.title === role.title
 						);
 
 						addRole(rolePayload).then((res) => {

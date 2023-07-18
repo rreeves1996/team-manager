@@ -86,6 +86,7 @@ export default function TeamCard(props: TeamCardProps) {
 						onClick={() => setDeleteConfirm(true)}
 						style={style}
 						className='tc-delete-icon-container'>
+							
 						<TiDelete className='tc-delete-icon' />
 					</div>
 

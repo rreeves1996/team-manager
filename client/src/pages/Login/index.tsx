@@ -109,7 +109,7 @@ export default function Login() {
 
 						<h5>Team Management</h5>
 					</div>
-					<div className='banner'></div>
+					<div className='banner' />
 				</div>
 			</div>
 		</>
