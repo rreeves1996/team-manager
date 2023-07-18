@@ -81,27 +81,24 @@ function EmpSalary(props: { salary?: number }) {
 	);
 }
 
-export function MngrCard(props: { manager: Manager }) {
-	const { id, name, picture, is_lead, phone, email, timezone, salary } =
-		props.manager;
+export function MngrCard({ manager }: { manager: Manager }) {
 	const { abbreviateName } = useFormat();
-	const abbreviatedname = abbreviateName(name);
+	const abbreviatedname = abbreviateName(manager.name);
 	const [show, setShow] = useState(false);
 	const [deleteConfirm, showDeleteConfirm] = useState(false);
 	const [editing, setEditing] = useState(false);
-	const [loading, setLoading] = useState(false);
 	const [phoneNumber, setPhoneNumber] = useState({
-		groupOne: phone ? phone.slice(0, 3) : '',
-		groupTwo: phone ? phone.slice(3, 6) : '',
-		groupThree: phone ? phone.slice(6, 10) : '',
+		groupOne: manager.phone ? manager.phone.slice(0, 3) : '',
+		groupTwo: manager.phone ? manager.phone.slice(3, 6) : '',
+		groupThree: manager.phone ? manager.phone.slice(6, 10) : '',
 	});
 	const [formState, setFormState] = useState({
-		mngrSalary: salary,
+		mngrSalary: manager.salary,
 		phone1: phoneNumber.groupOne,
 		phone2: phoneNumber.groupTwo,
 		phone3: phoneNumber.groupThree,
-		mngrEmail: email ? email : '',
-		mngrTimezone: timezone ? timezone : '',
+		mngrEmail: manager.email ? manager.email : '',
+		mngrTimezone: manager.timezone ? manager.timezone : '',
 	});
 
 	// Create an Array.range fucntion which takes in a custom start and end point and returns an array of numbers from start to end
@@ -117,7 +114,10 @@ export function MngrCard(props: { manager: Manager }) {
 			setEditing(false);
 		}, 300);
 	};
-	const handleShow = () => setShow(true);
+
+	const handleShow = () => {
+		setShow(true);
+	};
 
 	const handleChange = (event: any) => {
 		const { name, value, maxLength } = event.target;
@@ -137,252 +137,272 @@ export function MngrCard(props: { manager: Manager }) {
 	const handleEditSubmit = async (event: any) => {
 		event.preventDefault();
 
-		const emailFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-		const { mngrSalary, mngrEmail, mngrTimezone } = formState;
+		let payload: ManagerCardEditPayload = {
+			salary: manager.salary,
+			phone: manager.phone,
+			email: manager.email,
+			timezone: manager.timezone,
+		};
 		const phonenumbers = [
 			formState.phone1.trim(),
 			formState.phone2.trim(),
 			formState.phone3.trim(),
 		];
 
-		if (mngrEmail.match(emailFormat)) {
+		// Check if salary has changed , and if so, assign salary to payload
+		if (formState.mngrSalary !== manager.salary) {
+			payload!.salary = formState.mngrSalary;
+		}
+
+		// Check if phone number has changed
+		if (
+			`${phonenumbers[0]}${phonenumbers[1]}${phonenumbers[2]}` !== manager.phone
+		) {
+			// Check to make sure phone number length is valid
 			if (
 				phonenumbers[0].length === 3 &&
 				phonenumbers[1].length === 3 &&
 				phonenumbers[2].length === 4
 			) {
-				await axios
-					.put(`/api/managers/${id}`, {
-						salary: mngrSalary,
-						phone: phonenumbers[0] + phonenumbers[1] + phonenumbers[2],
-						email: mngrEmail,
-						timezone: mngrTimezone,
-					})
-					.then((res) => {
-						console.log(`Manager updated: ${res}`);
-
-						setPhoneNumber({
-							groupOne: phonenumbers[0],
-							groupTwo: phonenumbers[1],
-							groupThree: phonenumbers[2],
-						});
-					})
-					.catch((err) => console.log(`Failed to update manager: ${err}`));
+				payload!.phone = `${phonenumbers[0]}${phonenumbers[1]}${phonenumbers[2]}`;
 			} else {
-				alert('Invalid phone number!');
+				window.alert('Invalid phone number!');
 			}
-		} else {
-			alert('Invalid email!');
 		}
+
+		// Check if email has changed
+		if (formState.mngrEmail && formState.mngrEmail !== manager.email) {
+			let emailFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+
+			// Ensure email is formatted correctly and add to payload
+			if (formState.mngrEmail.match(emailFormat)) {
+				payload!.email = formState.mngrEmail;
+			} else {
+				window.alert('Invalid email!');
+			}
+		}
+
+		// Check if timezone has changed, and if so, add to payload
+		if (formState.mngrTimezone !== manager.timezone) {
+			payload!.timezone = formState.mngrTimezone;
+		}
+
+		await axios
+			.put(`/api/managers/${manager.id}`, {
+				salary: payload.salary,
+				phone: payload.phone,
+				email: payload.email,
+				timezone: payload.timezone,
+			})
+			.then((res) => {
+				console.log(`Manager updated: ${res}`);
+
+				setPhoneNumber({
+					groupOne: phonenumbers[0],
+					groupTwo: phonenumbers[1],
+					groupThree: phonenumbers[2],
+				});
+			})
+			.catch((err) => console.log(`Failed to update manager: ${err}`));
 
 		setEditing(!editing);
 	};
 
-	const deleteEmployee = (employee: any) => {
-		if (employee.role === 'manager') {
-			let index = employee.id - 1;
-			// delete props.manager[index];
-		}
+	const deleteEmployee = (manager: any) => {
+		let index = manager.id - 1;
+		delete manager[index];
 	};
 
 	return (
 		<>
-			{loading ? (
-				<></>
-			) : (
-				<>
-					<div className='emp-card' onClick={handleShow}>
-						<div className='emp-card-header'>
-							<div className='emp-picture'>
-								{picture ? (
-									<img src={picture} alt='' />
-								) : (
-									<FaUser className='emp-picture-icon' />
-								)}
-							</div>
+			<div className='emp-card' onClick={handleShow}>
+				<div className='emp-card-header'>
+					<div className='emp-picture'>
+						{manager.picture ? (
+							<img src={manager.picture} alt='' />
+						) : (
+							<FaUser className='emp-picture-icon' />
+						)}
+					</div>
 
-							<div className='emp-info-header'>
-								<h6 className='emp-name'>
-									<strong>{abbreviatedname}</strong>
-								</h6>
+					<div className='emp-info-header'>
+						<h6 className='emp-name'>
+							<strong>{abbreviatedname}</strong>
+						</h6>
 
-								<h6 className='emp-role'>
-									{is_lead ? 'Team Lead' : 'Manager'}
-								</h6>
+						<h6 className='emp-role'>
+							{manager.is_lead ? 'Team Lead' : 'Manager'}
+						</h6>
 
+						<EmpPhoneNumber
+							header={true}
+							number1={phoneNumber.groupOne}
+							number2={phoneNumber.groupTwo}
+							number3={phoneNumber.groupThree}
+						/>
+					</div>
+				</div>
+			</div>
+
+			<Modal
+				aria-labelledby='contained-modal-title-vcenter'
+				centered
+				show={show}
+				onHide={() => {
+					handleClose();
+					setTimeout(() => {
+						showDeleteConfirm(false);
+						setEditing(false);
+					}, 300);
+				}}>
+				<div className='emp-card-modal-container'>
+					<HiXMark className=' exit-button' onClick={() => handleClose()} />
+
+					<div className='emp-card-header-modal'>
+						<div className='emp-picture'>
+							{manager.picture ? (
+								<img src={manager.picture} alt='' />
+							) : (
+								<FaUser className='emp-picture-icon' />
+							)}
+						</div>
+
+						<div className='emp-info-header'>
+							<h6 className='emp-name'>
+								<strong>{manager.name}</strong>
+							</h6>
+
+							<h6 className='emp-role'>
+								{manager.is_lead ? 'Team Lead' : 'Manager'}
+							</h6>
+						</div>
+					</div>
+
+					<div className='emp-contact-info'>
+						{editing ? (
+							<>
+								<form className='card-edit' onSubmit={handleEditSubmit}>
+									<p>
+										<strong>Salary:</strong> $
+										<input
+											type='text'
+											className='card-input salary-input'
+											name='mngrSalary'
+											value={formState.mngrSalary}
+											onChange={handleChange}
+										/>
+									</p>
+
+									<p>
+										<strong>Phone:</strong>
+										<input
+											type='text'
+											className='card-input number-input'
+											id='number-input1'
+											name='phone1'
+											maxLength={3}
+											value={formState.phone1}
+											onChange={handleChange}
+										/>
+										-
+										<input
+											type='text'
+											className='card-input number-input'
+											id='number-input2'
+											name='phone2'
+											maxLength={3}
+											value={formState.phone2}
+											onChange={handleChange}
+										/>
+										-
+										<input
+											type='text'
+											className='card-input number-input'
+											id='number-input3'
+											name='phone3'
+											maxLength={4}
+											value={formState.phone3}
+											onChange={handleChange}
+										/>
+									</p>
+
+									<p>
+										<strong>Email:</strong>
+										<input
+											type='text'
+											className='card-input email-input'
+											name='mngrEmail'
+											value={formState.mngrEmail}
+											onChange={handleChange}
+										/>
+									</p>
+
+									<p>
+										<strong>Time:</strong>
+										<select
+											className='card-input timezone-input'
+											name='mngrTimezone'
+											defaultValue={'default'}
+											onChange={handleChange}>
+											<option value='default' disabled>
+												Select timezone...
+											</option>
+											{timezones.map((time) => (
+												<option value={time}>
+													<p>UTC -{time}:00</p>
+												</option>
+											))}
+										</select>
+									</p>
+
+									<div className='emp-card-button-container'>
+										<button
+											className='edit-button'
+											onClick={() => setEditing(!editing)}>
+											Cancel
+										</button>
+
+										<button className='submit-button' type='submit'>
+											Submit
+										</button>
+									</div>
+								</form>
+							</>
+						) : (
+							<>
+								<EmpSalary salary={manager.salary} />
 								<EmpPhoneNumber
-									header={true}
+									header={false}
 									number1={phoneNumber.groupOne}
 									number2={phoneNumber.groupTwo}
 									number3={phoneNumber.groupThree}
 								/>
-							</div>
-						</div>
+								<EmpEmail email={manager.email} />
+								<EmpTimeZone timezone={manager.timezone} />
+								<div className='emp-card-button-container'>
+									<button
+										className='edit-button'
+										onClick={() => setEditing(!editing)}>
+										Edit
+									</button>
+
+									<button
+										className={
+											deleteConfirm ? 'delete-button confirm' : 'delete-button'
+										}
+										onClick={
+											deleteConfirm
+												? () => deleteEmployee(manager)
+												: () => showDeleteConfirm(true)
+										}>
+										{deleteConfirm ? 'Are you sure?' : 'Delete'}
+									</button>
+								</div>
+							</>
+						)}
 					</div>
-
-					<Modal
-						aria-labelledby='contained-modal-title-vcenter'
-						centered
-						show={show}
-						onHide={() => {
-							handleClose();
-							setTimeout(() => {
-								showDeleteConfirm(false);
-								setEditing(false);
-							}, 300);
-						}}>
-						<div className='emp-card-modal-container'>
-							<HiXMark className=' exit-button' onClick={() => handleClose()} />
-
-							<div className='emp-card-header-modal'>
-								<div className='emp-picture'>
-									{picture ? (
-										<img src={picture} alt='' />
-									) : (
-										<FaUser className='emp-picture-icon' />
-									)}
-								</div>
-
-								<div className='emp-info-header'>
-									<h6 className='emp-name'>
-										<strong>{name}</strong>
-									</h6>
-
-									<h6 className='emp-role'>
-										{is_lead ? 'Team Lead' : 'Manager'}
-									</h6>
-								</div>
-							</div>
-
-							<div className='emp-contact-info'>
-								{editing ? (
-									<>
-										<form className='card-edit' onSubmit={handleEditSubmit}>
-											<p>
-												<strong>Salary:</strong> $
-												<input
-													type='text'
-													className='card-input salary-input'
-													name='mngrSalary'
-													value={formState.mngrSalary}
-													onChange={handleChange}
-												/>
-											</p>
-
-											<p>
-												<strong>Phone:</strong>
-												<input
-													type='text'
-													className='card-input number-input'
-													id='number-input1'
-													name='phone1'
-													maxLength={3}
-													value={formState.phone1}
-													onChange={handleChange}
-												/>
-												-
-												<input
-													type='text'
-													className='card-input number-input'
-													id='number-input2'
-													name='phone2'
-													maxLength={3}
-													value={formState.phone2}
-													onChange={handleChange}
-												/>
-												-
-												<input
-													type='text'
-													className='card-input number-input'
-													id='number-input3'
-													name='phone3'
-													maxLength={4}
-													value={formState.phone3}
-													onChange={handleChange}
-												/>
-											</p>
-
-											<p>
-												<strong>Email:</strong>
-												<input
-													type='text'
-													className='card-input email-input'
-													name='mngrEmail'
-													value={formState.mngrEmail}
-													onChange={handleChange}
-												/>
-											</p>
-
-											<p>
-												<strong>Time:</strong>
-												<select
-													className='card-input timezone-input'
-													name='mngrTimezone'
-													defaultValue={'default'}
-													onChange={handleChange}>
-													<option value='default' disabled>
-														Select timezone...
-													</option>
-													{timezones.map((time) => (
-														<option value={time}>
-															<p>UTC -{time}:00</p>
-														</option>
-													))}
-												</select>
-											</p>
-
-											<div className='emp-card-button-container'>
-												<button
-													className='edit-button'
-													onClick={() => setEditing(!editing)}>
-													Cancel
-												</button>
-
-												<button className='submit-button' type='submit'>
-													Submit
-												</button>
-											</div>
-										</form>
-									</>
-								) : (
-									<>
-										<EmpSalary salary={salary} />
-										<EmpPhoneNumber
-											header={false}
-											number1={phoneNumber.groupOne}
-											number2={phoneNumber.groupTwo}
-											number3={phoneNumber.groupThree}
-										/>
-										<EmpEmail email={email} />
-										<EmpTimeZone timezone={timezone} />
-										<div className='emp-card-button-container'>
-											<button
-												className='edit-button'
-												onClick={() => setEditing(!editing)}>
-												Edit
-											</button>
-
-											<button
-												className={
-													deleteConfirm
-														? 'delete-button confirm'
-														: 'delete-button'
-												}
-												onClick={
-													deleteConfirm
-														? () => deleteEmployee(props)
-														: () => showDeleteConfirm(true)
-												}>
-												{deleteConfirm ? 'Are you sure?' : 'Delete'}
-											</button>
-										</div>
-									</>
-								)}
-							</div>
-						</div>
-					</Modal>
-				</>
-			)}
+				</div>
+			</Modal>
 		</>
 	);
 }
@@ -444,6 +464,7 @@ export function EmpCard({
 
 	const handleEditSubmit = async (event: any) => {
 		event.preventDefault();
+
 		let payload: EmpCardEditPayload = {
 			role_id: currentEmpData?.role.id,
 			salary: currentEmpData?.salary
@@ -498,7 +519,7 @@ export function EmpCard({
 		if (formState.empEmail && formState.empEmail !== currentEmpData?.email) {
 			let emailFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
-			// Ensure email is formatted correctly
+			// Ensure email is formatted correctly and add to payload
 			if (formState.empEmail.match(emailFormat)) {
 				payload!.email = formState.empEmail;
 			} else {
