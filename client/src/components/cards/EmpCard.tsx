@@ -387,30 +387,31 @@ export function MngrCard(props: { manager: Manager }) {
 	);
 }
 
-export function EmpCard(props: {
+export function EmpCard({
+	employee,
+	managers,
+	roles,
+}: {
 	employee: Employee;
 	managers?: Manager[];
 	roles?: Role[];
 }) {
-	const { id, name, picture, role_id, phone, email, manager_id } =
-		props.employee;
 	const { abbreviateName } = useFormat();
-	const abbreviatedname = abbreviateName(name);
+	const abbreviatedname = abbreviateName(employee.name);
 	const [show, setShow] = useState<boolean>(false);
 	const [deleteConfirm, showDeleteConfirm] = useState<boolean>(false);
 	const [editing, setEditing] = useState<boolean>(false);
-	const [loading, setLoading] = useState<boolean>(true);
 	const [phoneNumber, setPhoneNumber] = useState({
-		groupOne: phone ? phone.slice(0, 3) : '',
-		groupTwo: phone ? phone.slice(3, 6) : '',
-		groupThree: phone ? phone.slice(6, 10) : '',
+		groupOne: employee.phone ? employee.phone.slice(0, 3) : '',
+		groupTwo: employee.phone ? employee.phone.slice(3, 6) : '',
+		groupThree: employee.phone ? employee.phone.slice(6, 10) : '',
 	});
 	const [currentEmpData, setCurrentEmpData] = useState<CurrentEmpData | null>();
 	const [formState, setFormState] = useState({
 		phone1: phoneNumber.groupOne,
 		phone2: phoneNumber.groupTwo,
 		phone3: phoneNumber.groupThree,
-		empEmail: email ? email : '',
+		empEmail: employee.email ? employee.email : '',
 		empRole: '',
 		empSalary: '',
 		empManager: '',
@@ -461,7 +462,7 @@ export function EmpCard(props: {
 		// Check if role has changed
 		if (formState.empRole !== currentEmpData?.role.title) {
 			// Find new role's ID and assign it to payload
-			let newEmpRole = props.roles?.filter(
+			let newEmpRole = roles?.filter(
 				(role) => role.title === formState.empRole
 			);
 
@@ -508,7 +509,7 @@ export function EmpCard(props: {
 		// Check if manager has changed
 		if (formState.empManager !== currentEmpData?.manager.name) {
 			// Find new manager's ID and assign it to payload
-			let newManagerID = props.managers!.filter(
+			let newManagerID = managers!.filter(
 				(manager) => manager.name === formState.empManager
 			);
 
@@ -516,7 +517,7 @@ export function EmpCard(props: {
 		}
 
 		await axios
-			.put(`/api/employees/${props.employee.id}`, {
+			.put(`/api/employees/${employee.id}`, {
 				role_id: payload.role_id,
 				salary: payload.salary,
 				phone: payload.phone,
@@ -540,56 +541,49 @@ export function EmpCard(props: {
 	const deleteEmployee = (employee: Employee) => {
 		if (employee.role!.title === 'manager') {
 			let index = parseInt(employee.id!) - 1;
-			delete props.managers![index];
+			delete managers![index];
 		}
 	};
 
 	useEffect(() => {
 		const handleSetCurrentData = () => {
-			if (props.roles) {
-				const roleData = props.roles.filter(
-					(role) => role.id === props.employee.role_id
-				);
-				const managerData = props.managers!.filter(
-					(manager) => manager.id === props.employee.manager_id
+			if (roles) {
+				const roleData = roles.filter((role) => role.id === employee.role_id);
+				const managerData = managers!.filter(
+					(manager) => manager.id === employee.manager_id
 				);
 
 				setCurrentEmpData({
 					role: roleData[0],
-					salary: props.employee.salary
-						? props.employee.salary
-						: roleData[0].salary,
-					phone: props.employee.phone ? props.employee.phone : undefined,
-					email: props.employee.email ? props.employee.email : undefined,
+					salary: employee.salary ? employee.salary : roleData[0].salary,
+					phone: employee.phone ? employee.phone : undefined,
+					email: employee.email ? employee.email : undefined,
 					manager: managerData[0],
 				});
 
 				setFormState({
 					...formState,
 					empRole: roleData[0].title,
-					empSalary: props.employee.salary
-						? props.employee.salary.toString()
+					empSalary: employee.salary
+						? employee.salary.toString()
 						: roleData[0].salary.toString(),
 					empManager: managerData[0].name,
 				});
 			}
-
-			setLoading(!loading);
 		};
 
 		handleSetCurrentData();
 	}, []);
 
 	console.log(currentEmpData);
-	if (loading) return <></>;
 
 	return (
 		<>
 			<div className='emp-card' onClick={handleShow}>
 				<div className='emp-card-header'>
 					<div className='emp-picture'>
-						{picture ? (
-							<img src={picture} alt='' />
+						{employee.picture ? (
+							<img src={employee.picture} alt='' />
 						) : (
 							<FaUser className='emp-picture-icon' />
 						)}
@@ -600,7 +594,7 @@ export function EmpCard(props: {
 							<strong>{abbreviatedname}</strong>
 						</h6>
 
-						<h6 className='emp-role'>{currentEmpData!.role.title}</h6>
+						<h6 className='emp-role'>{employee.role!.title}</h6>
 					</div>
 				</div>
 			</div>
@@ -621,8 +615,8 @@ export function EmpCard(props: {
 
 					<div className='emp-card-header-modal'>
 						<div className='emp-picture'>
-							{picture ? (
-								<img src={picture} alt='' />
+							{employee.picture ? (
+								<img src={employee.picture} alt='' />
 							) : (
 								<FaUser className='emp-picture-icon' />
 							)}
@@ -630,7 +624,7 @@ export function EmpCard(props: {
 
 						<div className='emp-info-header'>
 							<h6 className='emp-name'>
-								<strong>{name}</strong>
+								<strong>{employee.name}</strong>
 							</h6>
 						</div>
 					</div>
@@ -646,7 +640,7 @@ export function EmpCard(props: {
 											name='empRole'
 											value={formState.empRole}
 											onChange={handleChange}>
-											{props.roles!.map((role) => (
+											{roles!.map((role) => (
 												<option key={uuidv4()} value={role.id}>
 													{role.title}
 												</option>
@@ -716,7 +710,7 @@ export function EmpCard(props: {
 											name='empManager'
 											value={formState.empManager}
 											onChange={handleChange}>
-											{props.managers!.map((manager) => (
+											{managers!.map((manager) => (
 												<option key={uuidv4()} value={manager.id}>
 													{manager.name}
 												</option>
@@ -760,7 +754,7 @@ export function EmpCard(props: {
 										}
 										onClick={
 											deleteConfirm
-												? () => deleteEmployee(props.employee)
+												? () => deleteEmployee(employee)
 												: () => showDeleteConfirm(true)
 										}>
 										{deleteConfirm ? 'Are you sure?' : 'Delete'}
