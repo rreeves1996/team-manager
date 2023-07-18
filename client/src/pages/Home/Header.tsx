@@ -10,7 +10,7 @@ export default function Header() {
 	const navigate = useNavigate();
 	const teamData = useContext(DataContext);
 	const { editTeamName, editTeamLead, deleteTeam } = useQuery();
-	const [collapsedMenu, toggleCollapseMenu] = useState(true);
+	const [collapse, toggleCollapse] = useState(true);
 	const [deleteConfirm, setDeleteConfirm] = useState(false);
 	const [editing, setEditing] = useState('none');
 	const [formState, setFormState] = useState({
@@ -165,22 +165,22 @@ export default function Header() {
 						)}
 					</h4>
 				</div>
-				<div className={collapsedMenu ? 'menu-button' : 'menu-button open'}>
+				<div className={collapse ? 'menu-button' : 'menu-button open'}>
 					<HiPencilSquare
 						className='pencil-icon'
 						onClick={() => {
-							toggleCollapseMenu(!collapsedMenu);
+							toggleCollapse(!collapse);
 							setTimeout(() => {
 								setDeleteConfirm(false);
 							}, 200);
 						}}
 					/>
-					<ul className={!collapsedMenu ? 'team-menu' : 'team-menu collapse'}>
+					<ul className={!collapse ? 'team-menu' : 'team-menu collapse'}>
 						<li
 							id='edit-name'
 							onClick={() => {
 								setEditing('team');
-								toggleCollapseMenu(true);
+								toggleCollapse(true);
 							}}>
 							Edit team name
 						</li>
@@ -188,7 +188,7 @@ export default function Header() {
 							id='edit-manager'
 							onClick={() => {
 								setEditing('lead');
-								toggleCollapseMenu(true);
+								toggleCollapse(true);
 							}}>
 							Edit team lead
 						</li>

@@ -27,7 +27,7 @@ function EmpPhoneNumber({
 				<>
 					{header ? (
 						<span className='phone-missing'>
-							<BsExclamationLg className='alert-icon' /> Phone # missing
+							<BsExclamationLg className='alert-icon-empcard' /> Phone # missing
 						</span>
 					) : (
 						<>No # found</>

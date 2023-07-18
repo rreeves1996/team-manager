@@ -1,8 +1,8 @@
 @import './variables';
 @import './mixins';
 @import './navbar';
-@import './empcard';
 @import './teamcard';
+@import './empcard';
 
 /* CSS RESETS */
 
@@ -59,9 +59,7 @@ body {
 /* MAIN STYLING */
 
 main {
-	display: flex;
-	align-items: center;
-	flex-direction: column;
+	@include flexColumnAlign(center);
 	width: 100vw;
 	min-height: calc(100vh - 130px);
 }
@@ -89,10 +87,8 @@ button:focus {
 	outline: none;
 }
 header {
+	@include flexColumnJustify(center);
 	background-color: $blue;
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
 	user-select: contain;
 	width: 100%;
 	padding: 5px calc((100vw - 1180px) / 2);
@@ -121,10 +117,8 @@ select {
 }
 
 footer {
+	@include flexCenter();
 	position: relative;
-	display: flex;
-	justify-content: center;
-	align-items: center;
 	height: 50px;
 	width: 100vw;
 }
@@ -183,11 +177,9 @@ p {
 	margin: 7px 0 22px;
 }
 .form-side {
+	@include flexColumnAlign(center);
 	width: 50%;
 	height: 100%;
-	display: flex;
-	align-items: center;
-	flex-direction: column;
 	background-color: $accent;
 	color: $offBlack;
 }
@@ -536,7 +528,11 @@ header .pencil-icon:active,
 	transition: all 270ms ease;
 }
 .team-menu.collapse {
+	@include noSelect();
 	opacity: 0;
+}
+.team-menu .collapse li {
+	@include noSelect();
 }
 .team-menu,
 .nav-link-container {
