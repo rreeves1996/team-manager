@@ -78,3 +78,10 @@ type EmpCardEditPayload = {
 	email?: string;
 	manager_id?: string;
 };
+
+type ManagerCardEditPayload = {
+	salary?: number;
+	phone?: string;
+	email?: string;
+	timezone?: string;
+};

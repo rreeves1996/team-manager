@@ -39,7 +39,7 @@ function EmpPhoneNumber(props: {
 	);
 }
 
-function EmpEmail(props: { email?: string }) {
+function EmpEmail(props: { email?: string | null }) {
 	return (
 		<p>
 			<strong>Email:</strong> {props.email ? props.email : 'No email found'}
@@ -55,7 +55,7 @@ function EmpTimeZone(props: { timezone?: string }) {
 	);
 }
 
-function EmpRole(props: { role?: string }) {
+function EmpRole(props: { role?: string | null }) {
 	return (
 		<p>
 			<strong>Role:</strong> {props.role ? props.role : 'No role found'}
@@ -63,7 +63,7 @@ function EmpRole(props: { role?: string }) {
 	);
 }
 
-function EmpMngr(props: { manager: string }) {
+function EmpMngr(props: { manager?: string | null }) {
 	return (
 		<p>
 			<strong>Manager:</strong>{' '}
@@ -72,7 +72,7 @@ function EmpMngr(props: { manager: string }) {
 	);
 }
 
-function EmpSalary(props: { salary?: number }) {
+function EmpSalary(props: { salary?: number | null }) {
 	return (
 		<p>
 			<strong>Salary:</strong> $
@@ -615,7 +615,7 @@ export function EmpCard({
 							<strong>{abbreviatedname}</strong>
 						</h6>
 
-						<h6 className='emp-role'>{employee.role!.title}</h6>
+						<h6 className='emp-role'>{currentEmpData?.role.title}</h6>
 					</div>
 				</div>
 			</div>
@@ -753,15 +753,17 @@ export function EmpCard({
 							</>
 						) : (
 							<>
-								<EmpRole role={currentEmpData!.role.title} />
-								<EmpSalary salary={currentEmpData!.salary} />
+								<EmpRole role={currentEmpData && currentEmpData!.role.title} />
+								<EmpSalary salary={currentEmpData && currentEmpData!.salary} />
 								<EmpPhoneNumber
 									number1={phoneNumber.groupOne}
 									number2={phoneNumber.groupTwo}
 									number3={phoneNumber.groupThree}
 								/>
-								<EmpEmail email={currentEmpData!.email} />
-								<EmpMngr manager={currentEmpData!.manager.name} />
+								<EmpEmail email={currentEmpData && currentEmpData!.email} />
+								<EmpMngr
+									manager={currentEmpData && currentEmpData!.manager.name}
+								/>
 								<div className='emp-card-button-container'>
 									<button
 										className='edit-button'
