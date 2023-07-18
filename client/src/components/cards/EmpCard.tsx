@@ -6,25 +6,26 @@ import { v4 as uuidv4 } from 'uuid';
 import Modal from 'react-bootstrap/Modal';
 import axios from 'axios';
 import useFormat from '../../hooks/useFormat';
+import { useNavigate } from 'react-router-dom';
 
-function EmpPhoneNumber(props: {
+function EmpPhoneNumber({
+	header,
+	phone,
+}: {
 	header?: boolean;
-	number1: string;
-	number2: string;
-	number3: string;
+	phone?: string | null;
 }) {
+	const phoneSplit = [
+		phone ? phone!.slice(0, 3) : '',
+		phone ? phone!.slice(3, 6) : '',
+		phone ? phone!.slice(6, 10) : '',
+	];
 	return (
 		<p>
-			{props.header ? (
-				<></>
-			) : (
+			{header ? <></> : <strong>Phone:</strong>}
+			{phoneSplit[0] === '' ? (
 				<>
-					<strong>Phone:</strong>
-				</>
-			)}
-			{props.number1 === '' ? (
-				<>
-					{props.header ? (
+					{header ? (
 						<span className='phone-missing'>
 							<BsExclamationLg className='alert-icon' /> Phone # missing
 						</span>
@@ -33,7 +34,7 @@ function EmpPhoneNumber(props: {
 					)}
 				</>
 			) : (
-				<>{`(${props.number1}) ${props.number2}-${props.number3}`}</>
+				<>{`(${phoneSplit[0]}) ${phoneSplit[1]}-${phoneSplit[2]}`}</>
 			)}
 		</p>
 	);
@@ -82,21 +83,17 @@ function EmpSalary(props: { salary?: number | null }) {
 }
 
 export function MngrCard({ manager }: { manager: Manager }) {
+	const navigate = useNavigate();
 	const { abbreviateName } = useFormat();
 	const abbreviatedname = abbreviateName(manager.name);
 	const [show, setShow] = useState(false);
 	const [deleteConfirm, showDeleteConfirm] = useState(false);
 	const [editing, setEditing] = useState(false);
-	const [phoneNumber, setPhoneNumber] = useState({
-		groupOne: manager.phone ? manager.phone.slice(0, 3) : '',
-		groupTwo: manager.phone ? manager.phone.slice(3, 6) : '',
-		groupThree: manager.phone ? manager.phone.slice(6, 10) : '',
-	});
 	const [formState, setFormState] = useState({
 		mngrSalary: manager.salary,
-		phone1: phoneNumber.groupOne,
-		phone2: phoneNumber.groupTwo,
-		phone3: phoneNumber.groupThree,
+		phone1: manager.phone ? manager.phone.slice(0, 3) : '',
+		phone2: manager.phone ? manager.phone.slice(3, 6) : '',
+		phone3: manager.phone ? manager.phone.slice(6, 10) : '',
 		mngrEmail: manager.email ? manager.email : '',
 		mngrTimezone: manager.timezone ? manager.timezone : '',
 	});
@@ -167,6 +164,7 @@ export function MngrCard({ manager }: { manager: Manager }) {
 				payload!.phone = `${phonenumbers[0]}${phonenumbers[1]}${phonenumbers[2]}`;
 			} else {
 				window.alert('Invalid phone number!');
+				return;
 			}
 		}
 
@@ -179,6 +177,7 @@ export function MngrCard({ manager }: { manager: Manager }) {
 				payload!.email = formState.mngrEmail;
 			} else {
 				window.alert('Invalid email!');
+				return;
 			}
 		}
 
@@ -194,14 +193,10 @@ export function MngrCard({ manager }: { manager: Manager }) {
 				email: payload.email,
 				timezone: payload.timezone,
 			})
-			.then((res) => {
-				console.log(`Manager updated: ${res}`);
+			.then(() => {
+				window.alert(`Manager successfully updated!`);
 
-				setPhoneNumber({
-					groupOne: phonenumbers[0],
-					groupTwo: phonenumbers[1],
-					groupThree: phonenumbers[2],
-				});
+				navigate(0);
 			})
 			.catch((err) => console.log(`Failed to update manager: ${err}`));
 
@@ -234,12 +229,7 @@ export function MngrCard({ manager }: { manager: Manager }) {
 							{manager.is_lead ? 'Team Lead' : 'Manager'}
 						</h6>
 
-						<EmpPhoneNumber
-							header={true}
-							number1={phoneNumber.groupOne}
-							number2={phoneNumber.groupTwo}
-							number3={phoneNumber.groupThree}
-						/>
+						<EmpPhoneNumber header={true} phone={manager.phone} />
 					</div>
 				</div>
 			</div>
@@ -371,12 +361,7 @@ export function MngrCard({ manager }: { manager: Manager }) {
 						) : (
 							<>
 								<EmpSalary salary={manager.salary} />
-								<EmpPhoneNumber
-									header={false}
-									number1={phoneNumber.groupOne}
-									number2={phoneNumber.groupTwo}
-									number3={phoneNumber.groupThree}
-								/>
+								<EmpPhoneNumber header={false} phone={manager.phone} />
 								<EmpEmail email={manager.email} />
 								<EmpTimeZone timezone={manager.timezone} />
 								<div className='emp-card-button-container'>
@@ -416,21 +401,17 @@ export function EmpCard({
 	managers?: Manager[];
 	roles?: Role[];
 }) {
+	const navigate = useNavigate();
 	const { abbreviateName } = useFormat();
 	const abbreviatedname = abbreviateName(employee.name);
 	const [show, setShow] = useState<boolean>(false);
 	const [deleteConfirm, showDeleteConfirm] = useState<boolean>(false);
 	const [editing, setEditing] = useState<boolean>(false);
-	const [phoneNumber, setPhoneNumber] = useState({
-		groupOne: employee.phone ? employee.phone.slice(0, 3) : '',
-		groupTwo: employee.phone ? employee.phone.slice(3, 6) : '',
-		groupThree: employee.phone ? employee.phone.slice(6, 10) : '',
-	});
 	const [currentEmpData, setCurrentEmpData] = useState<CurrentEmpData | null>();
 	const [formState, setFormState] = useState({
-		phone1: phoneNumber.groupOne,
-		phone2: phoneNumber.groupTwo,
-		phone3: phoneNumber.groupThree,
+		phone1: employee.phone ? employee.phone.slice(0, 3) : '',
+		phone2: employee.phone ? employee.phone.slice(3, 6) : '',
+		phone3: employee.phone ? employee.phone.slice(6, 10) : '',
 		empEmail: employee.email ? employee.email : '',
 		empRole: '',
 		empSalary: '',
@@ -512,6 +493,7 @@ export function EmpCard({
 				payload!.phone = `${phonenumbers[0]}${phonenumbers[1]}${phonenumbers[2]}`;
 			} else {
 				window.alert('Invalid phone number!');
+				return;
 			}
 		}
 
@@ -524,6 +506,7 @@ export function EmpCard({
 				payload!.email = formState.empEmail;
 			} else {
 				window.alert('Invalid email!');
+				return;
 			}
 		}
 
@@ -545,14 +528,10 @@ export function EmpCard({
 				email: payload.email,
 				manager_id: payload.manager_id,
 			})
-			.then((res) => {
+			.then(() => {
 				window.alert(`Employee successfully updated!`);
 
-				setPhoneNumber({
-					groupOne: phonenumbers[0],
-					groupTwo: phonenumbers[1],
-					groupThree: phonenumbers[2],
-				});
+				navigate(0);
 			})
 			.catch((err) => console.log(`Failed to update updated: ${err}`));
 
@@ -595,8 +574,6 @@ export function EmpCard({
 
 		handleSetCurrentData();
 	}, []);
-
-	console.log(currentEmpData);
 
 	return (
 		<>
@@ -756,9 +733,7 @@ export function EmpCard({
 								<EmpRole role={currentEmpData && currentEmpData!.role.title} />
 								<EmpSalary salary={currentEmpData && currentEmpData!.salary} />
 								<EmpPhoneNumber
-									number1={phoneNumber.groupOne}
-									number2={phoneNumber.groupTwo}
-									number3={phoneNumber.groupThree}
+									phone={currentEmpData && currentEmpData!.phone}
 								/>
 								<EmpEmail email={currentEmpData && currentEmpData!.email} />
 								<EmpMngr
