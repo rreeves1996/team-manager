@@ -374,7 +374,10 @@ export function MngrCard({ manager }: { manager: Manager }) {
 										}
 										onClick={
 											deleteConfirm
-												? () => deleteManager(manager.id)
+												? () => {
+														deleteManager(manager.id);
+														navigate(0);
+												  }
 												: () => showDeleteConfirm(true)
 										}>
 										{deleteConfirm ? 'Are you sure?' : 'Delete'}
@@ -743,7 +746,10 @@ export function EmpCard({
 										}
 										onClick={
 											deleteConfirm
-												? () => deleteEmployee(employee.id)
+												? () => {
+														deleteEmployee(employee.id);
+														navigate(0);
+												  }
 												: () => showDeleteConfirm(true)
 										}>
 										{deleteConfirm ? 'Are you sure?' : 'Delete'}
