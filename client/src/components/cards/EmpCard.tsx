@@ -7,6 +7,7 @@ import Modal from 'react-bootstrap/Modal';
 import axios from 'axios';
 import useFormat from '../../hooks/useFormat';
 import { useNavigate } from 'react-router-dom';
+import useQuery from '../../hooks/useQuery';
 
 function EmpPhoneNumber({
 	header,
@@ -83,6 +84,7 @@ function EmpSalary(props: { salary?: number | null }) {
 }
 
 export function MngrCard({ manager }: { manager: Manager }) {
+	const { deleteManager } = useQuery();
 	const navigate = useNavigate();
 	const { abbreviateName } = useFormat();
 	const abbreviatedname = abbreviateName(manager.name);
@@ -201,11 +203,6 @@ export function MngrCard({ manager }: { manager: Manager }) {
 			.catch((err) => console.log(`Failed to update manager: ${err}`));
 
 		setEditing(!editing);
-	};
-
-	const deleteEmployee = (manager: any) => {
-		let index = manager.id - 1;
-		delete manager[index];
 	};
 
 	return (
@@ -377,7 +374,7 @@ export function MngrCard({ manager }: { manager: Manager }) {
 										}
 										onClick={
 											deleteConfirm
-												? () => deleteEmployee(manager)
+												? () => deleteManager(manager.id)
 												: () => showDeleteConfirm(true)
 										}>
 										{deleteConfirm ? 'Are you sure?' : 'Delete'}
@@ -401,6 +398,7 @@ export function EmpCard({
 	managers?: Manager[];
 	roles?: Role[];
 }) {
+	const { deleteEmployee } = useQuery();
 	const navigate = useNavigate();
 	const { abbreviateName } = useFormat();
 	const abbreviatedname = abbreviateName(employee.name);
@@ -536,13 +534,6 @@ export function EmpCard({
 			.catch((err) => console.log(`Failed to update updated: ${err}`));
 
 		setEditing(!editing);
-	};
-
-	const deleteEmployee = (employee: Employee) => {
-		if (employee.role!.title === 'manager') {
-			let index = parseInt(employee.id!) - 1;
-			delete managers![index];
-		}
 	};
 
 	useEffect(() => {
@@ -752,7 +743,7 @@ export function EmpCard({
 										}
 										onClick={
 											deleteConfirm
-												? () => deleteEmployee(employee)
+												? () => deleteEmployee(employee.id)
 												: () => showDeleteConfirm(true)
 										}>
 										{deleteConfirm ? 'Are you sure?' : 'Delete'}

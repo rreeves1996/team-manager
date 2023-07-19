@@ -125,6 +125,26 @@ export default function useQuery() {
 		}
 	}
 
+	async function deleteEmployee(id: string) {
+		try {
+			const res = await axios.delete(`${API_ROUTE}/employees/${id}`);
+
+			return res;
+		} catch (err) {
+			console.log(`Failed to delete team! Error:\n${err}`);
+		}
+	}
+
+	async function deleteManager(id: string) {
+		try {
+			const res = await axios.delete(`${API_ROUTE}/managers/${id}`);
+
+			return res;
+		} catch (err) {
+			console.log(`Failed to delete team! Error:\n${err}`);
+		}
+	}
+
 	async function deleteTeam(id: string) {
 		try {
 			const res = await axios.delete(`${API_ROUTE}/teams/${id}`);
@@ -208,6 +228,8 @@ export default function useQuery() {
 		addRole,
 		editTeamName,
 		editTeamLead,
+		deleteEmployee,
+		deleteManager,
 		deleteTeam,
 		createTeam,
 	};
