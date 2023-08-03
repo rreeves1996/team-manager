@@ -125,7 +125,7 @@ export default function useQuery() {
 		}
 	}
 
-	async function deleteEmployee(id: string) {
+	async function deleteEmployee(id: string | undefined) {
 		try {
 			const res = await axios.delete(`${API_ROUTE}/employees/${id}`);
 
@@ -135,9 +135,10 @@ export default function useQuery() {
 		}
 	}
 
-	async function deleteManager(id: string) {
+	async function deleteManager(id: string | undefined) {
 		try {
 			const res = await axios.delete(`${API_ROUTE}/managers/${id}`);
+			localStorage.deleteItem('teamId');
 
 			return res;
 		} catch (err) {
