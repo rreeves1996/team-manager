@@ -60,9 +60,12 @@ export default function Navbar() {
 						<Link to='/about' className='nav-button' id='about-button'>
 							<div className='about-link link'>About</div>
 						</Link>
-						<Link to='/contact' className='nav-button' id='contact-button'>
-							<div className='contact-link link'>Contact</div>
-						</Link>
+
+						<div className='nav-button' id='contact-button'>
+							<a href='https://rreeves.dev/' className='contact-link link'>
+								Contact
+							</a>
+						</div>
 						{isLogged ? (
 							<Link to='' className='nav-button' id='login-button'>
 								<div

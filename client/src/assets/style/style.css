@@ -122,6 +122,9 @@ nav .navbar-links .navbar-toggle .nav-link-container .nav-button:hover {
   color: white;
   text-decoration: none;
 }
+nav .navbar-links .navbar-toggle .nav-link-container .nav-button a {
+  color: #fcfbfd;
+}
 nav .navbar-links .navbar-toggle .nav-link-container #login-button {
   border-top: 1px solid #fcfbfd;
   border-radius: 0px 0px 6px 6px;
